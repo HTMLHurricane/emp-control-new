@@ -1,46 +1,26 @@
 import {
-    useDeleteEmployeeMutation,
     useGetAllEmployeesQuery,
 } from '@/entities/employee/api';
 import { IEmployee } from '@/entities/employee/model/types';
 import {
-    DeleteButton,
-    EditButton,
     FlexBox,
-    useAppActions,
     useAppSelector,
 } from '@/shared';
-import { Button, Image, Table, TableProps, message } from 'antd';
-import { useEffect } from 'react';
+import { Button, Image, Table, TableProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa6';
 import { columnResponseText } from '@/shared/const/css';
 
 const AdminEmployeePageTable = () => {
     const { attendanceBranch } = useAppSelector();
-    const { setEmployeeForm, setIsUpdatingEmployee } = useAppActions();
-    const navigate = useNavigate();
     const { data, isFetching } = useGetAllEmployeesQuery(
         attendanceBranch !== undefined
             ? { branch_id: attendanceBranch }
             : { branch_id: undefined },
         { skip: attendanceBranch === undefined },
     );
-    const [deleteBranch, { isSuccess: deleteSuccess }] =
-        useDeleteEmployeeMutation();
-
-    const handleEdit = (rec: IEmployee) => {
-        setEmployeeForm({
-            id: rec.id,
-            first_name: rec.first_name,
-            last_name: rec.last_name,
-            phone: rec.phone,
-            branch_id: rec.branch.id,
-            position_id: rec.position.id,
-            schedule_id: rec.schedule.id,
-        });
-        setIsUpdatingEmployee(true);
-    };
+    const navigate = useNavigate()
+    
 
     const columns: TableProps<IEmployee>['columns'] = [
         {
@@ -105,19 +85,13 @@ const AdminEmployeePageTable = () => {
                         icon={<FaEye />}
                         className="text-[12px] md:text-[14px]"
                     />
-                    <DeleteButton onConfirm={() => deleteBranch(rec.id)} />
-                    <EditButton onClick={() => handleEdit(rec)} />
                 </div>
             ),
             className: `${columnResponseText}`,
         },
     ];
 
-    useEffect(() => {
-        if (deleteSuccess) {
-            message.success('Успешно удалено');
-        }
-    }, [deleteSuccess]);
+    
 
     return (
         <Table

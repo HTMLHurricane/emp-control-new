@@ -41,11 +41,10 @@ export const ClientHeader: FC<IHeaderProps> = ({
                 />
                 Топ клиенты
             </h2>
-            <div className="flex">
+            <div className="flex gap-1">
                 <Select
                     value={topCount}
                     onChange={handleChange}
-                    className="w-[100%] mr-2"
                     placeholder="Выберите значение"
                 >
                     <Option value={10}>10</Option>
@@ -58,7 +57,6 @@ export const ClientHeader: FC<IHeaderProps> = ({
                     onChange={onChangeInterval}
                     format="YYYY-MM-DD"
                     allowClear
-                    className="w-[100%]"
                 />
             </div>
         </FlexBox>

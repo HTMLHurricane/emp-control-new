@@ -3,7 +3,7 @@ import { Card, Title } from '@/shared';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { columnResponseText } from '@/shared/const/css';
-import { Image, Spin, Table, TableProps, Tag } from 'antd';
+import { Image, Spin, Table, TableProps } from 'antd';
 import { ILastAttendance } from '@/entities/home/model';
 
 const Last = () => {
@@ -18,10 +18,10 @@ const Last = () => {
 
     const columns: TableProps<ILastAttendance>['columns'] = [
         {
-            title: 'ФИО',
-            dataIndex: 'full_name',
-            key: 'full_name',
-            render: (name, res) => (
+            title: 'Фото',
+            dataIndex: 'employee',
+            key: 'employee',
+            render: (_, res) => (
                 <div className="flex items-center">
                     <Image
                         width={100}
@@ -36,13 +36,17 @@ const Last = () => {
                             },
                         }}
                         onClick={(e) => e.stopPropagation()}
-                        src={res.employee.first_image.url}
+                        src={res?.employee?.first_image?.url}
                         className="hidden lg:block lg:w-[100px]"
                     />
-                    <span className="px-0 lg:px-2">{name}</span>
                 </div>
             ),
-            className: `${columnResponseText}`,
+        },
+        {
+            title: 'ФИО',
+            key: 'full_name',
+            dataIndex: 'full_name',
+            render: (_, res) => <>{res.employee.full_name}</>,
         },
         {
             title: 'Должность',
@@ -60,14 +64,10 @@ const Last = () => {
             className: `${columnResponseText}`,
         },
         {
-            title: 'Статус',
+            title: 'det score',
             dataIndex: 'score',
             key: 'score',
-            render: (score) => (
-                <Tag color={score > 60 ? 'green' : 'red'}>
-                    {score.toFixed(2)}%
-                </Tag>
-            ),
+            render: (score) => <>{score.toFixed(2) * 100}%</>,
             responsive: ['md', 'lg', 'xl'],
             className: `${columnResponseText}`,
         },

@@ -6,7 +6,7 @@ import {
     ITopClients,
     ITopClientsParams,
 } from '../models/types';
-import { IData } from '@/shared/types/Types';
+import { IData, IResponse } from '@/shared/types/Types';
 
 export const clientApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -33,6 +33,13 @@ export const clientApi = api.injectEndpoints({
             }),
             providesTags: ['client'],
         }),
+        deleteClient: build.mutation<IResponse['detail'], number>({
+            query: (id) => ({
+                url: `clients/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['client'],
+        }),
     }),
 });
 
@@ -40,4 +47,5 @@ export const {
     useGetTopClientsQuery,
     useGetTopClientByIdQuery,
     useGetClientAttendancesQuery,
+    useDeleteClientMutation,
 } = clientApi;

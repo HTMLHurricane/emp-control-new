@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { columnResponseText } from '@/shared/const/css';
 
 // Функция для расчета разницы времени
-const calculateDelay = (actualTime?: string, scheduledTime?: string) => {
+export const calculateDelay = (actualTime?: string, scheduledTime?: string) => {
     if (!actualTime || !scheduledTime) return { hours: 0, minutes: 0 };
 
     const [actualHours, actualMinutes, actualSeconds] = actualTime

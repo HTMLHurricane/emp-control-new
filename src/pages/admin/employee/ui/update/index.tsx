@@ -8,6 +8,7 @@ import { useGetAllRolesQuery } from '@/entities/role/api';
 import { useGetAllSchedulesQuery } from '@/entities/schedule/api';
 import { mapToOptions } from '@/shared/lib/mapToOptions';
 import { FormLayout } from '@/shared/ui/formLayout/formLayout';
+import { useNavigate } from 'react-router-dom';
 
 const AdminUpdateEmployeeForm = () => {
     const [form] = Form.useForm();
@@ -18,7 +19,7 @@ const AdminUpdateEmployeeForm = () => {
     const { setIsUpdatingEmployee } = useAppActions();
     const { data: roles } = useGetAllRolesQuery();
     const { data: branches } = useGetAllBranchesQuery();
-
+    const navigate = useNavigate();
     const roleOptions = useMemo(() => mapToOptions(roles), [roles]);
     const branchOptions = useMemo(() => mapToOptions(branches), [branches]);
     const scheduleOptions = useMemo(() => mapToOptions(schedules), [schedules]);
@@ -33,6 +34,7 @@ const AdminUpdateEmployeeForm = () => {
     const onCancel = () => {
         setIsUpdatingEmployee(false);
         form.resetFields();
+        navigate(`/employees/${employeeForm?.id}`);
     };
 
     useEffect(() => {

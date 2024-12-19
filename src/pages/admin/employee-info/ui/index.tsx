@@ -16,19 +16,15 @@ const AdminEmployeeInfoPage = () => {
     const navigate = useNavigate();
 
     return (
-        <FlexBox cls="flex-col p-6 space-y-6">
-            {/* Контейнер для кнопки и радиокнопок на одном уровне */}
+        <FlexBox cls="flex-col space-y-6">
             <div className="flex items-center justify-between mb-5">
-                {/* Кнопка назад */}
                 <Button
-                    onClick={() => navigate(-1)}
+                    onClick={() => navigate('/employees')}
                     type="primary"
                     className="self-start"
                 >
                     Назад
                 </Button>
-
-                {/* Радиокнопки для переключения вкладок */}
                 <Radio.Group
                     value={activeTab}
                     onChange={handleTabChange}
@@ -56,8 +52,6 @@ const AdminEmployeeInfoPage = () => {
                     </Radio.Button>
                 </Radio.Group>
             </div>
-
-            {/* Контент вкладок */}
             <div className="w-full">
                 {activeTab === 'info' && <EmployeeInfo />}
                 {activeTab === 'attendance' && <EmployeeAttendance />}

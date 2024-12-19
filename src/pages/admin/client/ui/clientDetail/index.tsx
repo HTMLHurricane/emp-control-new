@@ -19,7 +19,6 @@ import { useEffect } from 'react';
 
 export const ClientDetail = () => {
     const [deleteImage, { isSuccess }] = useDeleteImageMutation();
-
     const { id } = useParams();
     const navigate = useNavigate();
     const { data, isLoading } = useGetTopClientByIdQuery(id, {

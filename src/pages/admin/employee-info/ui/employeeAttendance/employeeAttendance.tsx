@@ -1,6 +1,6 @@
 import { useGetDailyAttendanceByIdQuery } from '@/entities/employee-info/api';
 import { IDailyAttendanceById } from '@/entities/employee-info/model';
-import { TableProps, Table, Image } from 'antd';
+import { TableProps, Table, Image, Empty, Spin } from 'antd';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -27,7 +27,7 @@ const EmployeeAttendance = () => {
         {
             title: 'Пришёл(а)',
             dataIndex: 'time_in',
-            render: (item) => <>{item.substring(0, 5)}</>,
+            render: (item) => <>в {item?.slice(0, 5)}</>,
             className: 'w-[120px]',
         },
         {
@@ -36,7 +36,7 @@ const EmployeeAttendance = () => {
             render: (_, res) => (
                 <div className="flex flex-wrap gap-2">
                     <Image
-                        src={res.attendance_in.url}
+                        src={res?.attendance_in?.url}
                         width={150}
                         height={100}
                     />
@@ -47,7 +47,7 @@ const EmployeeAttendance = () => {
         {
             title: 'Опоздал(а)',
             dataIndex: 'late',
-            render: (item) => <>{item}</>,
+            render: (item) => <>на {item?.slice(0, 4)} ч</>,
         },
         {
             title: 'Ранний уход',
@@ -57,7 +57,7 @@ const EmployeeAttendance = () => {
         {
             title: 'Ушёл(а)',
             dataIndex: 'time_out',
-            render: (item) => <>{item.substring(0, 5)}</>,
+            render: (item) => <>{item ? `в ${item.slice(0, 5)}` : ''}</>,
         },
         {
             title: 'Фото ухода',
@@ -65,7 +65,7 @@ const EmployeeAttendance = () => {
             render: (_, res) => (
                 <div className="flex flex-wrap gap-2">
                     <Image
-                        src={res.attendance_out.url}
+                        src={res?.attendance_out?.url}
                         width={150}
                         height={100}
                     />
@@ -75,25 +75,37 @@ const EmployeeAttendance = () => {
         },
     ];
 
+    if (isLoading) {
+        return <Spin />;
+    }
+    if (!data) {
+        return (
+            <div className="flex justify-center items-center">
+                <Empty description="Данные не найдены" />
+            </div>
+        );
+    }
     return (
-        <Table
-            loading={isLoading}
-            scroll={{ x: true, y: 400 }}
-            bordered
-            columns={columns}
-            dataSource={data?.content}
-            pagination={{
-                showSizeChanger: true,
-                current: employeeTablePage,
-                pageSize: employeeTableLimit,
-                total: data?.total_pages,
-                onChange: (page, limit) => {
-                    setEmployeeTablePage(page);
-                    setEmployeeTableLimit(limit);
-                },
-            }}
-            rowKey={() => Math.random()}
-        />
+        <div>
+            <Table
+                loading={isLoading}
+                scroll={{ x: true, y: 400 }}
+                bordered
+                columns={columns}
+                dataSource={data.content}
+                pagination={{
+                    showSizeChanger: true,
+                    current: employeeTablePage,
+                    pageSize: employeeTableLimit,
+                    total: data?.total_pages,
+                    onChange: (page, limit) => {
+                        setEmployeeTablePage(page);
+                        setEmployeeTableLimit(limit);
+                    },
+                }}
+                rowKey={() => Math.random()}
+            />
+        </div>
     );
 };
 
