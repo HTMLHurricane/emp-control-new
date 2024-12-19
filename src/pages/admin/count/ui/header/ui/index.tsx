@@ -38,7 +38,7 @@ export const Header: FC<IHeaderProps> = ({ setDates, dates }) => {
         setDates(null);
     };
     return (
-        <FlexBox cls="justify-between pb-5">
+        <FlexBox cls="justify-between items-center  pb-5 flex-wrap ">
             <h2 className="header_title">
                 <FaArrowLeft
                     size={15}
@@ -47,28 +47,30 @@ export const Header: FC<IHeaderProps> = ({ setDates, dates }) => {
                 />
                 Статистика
             </h2>
-            <div className="flex flex-col lg:flex-row gap-1">
+            <div className="flex flex-col lg:flex-row gap-1 justify-center mx-[auto] ">
                 <RangePicker
                     value={dates}
                     onChange={onChangeInterval}
                     format="YYYY-MM-DD"
                     allowClear
-                    className="w-[320px]"
+                    className="w-[100%]"
                 />
-                <DatePicker
-                    allowClear={false}
-                    placeholder="Выберите день"
-                    onChange={onChange}
-                    className="w-[220px]"
-                />
-                <Select
-                    options={branchOptions}
-                    value={attendanceBranch}
-                    placeholder="Филиал"
-                    onSelect={(e) => setAttendanceBranch(e)}
-                    allowClear
-                    onClear={() => setAttendanceBranch(undefined)}
-                />
+                <div className='flex items-center gap-3'>
+                    <DatePicker
+                        allowClear={false}
+                        placeholder="Выберите день"
+                        onChange={onChange}
+                        className="w-[100%]"
+                    />
+                    <Select
+                        options={branchOptions}
+                        value={attendanceBranch}
+                        placeholder="Филиал"
+                        onSelect={(e) => setAttendanceBranch(e)}
+                        allowClear
+                        onClear={() => setAttendanceBranch(undefined)}
+                    />
+                </div>
             </div>
         </FlexBox>
     );

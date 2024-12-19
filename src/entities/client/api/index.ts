@@ -33,7 +33,6 @@ export const clientApi = api.injectEndpoints({
             }),
             providesTags: ['client'],
         }),
-
     }),
 });
 

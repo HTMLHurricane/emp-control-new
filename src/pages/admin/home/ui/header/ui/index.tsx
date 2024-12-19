@@ -20,7 +20,7 @@ export const Header = () => {
     }, [branchOptions, setAttendanceBranch]);
 
     return (
-        <div className="flex justify-between items-center md:px-4">
+        <div className="flex justify-between items-center md:px-4 flex-wrap">
             <h2 className="header_title">Главная</h2>
             <div>
                 <DatePicker

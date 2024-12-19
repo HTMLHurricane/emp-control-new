@@ -1,16 +1,33 @@
 import { useGetTopClientByIdQuery } from '@/entities/client/api';
-import { Button, Card, Image, Row, Col, Spin, List } from 'antd';
+import {
+    Button,
+    Card,
+    Image,
+    Row,
+    Col,
+    Spin,
+    List,
+    Popconfirm,
+    message,
+} from 'antd';
 import Meta from 'antd/es/card/Meta';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ClientAttendances } from '../clientAttendance';
+import { MdDelete } from 'react-icons/md';
+import { useDeleteImageMutation } from '@/entities/employee-info/api';
+import { useEffect } from 'react';
 
 export const ClientDetail = () => {
+    const [deleteImage, { isSuccess }] = useDeleteImageMutation();
+
     const { id } = useParams();
     const navigate = useNavigate();
     const { data, isLoading } = useGetTopClientByIdQuery(id, {
         skip: id === undefined,
     });
-
+    useEffect(() => {
+        if (isSuccess) message.success('Успешно удалено');
+    }, [isSuccess]);
     if (isLoading) {
         return (
             <div className="flex justify-center items-center min-h-screen">
@@ -81,6 +98,17 @@ export const ClientDetail = () => {
                                                 className="rounded-full cursor-pointer"
                                                 preview={{ mask: null }}
                                             />
+                                            <div className="absolute bottom-0 cursor-pointer w-[100px] h-[50px] bg-[#80808080] text-red-500 flex items-center justify-center  opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out rounded-bl-full rounded-br-full">
+                                                <Popconfirm
+                                                    onConfirm={() =>
+                                                        deleteImage(item.id)
+                                                    }
+                                                    className="basis-1/2"
+                                                    title="Вы действительно хотите удалить?"
+                                                >
+                                                    <MdDelete size={30} />
+                                                </Popconfirm>
+                                            </div>
                                         </div>
                                     </List.Item>
                                 )}
