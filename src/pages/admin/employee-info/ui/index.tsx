@@ -11,7 +11,7 @@ type Tab = 'info' | 'attendance' | 'devices';
 const AdminEmployeeInfoPage = () => {
     const [activeTab, setActiveTab] = useState<Tab>('info');
     const handleTabChange = (e: RadioChangeEvent) => {
-        setActiveTab(e.target.value as Tab); // Приведение значения к типу Tab
+        setActiveTab(e.target.value as Tab);
     };
     const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ const AdminEmployeeInfoPage = () => {
         <FlexBox cls="flex-col space-y-6">
             <div className="flex items-center justify-between mb-5">
                 <Button
-                    onClick={() => navigate('/employees')}
+                    onClick={() => navigate(-1)}
                     type="primary"
                     className="self-start"
                 >

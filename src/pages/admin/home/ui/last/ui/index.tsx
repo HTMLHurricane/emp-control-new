@@ -113,7 +113,7 @@ const Last = () => {
         return (
             <Card className="flex-col flex-1 min-h-[450px] text-center">
                 <Title>Последняя активность</Title>
-                <Table
+                <Table<ILastAttendance>
                     scroll={{ y: 450 }}
                     dataSource={data?.content}
                     columns={columns}
@@ -129,10 +129,11 @@ const Last = () => {
                             setLimit(limit);
                         },
                     }}
-                    onRow={(rec) => ({
+                    onRow={(res) => ({
                         onClick: () => {
+                            
                             if (!isPreviewOpened) {
-                                navigate(`employees/${rec.id}`);
+                                navigate(`employees/${res.employee_id}`);
                             }
                         },
                         className: 'hover:cursor-pointer',
