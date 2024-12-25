@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 export const ClientType = ({ data }: { data: number[] | undefined }) => {
-    const total = data ?  data[0] + data[1] : 0;
+    const total = data ? data[0] + data[1] : 0;
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
@@ -16,15 +16,14 @@ export const ClientType = ({ data }: { data: number[] | undefined }) => {
     }, []);
 
     const formattedData = [
-        { name: 'Постоянные', value: data ? data[0] : 0},
-        { name: 'Новые', value:data ? data[1] : 0 },
+        { name: 'Постоянные', value: data ? data[0] : 0 },
+        { name: 'Новые', value: data ? data[1] : 0 },
     ];
 
-    // Ассоциированные цвета для каждого сегмента
-    const COLORS = ['#2E3A8C', '#32CD32']; // Синий для постоянных и оранжевый для новых клиентов
+    const COLORS = ['#2E3A8C', '#32CD32'];
 
     const renderLabel = ({ name, value }: { name: string; value: number }) => {
-        const percent = ((value / total) * 100).toFixed(0);
+        const percent = total > 0 ? ((value / total) * 100).toFixed(0) : 0; // Защита от деления на 0
         return `${name} ${percent}%`;
     };
 

@@ -55,7 +55,7 @@ const AuthForm = () => {
                 layout="vertical"
             >
                 <Form.Item<IAuthForm>
-                    label="Почта"
+                    label="Логин"
                     name="username"
                     rules={[
                         {

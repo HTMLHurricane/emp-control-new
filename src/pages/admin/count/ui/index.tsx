@@ -81,7 +81,6 @@ const AdminCount = () => {
                                   data ? data.gender_count.count.Female : 0,
                               ]
                     }
-                    data={[50, 50]}
                 />
                 <ClientTypeChart
                     data={

@@ -1,23 +1,27 @@
 import { useEffect, useState } from 'react';
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
-export const Sex = ({
-    count,
-    data,
-}: {
-    count: [number, number];
-    data: [number, number];
-}) => {
+export const Sex = ({ count }: { count: [number, number] }) => {
+    const total = count[0] + count[1]; // Общее количество людей
     const formattedData = [
-        { name: 'Мужчины', value: count[0], precent: data[0] },
-        { name: 'Женщины', value: count[1], precent: data[1] },
+        {
+            name: 'Мужчины',
+            value: count[0],
+            percent: total > 0 ? (count[0] / total) * 100 : 0,
+        },
+        {
+            name: 'Женщины',
+            value: count[1],
+            percent: total > 0 ? (count[1] / total) * 100 : 0,
+        },
     ];
+
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
         const updateLayout = () => {
             const isMobile = window.innerWidth < 768;
-            setIsMobile(isMobile ? true : false); // Изменяем радиус
+            setIsMobile(isMobile); // Изменяем радиус
         };
         updateLayout(); // Установить начальное состояние
         window.addEventListener('resize', updateLayout);
@@ -25,17 +29,16 @@ export const Sex = ({
     }, []);
 
     // Новые ассоциированные цвета для каждого сегмента
-    const COLORS = ['#1E90FF', '#FF5252 ']; // Темно-зеленый для мужчин и лаванда для женщин
+    const COLORS = ['#1E90FF', '#FF5252 ']; // Темно-синий для мужчин и красный для женщин
 
     const renderLabel = ({
         name,
-        precent,
+        percent,
     }: {
         name: string;
-        value: number;
-        precent: number;
+        percent: number;
     }) => {
-        return `${name} ${precent.toFixed(2)}%`;
+        return `${name} ${percent.toFixed(2)}%`; // Показать процент с 2 знаками после запятой
     };
 
     return (
