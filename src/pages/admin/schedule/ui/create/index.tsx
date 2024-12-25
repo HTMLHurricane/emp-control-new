@@ -1,25 +1,19 @@
-import { FC, useEffect, useMemo } from 'react';
-import { Form, Input, Button, message, Select } from 'antd';
+import { FC, useEffect } from 'react';
+import { Form, Input, Button, message } from 'antd';
 import { useCreateScheduleMutation } from '@/entities/schedule/api';
 import { FlexBox, useAppActions } from '@/shared';
 import {
     ISchedulePost,
     IScheduleDayPost,
 } from '@/entities/schedule/model/types';
-import { useGetOrganizationQuery } from '@/entities/organization/api';
-import { mapToOptions } from '@/shared/lib/mapToOptions';
+import { useCheckUserQuery } from '@/entities/auth/api';
 
 const AdminCreateScheduleForm: FC = () => {
     const [form] = Form.useForm<ISchedulePost>();
     const [createSchedule, { isSuccess, isLoading, isError }] =
         useCreateScheduleMutation();
     const { setIsCreatingSchedule } = useAppActions();
-    const { data: organizations } = useGetOrganizationQuery();
-
-    const organizationOptions = useMemo(
-        () => mapToOptions(organizations),
-        [organizations],
-    );
+    const { data: getmeData } = useCheckUserQuery();
 
     const generateDayData = (
         day:
@@ -55,25 +49,24 @@ const AdminCreateScheduleForm: FC = () => {
     };
 
     const onSubmit = (data: any) => {
-        const workHours: any = Object.keys(
-            data.work_hours || {},
-        ).map((day: any) =>
-            generateDayData(
-                day as
-                    | 'monday'
-                    | 'tuesday'
-                    | 'wednesday'
-                    | 'thursday'
-                    | 'friday'
-                    | 'saturday'
-                    | 'sunday',
-                data.work_hours[day],
-            ),
+        const workHours: any = Object.keys(data.work_hours || {}).map(
+            (day: any) =>
+                generateDayData(
+                    day as
+                        | 'monday'
+                        | 'tuesday'
+                        | 'wednesday'
+                        | 'thursday'
+                        | 'friday'
+                        | 'saturday'
+                        | 'sunday',
+                    data.work_hours[day],
+                ),
         );
 
         createSchedule({
             name: data.name,
-            organization_id: 43, // Можно сделать параметром для большей гибкости
+            organization_id: getmeData!.org, // Можно сделать параметром для большей гибкости
             work_hours: workHours,
         });
     };
@@ -123,19 +116,6 @@ const AdminCreateScheduleForm: FC = () => {
                 ]}
             >
                 <Input />
-            </Form.Item>
-            <Form.Item
-                name="organization_id"
-                label="Организация"
-                rules={[
-                    { required: true, message: 'Пожалуйста, заполните поле!' },
-                ]}
-                className="max-w-[600px]"
-            >
-                <Select
-                    disabled={!organizationOptions?.length}
-                    options={organizationOptions}
-                />
             </Form.Item>
             <FlexBox cls="max-w-[600px] mb-5">
                 <b>День недели</b>

@@ -45,7 +45,7 @@ export const OrganizationUpdateForm = () => {
     }, []);
 
     return (
-        <FormLayout title="Изменить название организации" size="2xl">
+        <FormLayout title="Изменить название организации" size="xl">
             <Form form={form} onFinish={onSubmit} layout="vertical">
                 <Form.Item<IdName>
                     name="name"

@@ -4,7 +4,6 @@ import {
     useSetEmployeeImageMutation,
 } from '@/entities/employee/api';
 import { IEmployeePost } from '@/entities/employee/model/types';
-import { useGetOrganizationQuery } from '@/entities/organization/api';
 import { useGetAllRolesQuery } from '@/entities/role/api';
 import { useGetAllSchedulesQuery } from '@/entities/schedule/api';
 import { useAppActions } from '@/shared';
@@ -13,6 +12,7 @@ import { Button, Col, Form, Input, Row, Select, Upload, message } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { UploadOutlined } from '@ant-design/icons';
 import { FormLayout } from '@/shared/ui/formLayout/formLayout';
+import { useCheckUserQuery } from '@/entities/auth/api';
 
 const AdminCreateEmployeeForm = () => {
     const [form] = Form.useForm();
@@ -21,20 +21,15 @@ const AdminCreateEmployeeForm = () => {
     const { data: roles } = useGetAllRolesQuery();
     const { data: branches } = useGetAllBranchesQuery();
     const { data: schedules } = useGetAllSchedulesQuery();
-    const { data: organizations } = useGetOrganizationQuery();
     const { setIsCreatingEmployee } = useAppActions();
     const [
         setImage,
         { isLoading: loading, isSuccess: success, isError: error },
     ] = useSetEmployeeImageMutation();
-
+    const { data: getmeData } = useCheckUserQuery();
     const roleOptions = useMemo(() => mapToOptions(roles), [roles]);
     const branchOptions = useMemo(() => mapToOptions(branches), [branches]);
     const scheduleOptions = useMemo(() => mapToOptions(schedules), [schedules]);
-    const organizationOptions = useMemo(
-        () => mapToOptions(organizations),
-        [organizations],
-    );
 
     const [imageFile, setImageFile] = useState<File | null>(null);
 
@@ -45,8 +40,11 @@ const AdminCreateEmployeeForm = () => {
         }
     };
 
-    const onSubmit = async (data: IEmployeePost) => {
-        const employeeResponse = await createEmployee(data).unwrap();
+    const onSubmit = async (data: Omit<IEmployeePost, 'organization_id'>) => {
+        const employeeResponse = await createEmployee({
+            organization_id: getmeData!.org,
+            ...data,
+        }).unwrap();
         if (imageFile) {
             await setImage({
                 id: employeeResponse.data.id,
@@ -74,7 +72,7 @@ const AdminCreateEmployeeForm = () => {
     useEffect(() => () => onCancel(), []);
 
     return (
-        <FormLayout title="Изменить данные сотрудника">
+        <FormLayout title="Изменить данные сотрудника" size="xl">
             <Form
                 form={form}
                 onFinish={onSubmit}
@@ -133,20 +131,19 @@ const AdminCreateEmployeeForm = () => {
 
                     <Col xs={24} sm={12}>
                         <Form.Item
-                            name="organization_id"
-                            label="Организация"
+                            name="branch_id"
+                            label="Филиал"
                             rules={[
                                 {
                                     required: true,
-                                    message:
-                                        'Пожалуйста, выберите организацию!',
+                                    message: 'Пожалуйста, выберите филиал!',
                                 },
                             ]}
                         >
                             <Select
-                                disabled={!organizationOptions?.length}
-                                options={organizationOptions}
-                                placeholder="Выберите организацию"
+                                disabled={!branchOptions?.length}
+                                options={branchOptions}
+                                placeholder="Выберите филиал"
                             />
                         </Form.Item>
                     </Col>
@@ -208,24 +205,6 @@ const AdminCreateEmployeeForm = () => {
                                     Выбрать изображение
                                 </Button>
                             </Upload>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                        <Form.Item
-                            name="branch_id"
-                            label="Филиал"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Пожалуйста, выберите филиал!',
-                                },
-                            ]}
-                        >
-                            <Select
-                                disabled={!branchOptions?.length}
-                                options={branchOptions}
-                                placeholder="Выберите филиал"
-                            />
                         </Form.Item>
                     </Col>
                 </Row>

@@ -64,7 +64,7 @@ const AuthForm = () => {
                         },
                     ]}
                 >
-                    <Input type="email" />
+                    <Input type="text" />
                 </Form.Item>
 
                 <Form.Item<IAuthForm>

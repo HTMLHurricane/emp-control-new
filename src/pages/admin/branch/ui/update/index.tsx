@@ -45,7 +45,7 @@ const AdminUpdateBranchForm = () => {
     }, []);
 
     return (
-        <FormLayout title="Изменить данные филиала" size="2xl">
+        <FormLayout title="Изменить данные филиала" size="xl">
             <Form
                 form={form}
                 className="space-y-4"

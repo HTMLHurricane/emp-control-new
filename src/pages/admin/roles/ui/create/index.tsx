@@ -1,24 +1,19 @@
-import { useGetOrganizationQuery } from '@/entities/organization/api';
+import { useCheckUserQuery } from '@/entities/auth/api';
 import { useCreateRoleMutation } from '@/entities/role/api';
 import { IRolePost } from '@/entities/role/model/types';
 import { useAppActions } from '@/shared';
-import { mapToOptions } from '@/shared/lib/mapToOptions';
 import { FormLayout } from '@/shared/ui/formLayout/formLayout';
-import { Button, Form, Input, message, Select } from 'antd';
-import { useEffect, useMemo } from 'react';
+import { Button, Form, Input, message } from 'antd';
+import { useEffect } from 'react';
 
 const AdminCreateRoleForm = () => {
     const [form] = Form.useForm();
     const [createRole, { isSuccess, isLoading, isError }] =
         useCreateRoleMutation();
     const { setIsCreatingRole } = useAppActions();
-    const { data: organizations } = useGetOrganizationQuery();
-    const organizationOptions = useMemo(
-        () => mapToOptions(organizations),
-        [organizations],
-    );
-    const onSubmit = (data: IRolePost) => {
-        createRole(data);
+    const { data: getmeData } = useCheckUserQuery();
+    const onSubmit = (data: Omit<IRolePost, 'organization_id'>) => {
+        createRole({ organization_id: getmeData!.org, ...data });
     };
 
     const onCancel = () => {
@@ -63,21 +58,7 @@ const AdminCreateRoleForm = () => {
                 >
                     <Input />
                 </Form.Item>
-                <Form.Item<IRolePost>
-                    name="organization_id"
-                    label="Организация"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Пожалуйста, заполните поле!',
-                        },
-                    ]}
-                >
-                    <Select
-                        disabled={!organizationOptions?.length}
-                        options={organizationOptions}
-                    />
-                </Form.Item>
+
                 <div className="flex justify-end space-x-4">
                     <Button onClick={onCancel} type="default">
                         Отмена

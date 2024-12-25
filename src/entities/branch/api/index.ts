@@ -5,8 +5,9 @@ import {
     IBranchPatch,
     IBranchResponse,
     IBranchesInfo,
+    IBranchParams,
 } from '../model/types';
-import { IResponse } from '@/shared/types/Types';
+import { IAttendanceStats, IResponse } from '@/shared/types/Types';
 
 export const branchApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -21,6 +22,14 @@ export const branchApi = api.injectEndpoints({
             query: (date) => ({
                 url: `branches/get_branches_info?date=${date}`,
                 method: 'GET',
+            }),
+            providesTags: ['branch'],
+        }),
+        getBranchById: builder.query<IAttendanceStats, IBranchParams>({
+            query: (params) => ({
+                url: 'branches/get_branch_attendance_stats',
+                method: 'GET',
+                params,
             }),
             providesTags: ['branch'],
         }),
@@ -59,6 +68,7 @@ export const branchApi = api.injectEndpoints({
 
 export const {
     useGetAllBranchesQuery,
+    useGetBranchByIdQuery,
     useCreateBranchMutation,
     useDeleteBranchMutation,
     useUpdateBranchMutation,

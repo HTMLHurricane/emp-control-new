@@ -1,9 +1,9 @@
+import { useCheckUserQuery } from '@/entities/auth/api';
 import { useCreateBranchMutation } from '@/entities/branch/api';
 import { IBranchPost } from '@/entities/branch/model/types';
-import { useGetOrganizationQuery } from '@/entities/organization/api';
 import { useAppActions } from '@/shared';
 import { FormLayout } from '@/shared/ui/formLayout/formLayout';
-import { Button, Checkbox, Col, Form, Input, message, Row, Select } from 'antd';
+import { Button, Checkbox, Col, Form, Input, message, Row } from 'antd';
 import { useEffect } from 'react';
 
 const AdminCreateBranchForm = () => {
@@ -11,10 +11,9 @@ const AdminCreateBranchForm = () => {
     const [createBranch, { isSuccess, isLoading, isError }] =
         useCreateBranchMutation();
     const { setIsCreatingBranch } = useAppActions();
-    const { data } = useGetOrganizationQuery();
-
-    const onSubmit = (data: IBranchPost) => {
-        createBranch(data);
+    const { data: getmeData } = useCheckUserQuery();
+    const onSubmit = (data: Omit<IBranchPost, 'organization_id'>) => {
+        createBranch({ organization_id: getmeData!.org, ...data });
     };
 
     const onCancel = () => {
@@ -40,7 +39,7 @@ const AdminCreateBranchForm = () => {
     }, []);
 
     return (
-        <FormLayout title="Создать филиал">
+        <FormLayout title="Создать филиал" size="xl">
             <Form
                 form={form}
                 onFinish={onSubmit}
@@ -78,29 +77,6 @@ const AdminCreateBranchForm = () => {
                     </Col>
                 </Row>
                 <Row gutter={16}>
-                    <Col xs={24} sm={12}>
-                        <Form.Item
-                            name="organization_id"
-                            label="Организация"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Выберите организацию!',
-                                },
-                            ]}
-                        >
-                            <Select placeholder="Выберите организацию">
-                                {data?.map((item) => (
-                                    <Select.Option
-                                        key={item.id}
-                                        value={item.id}
-                                    >
-                                        {item.name}
-                                    </Select.Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
                     <Col xs={24} sm={12} className="pt-8">
                         {' '}
                         <Form.Item name="is_active" valuePropName="checked">

@@ -17,3 +17,8 @@ export interface IBranchSliceState {
     branchForm: IBranchPatch | null;
     branchDate: string;
 }
+
+export interface IBranchParams {
+    date: string;
+    branch_id: number;
+}

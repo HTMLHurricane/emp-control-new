@@ -38,7 +38,7 @@ export const OrganizationCreateForm = () => {
     }, []);
 
     return (
-        <FormLayout title="Создать организацию" size="2xl">
+        <FormLayout title="Создать организацию" size="xl">
             <Form form={form} onFinish={onSubmit} layout="vertical">
                 <Form.Item<IOrganizationPost>
                     name="name"

@@ -1,15 +1,16 @@
 import { Spin } from 'antd';
 import { DoughnutChart } from './chart';
 import { useAppSelector, Card } from '@/shared';
-import { useGetBranchesInfoQuery } from '@/entities/branch/api';
+import { useGetBranchByIdQuery } from '@/entities/branch/api';
 
 const Doughnut = () => {
     const { homeDate, attendanceBranch } = useAppSelector();
-    const { data, isLoading } = useGetBranchesInfoQuery(
-        homeDate.format('YYYY-MM-DD'),
-    );
-    const selectedBranch = data?.find(
-        (branch) => branch.id === attendanceBranch,
+    const { data, isLoading } = useGetBranchByIdQuery(
+        {
+            date: homeDate.format('YYYY-MM-DD'),
+            branch_id: attendanceBranch!,
+        },
+        { skip: attendanceBranch === undefined },
     );
     if (isLoading && !data) {
         return (
@@ -22,12 +23,12 @@ const Doughnut = () => {
             <Card className="xl:max-w-[400px]">
                 <DoughnutChart
                     datasets={[
-                        selectedBranch?.absent_employees ?? 0,
-                        selectedBranch?.late_employees ?? 0,
-                        selectedBranch?.total_employees ?? 0,
+                        data?.absent_employees ?? 0,
+                        data?.late_employees ?? 0,
+                        data?.total_employees ?? 0,
                     ]}
                     date={homeDate}
-                    total={selectedBranch?.total_employees ?? 0}
+                    total={data?.total_employees ?? 0}
                 />
             </Card>
         );

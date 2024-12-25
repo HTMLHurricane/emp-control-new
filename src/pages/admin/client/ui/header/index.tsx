@@ -1,12 +1,10 @@
 import { FlexBox } from '@/shared';
-import { DatePicker, Select } from 'antd';
-import { RangePickerProps } from 'antd/es/date-picker';
+import { DatePicker, Radio, Select } from 'antd';
 import dayjs from 'dayjs';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 
-const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 interface IHeaderProps {
@@ -15,22 +13,44 @@ interface IHeaderProps {
         React.SetStateAction<[dayjs.Dayjs | null, dayjs.Dayjs | null] | null>
     >;
     topCount: number;
-    setTopCount: (value: number) => void; //
+    setTopCount: (value: number) => void;
 }
 
 export const ClientHeader: FC<IHeaderProps> = ({
     setDates,
-    dates,
     setTopCount,
     topCount,
 }) => {
+    const [filter, setFilter] = useState<'week' | 'month' | null>(null);
     const navigate = useNavigate();
-    const onChangeInterval: RangePickerProps['onChange'] = (dates) => {
-        setDates(dates);
+
+    const applyFilter = (filter: 'week' | 'month') => {
+        if (filter === 'week') {
+            const startOfWeek = dayjs().startOf('week');
+            const endOfWeek = dayjs().endOf('week');
+            setDates([startOfWeek, endOfWeek]);
+        } else if (filter === 'month') {
+            const startOfMonth = dayjs().startOf('month');
+            const endOfMonth = dayjs().endOf('month');
+            setDates([startOfMonth, endOfMonth]);
+        }
+        setFilter(filter);
     };
+
     const handleChange = (value: number) => {
         setTopCount(value);
     };
+
+    const handleChangeDate = (date: dayjs.Dayjs | null) => {
+        if (date) {
+            const startOfMonth = date.startOf('month');
+            const endOfMonth = date.endOf('month');
+            setDates([startOfMonth, endOfMonth]);
+        } else {
+            setDates(null);
+        }
+    };
+
     return (
         <FlexBox cls="justify-between flex-wrap">
             <h2 className="header_title">
@@ -45,18 +65,26 @@ export const ClientHeader: FC<IHeaderProps> = ({
                 <Select
                     value={topCount}
                     onChange={handleChange}
-                    placeholder="Выберите значение"
+                    placeholder="Выберите количество топ клиентов"
                 >
                     <Option value={10}>10</Option>
                     <Option value={15}>15</Option>
                     <Option value={25}>25</Option>
                     <Option value={50}>50</Option>
                 </Select>
-                <RangePicker
-                    value={dates}
-                    onChange={onChangeInterval}
-                    format="YYYY-MM-DD"
-                    allowClear
+                <Radio.Group
+                    value={filter}
+                    onChange={(e) => applyFilter(e.target.value)}
+                    className="flex-shrink-0"
+                >
+                    <Radio.Button value="week">Текущая неделя</Radio.Button>
+                    <Radio.Button value="month">Текущий месяц</Radio.Button>
+                </Radio.Group>
+                <DatePicker
+                    picker="month"
+                    onChange={handleChangeDate}
+                    defaultValue={dayjs()}
+                    format="YYYY-MM"
                 />
             </div>
         </FlexBox>
