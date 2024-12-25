@@ -42,7 +42,7 @@ const AdminBranchPageTable = () => {
             className: `${columnResponseText}`,
         },
         {
-            title: 'Количество рабочих',
+            title: 'Количество сотрудников',
             dataIndex: 'total_employees',
             className: `${columnResponseText}`,
         },

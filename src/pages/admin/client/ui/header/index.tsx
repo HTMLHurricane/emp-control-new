@@ -1,7 +1,7 @@
 import { FlexBox } from '@/shared';
 import { DatePicker, Radio, Select } from 'antd';
 import dayjs from 'dayjs';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,16 +14,18 @@ interface IHeaderProps {
     >;
     topCount: number;
     setTopCount: (value: number) => void;
+    setFilter: (value: 'week' | 'month' | null) => void; // Убираем string и добавляем конкретные значения
+    filter: 'week' | 'month' | null; // Здесь тоже указываем 'week' | 'month' | null
 }
 
 export const ClientHeader: FC<IHeaderProps> = ({
     setDates,
     setTopCount,
     topCount,
+    setFilter,
+    filter,
 }) => {
-    const [filter, setFilter] = useState<'week' | 'month' | null>(null);
     const navigate = useNavigate();
-
     const applyFilter = (filter: 'week' | 'month') => {
         if (filter === 'week') {
             const startOfWeek = dayjs().startOf('week');
@@ -46,8 +48,10 @@ export const ClientHeader: FC<IHeaderProps> = ({
             const startOfMonth = date.startOf('month');
             const endOfMonth = date.endOf('month');
             setDates([startOfMonth, endOfMonth]);
+            setFilter(null);
         } else {
             setDates(null);
+            setFilter(null);
         }
     };
 
@@ -65,7 +69,7 @@ export const ClientHeader: FC<IHeaderProps> = ({
                 <Select
                     value={topCount}
                     onChange={handleChange}
-                    placeholder="Выберите количество топ клиентов"
+                    placeholder="Выберите значение"
                 >
                     <Option value={10}>10</Option>
                     <Option value={15}>15</Option>
@@ -83,7 +87,6 @@ export const ClientHeader: FC<IHeaderProps> = ({
                 <DatePicker
                     picker="month"
                     onChange={handleChangeDate}
-                    defaultValue={dayjs()}
                     format="YYYY-MM"
                 />
             </div>

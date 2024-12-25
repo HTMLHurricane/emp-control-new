@@ -45,7 +45,7 @@ const DoughnutChart: FC<IDoughnutChartProps> = ({ datasets, date, total }) => {
                 ref={chartRef}
                 data={data}
                 options={options}
-                style={{ width: '100%', maxHeight: '275px' }}
+                style={{ width: '100%', maxHeight: '275px', zIndex: 100 }}
             />
             <span className="absolute top-32 text-green-600 text-xl font-bold">
                 {(() => {

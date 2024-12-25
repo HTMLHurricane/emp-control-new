@@ -9,9 +9,14 @@ import { useNavigate } from 'react-router-dom';
 interface TopClientsTableProps {
     data: ITopClients[] | undefined;
     top: number;
+    title: string;
 }
 
-export const TopClientsTable: FC<TopClientsTableProps> = ({ data, top }) => {
+export const TopClientsTable: FC<TopClientsTableProps> = ({
+    data,
+    top,
+    title,
+}) => {
     const navigate = useNavigate();
     const [deleteClient, { isSuccess }] = useDeleteClientMutation();
     useEffect(() => {
@@ -21,7 +26,9 @@ export const TopClientsTable: FC<TopClientsTableProps> = ({ data, top }) => {
     }, [isSuccess]);
     return (
         <div>
-            <h2 className="text-center py-5">Топ {top} клиентов</h2>
+            <h2 className="text-center py-5">
+                Топ {top} клиентов {title}
+            </h2>
             <List
                 grid={{
                     gutter: 2,

@@ -1,12 +1,13 @@
 import { Button, Layout } from 'antd';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaArrowRight, FaBuildingUser } from 'react-icons/fa6';
 import { VscGraphLine } from 'react-icons/vsc';
-import { TOKEN, useAppActions, useAppSelector } from '@/shared';
+import { TOKEN, TOKEN_KEY, useAppActions, useAppSelector } from '@/shared';
 import { useCheckUserQuery } from '@/entities/auth/api';
+import { LuLogOut } from 'react-icons/lu';
 
 type MenuItem = Required<MenuProps>['items'][number];
 const { Content, Sider } = Layout;
@@ -71,8 +72,17 @@ const itemsAdmin: MenuItem[] = [
 const AdminLayout: FC = () => {
     const { collapsed } = useAppSelector();
     const { setCollapsed } = useAppActions();
-    const { data } = useCheckUserQuery(TOKEN.get() as string);
-
+    const { data, isError } = useCheckUserQuery(TOKEN.get() as string);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (isError) {
+            navigate('/login'); // Перенаправляем на /login
+        }
+    }, []);
+    const onLogout = () => {
+        TOKEN.remove(TOKEN_KEY); // Удаляем токен
+        navigate('/login');
+    };
     const handleCollapsed = () => {
         setCollapsed(!collapsed);
     };
@@ -98,15 +108,24 @@ const AdminLayout: FC = () => {
                     theme="dark"
                     items={data?.is_admin ? itemsAdmin : items}
                 />
-                <Button
-                    onClick={handleCollapsed}
-                    className="bg-transparent text-white hover:!bg-transparent hover:!text-white border-none w-full absolute bottom-0 py-8"
-                >
-                    {collapsed ? <FaArrowRight /> : <FaArrowLeft />}
-                </Button>
+                <div className="flex flex-col absolute bottom-0 w-full">
+                    <Button
+                        icon={!collapsed && <LuLogOut />}
+                        onClick={onLogout}
+                        type="link"
+                        className="text-white"
+                    >
+                        {collapsed ? <LuLogOut /> : 'Выйти'}
+                    </Button>
+                    <Button
+                        onClick={handleCollapsed}
+                        className="bg-transparent text-white hover:!bg-transparent hover:!text-white border-none w-full py-8"
+                    >
+                        {collapsed ? <FaArrowRight /> : <FaArrowLeft />}
+                    </Button>
+                </div>
             </Sider>
 
-            {/* Main Layout Content - Adjust margin based on sidebar visibility and screen size */}
             <Layout>
                 <Content
                     className={`relative transition-all duration-300 ${

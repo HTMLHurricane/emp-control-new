@@ -25,7 +25,7 @@ const Doughnut = () => {
                     datasets={[
                         data?.absent_employees ?? 0,
                         data?.late_employees ?? 0,
-                        data?.total_employees ?? 0,
+                        data?.present_employees ?? 0,
                     ]}
                     date={homeDate}
                     total={data?.total_employees ?? 0}

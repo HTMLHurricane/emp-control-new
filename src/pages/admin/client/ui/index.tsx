@@ -8,8 +8,9 @@ import { Spin, Empty } from 'antd';
 export const Clients = () => {
     const [dates, setDates] = useState<
         [dayjs.Dayjs | null, dayjs.Dayjs | null] | null
-    >([dayjs(), dayjs()]);
+    >([dayjs().startOf('month'), dayjs().endOf('month')]);
     const [topCount, setTopCount] = useState(10);
+    const [filter, setFilter] = useState<'week' | 'month' | null>(null);
     const { data, isLoading } = useGetTopClientsQuery({
         start_date: dates && dates[0] ? dates[0].format('YYYY-MM-DD') : '',
         end_date: dates && dates[1] ? dates[1].format('YYYY-MM-DD') : '',
@@ -21,6 +22,8 @@ export const Clients = () => {
             <div>
                 <ClientHeader
                     dates={dates}
+                    filter={filter}
+                    setFilter={setFilter}
                     setDates={setDates}
                     setTopCount={setTopCount}
                     topCount={topCount}
@@ -31,10 +34,22 @@ export const Clients = () => {
             </div>
         );
     }
+    const getTitle = () => {
+        if (filter === 'week') {
+            return 'Топ клиенты за текущую неделю';
+        } else if (filter === 'month') {
+            return 'Топ клиенты за текущий месяц';
+        } else if (dates && dates[0] && dates[1]) {
+            return `Топ клиенты за ${dates[0].format('YYYY-MM')}`; // Форматируем по выбранному месяцу
+        }
+        return 'Топ клиенты';
+    };
 
     return (
         <div>
             <ClientHeader
+                filter={filter}
+                setFilter={setFilter}
                 dates={dates}
                 setDates={setDates}
                 setTopCount={setTopCount}
@@ -45,7 +60,11 @@ export const Clients = () => {
                     <Empty description="Данные топ клиентов не найдены" />
                 </div>
             ) : (
-                <TopClientsTable data={data} top={topCount} />
+                <TopClientsTable
+                    data={data}
+                    top={topCount}
+                    title={getTitle()}
+                />
             )}
         </div>
     );
