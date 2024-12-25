@@ -1,7 +1,7 @@
 import { useCheckUserQuery } from '@/entities/auth/api';
 import { useCreateBranchMutation } from '@/entities/branch/api';
 import { IBranchPost } from '@/entities/branch/model/types';
-import { useAppActions } from '@/shared';
+import { TOKEN, useAppActions } from '@/shared';
 import { FormLayout } from '@/shared/ui/formLayout/formLayout';
 import { Button, Checkbox, Col, Form, Input, message, Row } from 'antd';
 import { useEffect } from 'react';
@@ -11,7 +11,8 @@ const AdminCreateBranchForm = () => {
     const [createBranch, { isSuccess, isLoading, isError }] =
         useCreateBranchMutation();
     const { setIsCreatingBranch } = useAppActions();
-    const { data: getmeData } = useCheckUserQuery();
+    const token = TOKEN.get();
+    const { data: getmeData } = useCheckUserQuery(token as string);
     const onSubmit = (data: Omit<IBranchPost, 'organization_id'>) => {
         createBranch({ organization_id: getmeData!.org, ...data });
     };

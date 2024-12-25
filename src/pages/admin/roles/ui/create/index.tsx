@@ -1,7 +1,7 @@
 import { useCheckUserQuery } from '@/entities/auth/api';
 import { useCreateRoleMutation } from '@/entities/role/api';
 import { IRolePost } from '@/entities/role/model/types';
-import { useAppActions } from '@/shared';
+import { TOKEN, useAppActions } from '@/shared';
 import { FormLayout } from '@/shared/ui/formLayout/formLayout';
 import { Button, Form, Input, message } from 'antd';
 import { useEffect } from 'react';
@@ -11,7 +11,8 @@ const AdminCreateRoleForm = () => {
     const [createRole, { isSuccess, isLoading, isError }] =
         useCreateRoleMutation();
     const { setIsCreatingRole } = useAppActions();
-    const { data: getmeData } = useCheckUserQuery();
+    const token = TOKEN.get();
+    const { data: getmeData } = useCheckUserQuery(token as string);
     const onSubmit = (data: Omit<IRolePost, 'organization_id'>) => {
         createRole({ organization_id: getmeData!.org, ...data });
     };

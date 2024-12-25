@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { useCreateScheduleMutation } from '@/entities/schedule/api';
-import { FlexBox, useAppActions } from '@/shared';
+import { FlexBox, TOKEN, useAppActions } from '@/shared';
 import {
     ISchedulePost,
     IScheduleDayPost,
@@ -13,7 +13,8 @@ const AdminCreateScheduleForm: FC = () => {
     const [createSchedule, { isSuccess, isLoading, isError }] =
         useCreateScheduleMutation();
     const { setIsCreatingSchedule } = useAppActions();
-    const { data: getmeData } = useCheckUserQuery();
+    const token = TOKEN.get();
+    const { data: getmeData } = useCheckUserQuery(token as string);
 
     const generateDayData = (
         day:

@@ -3,7 +3,7 @@ import { IAuthData, IAuthForm, IUser } from '../model/types/index.types';
 
 export const AuthAPI = api.injectEndpoints({
     endpoints: (builder) => ({
-        checkUser: builder.query<IUser, void>({
+        checkUser: builder.query<IUser, string>({
             query: (token) => ({
                 url: 'users/users/me',
                 method: 'GET',

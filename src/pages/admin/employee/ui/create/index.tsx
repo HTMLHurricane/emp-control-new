@@ -6,7 +6,7 @@ import {
 import { IEmployeePost } from '@/entities/employee/model/types';
 import { useGetAllRolesQuery } from '@/entities/role/api';
 import { useGetAllSchedulesQuery } from '@/entities/schedule/api';
-import { useAppActions } from '@/shared';
+import { TOKEN, useAppActions } from '@/shared';
 import { mapToOptions } from '@/shared/lib/mapToOptions';
 import { Button, Col, Form, Input, Row, Select, Upload, message } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
@@ -26,7 +26,8 @@ const AdminCreateEmployeeForm = () => {
         setImage,
         { isLoading: loading, isSuccess: success, isError: error },
     ] = useSetEmployeeImageMutation();
-    const { data: getmeData } = useCheckUserQuery();
+    const token = TOKEN.get();
+    const { data: getmeData } = useCheckUserQuery(token as string);
     const roleOptions = useMemo(() => mapToOptions(roles), [roles]);
     const branchOptions = useMemo(() => mapToOptions(branches), [branches]);
     const scheduleOptions = useMemo(() => mapToOptions(schedules), [schedules]);
