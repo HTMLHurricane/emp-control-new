@@ -32,15 +32,15 @@ export const Clients = () => {
                     <Spin />
                 </div>
             </div>
-        );
+        );  
     }
     const getTitle = () => {
         if (filter === 'week') {
-            return 'Топ клиенты за текущую неделю';
+            return 'за текущую неделю';
         } else if (filter === 'month') {
-            return 'Топ клиенты за текущий месяц';
+            return 'за текущий месяц';
         } else if (dates && dates[0] && dates[1]) {
-            return `Топ клиенты за ${dates[0].format('YYYY-MM')}`; // Форматируем по выбранному месяцу
+            return `за ${dates[0].format('YYYY-MM')}`; // Форматируем по выбранному месяцу
         }
         return 'Топ клиенты';
     };
