@@ -51,7 +51,7 @@ export const TopClientsTable: FC<TopClientsTableProps> = ({
                                 className="cursor-pointer rounded-sm"
                                 preview={{ mask: null }}
                             />
-                            <div className="absolute bottom-0 cursor-pointer w-[150px] h-[50px] bg-[#80808080] text-red-500 flex items-center justify-center  opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                            <div className="absolute bottom-0 cursor-pointer w-[150px] h-[50px] bg-[#80808080] text-red-500 flex items-center justify-center group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
                                 <Popconfirm
                                     onConfirm={() =>
                                         deleteClient(item.client_id)
@@ -61,6 +61,9 @@ export const TopClientsTable: FC<TopClientsTableProps> = ({
                                 >
                                     <MdDelete size={30} />
                                 </Popconfirm>
+                                <div className="text-white text-xl text-center font-semibold">
+                                    {item.visit_count}
+                                </div>
                                 <Button
                                     type="link"
                                     onClick={() =>
