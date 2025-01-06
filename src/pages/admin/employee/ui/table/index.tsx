@@ -1,11 +1,6 @@
-import {
-    useGetAllEmployeesQuery,
-} from '@/entities/employee/api';
+import { useGetAllEmployeesQuery } from '@/entities/employee/api';
 import { IEmployee } from '@/entities/employee/model/types';
-import {
-    FlexBox,
-    useAppSelector,
-} from '@/shared';
+import { FlexBox, useAppSelector } from '@/shared';
 import { Button, Image, Table, TableProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa6';
@@ -19,8 +14,7 @@ const AdminEmployeePageTable = () => {
             : { branch_id: undefined },
         { skip: attendanceBranch === undefined },
     );
-    const navigate = useNavigate()
-    
+    const navigate = useNavigate();
 
     const columns: TableProps<IEmployee>['columns'] = [
         {
@@ -91,8 +85,6 @@ const AdminEmployeePageTable = () => {
         },
     ];
 
-    
-
     return (
         <Table
             loading={isFetching}
@@ -101,16 +93,7 @@ const AdminEmployeePageTable = () => {
             columns={columns}
             rowKey={(el) => el.id}
             dataSource={data}
-            // pagination={{
-            //     showSizeChanger: true,
-            //     current: employeeTablePage,
-            //     pageSize: employeeTableLimit,
-            //     total: data?.total,
-            //     onChange: (page, limit) => {
-            //         setEmployeeTablePage(page);
-            //         setEmployeeTableLimit(limit);
-            //     },
-            // }}
+            pagination={{ pageSize: 10 }}
             className="mt-2"
         />
     );

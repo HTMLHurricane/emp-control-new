@@ -55,10 +55,10 @@ export const CustomizedAxisTick: React.FC<CustomizedAxisTickProps> = ({
 
 interface AgeChartProps {
     data: { [key: string]: number } | []; // Тип для ageStatistics
-    day: string; // День для отображения в заголовке
+    day?: string; // День для отображения в заголовке
 }
 
-export const AgeChartExample: React.FC<AgeChartProps> = ({ data, day }) => {
+export const AgeChartExample: React.FC<AgeChartProps> = ({ data }) => {
     // Преобразуем объект с использованием Object.values и Object.keys
     const transformedData = Object.keys(data).map((ageGroup, index) => ({
         ageGroup, // Возрастная группа (например "18-24")
@@ -81,7 +81,7 @@ export const AgeChartExample: React.FC<AgeChartProps> = ({ data, day }) => {
 
     return (
         <Card
-            title={<Title>Возраст клиентов, статистика за {day}</Title>}
+            title={<Title>Возраст клиентов</Title>}
             style={{ height: 500 }}
             className="text-center my-5"
         >

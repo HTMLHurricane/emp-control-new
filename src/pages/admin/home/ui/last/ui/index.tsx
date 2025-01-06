@@ -123,7 +123,7 @@ const Last = () => {
                         showSizeChanger: true,
                         current: page,
                         pageSize: limit,
-                        total: data?.total_pages,
+                        total: data?.total_elements,
                         onChange: (page, limit) => {
                             setPage(page);
                             setLimit(limit);

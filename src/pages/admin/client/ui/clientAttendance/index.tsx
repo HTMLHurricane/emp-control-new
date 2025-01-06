@@ -1,7 +1,7 @@
-import {  useGetClientAttendancesQuery } from '@/entities/client/api';
+import { useGetClientAttendancesQuery } from '@/entities/client/api';
 import { IClientAttendance } from '@/entities/client/models/types';
 import { TableProps, Image, Table } from 'antd';
-import {  useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export const ClientAttendances = () => {
@@ -49,7 +49,6 @@ export const ClientAttendances = () => {
             title: 'score',
             render: (item) => <>{item.toFixed(2)}%</>,
         },
-
     ];
     return (
         <Table
@@ -62,7 +61,7 @@ export const ClientAttendances = () => {
                 showSizeChanger: true,
                 current: page,
                 pageSize: page_size,
-                total: data?.total_pages,
+                total: data?.total_elements,
                 onChange: (page, limit) => {
                     setPage(page);
                     setPageSize(limit);

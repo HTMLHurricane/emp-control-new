@@ -56,13 +56,12 @@ export const CustomizedAxisTick: React.FC<CustomizedAxisTickProps> = ({
 
 interface PeakHoursProps {
     data: PeakAttendance[];
-    day: string;
+    day?: string;
     type?: 'days' | 'time';
 }
 
 export const PeakHours: React.FC<PeakHoursProps> = ({
     data,
-    day,
     type = 'time',
 }) => {
     const CustomTooltip = ({ active, payload }: any) => {
@@ -86,9 +85,8 @@ export const PeakHours: React.FC<PeakHoursProps> = ({
             title={
                 <Title>
                     {type == 'days'
-                        ? 'Количество клиентов за'
-                        : 'Пиковое время клиентов за'}{' '}
-                    {day}
+                        ? 'Количество клиентов'
+                        : 'Пиковое время клиентов'}{' '}
                 </Title>
             }
             style={{ height: 500 }}

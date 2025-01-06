@@ -89,7 +89,7 @@ const EmployeeAttendance = () => {
         <div>
             <Table
                 loading={isLoading}
-                scroll={{ x: true, y: 400 }}
+                scroll={{ x: true, y: 520 }}
                 bordered
                 columns={columns}
                 dataSource={data.content}
@@ -97,7 +97,7 @@ const EmployeeAttendance = () => {
                     showSizeChanger: true,
                     current: employeeTablePage,
                     pageSize: employeeTableLimit,
-                    total: data?.total_pages,
+                    total: data?.total_elements,
                     onChange: (page, limit) => {
                         setEmployeeTablePage(page);
                         setEmployeeTableLimit(limit);

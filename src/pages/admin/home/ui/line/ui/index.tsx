@@ -123,7 +123,7 @@ const Line = () => {
                     showSizeChanger: true,
                     current: employeeTablePage,
                     pageSize: employeeTableLimit,
-                    total: data?.total_pages || 0,
+                    total: data?.total_elements,
                     onChange: (page, limit) => {
                         setEmployeeTablePage(page);
                         setEmployeeTableLimit(limit);

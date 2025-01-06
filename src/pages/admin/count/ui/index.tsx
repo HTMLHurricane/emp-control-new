@@ -64,6 +64,16 @@ const AdminCount = () => {
     return (
         <div className="w-full">
             <Header dates={dates} setDates={setDates} />
+            <div className="text-xl font-bold text-center pt-5 pb-1">
+                Статистика за{' '}
+                {dates
+                    ? `${
+                          dates?.[0]?.format('YYYY-MM-DD') +
+                          ' - ' +
+                          dates?.[1]?.format('YYYY-MM-DD')
+                      }`
+                    : date}
+            </div>
             <div className="flex flex-col xl:flex-row">
                 <SexChart
                     count={
@@ -118,13 +128,13 @@ const AdminCount = () => {
                         />
                     )}
                     <PeakHours
-                        day={
-                            dates
-                                ? `${dates?.[0]?.format(
-                                      'YYYY-MM-DD',
-                                  )} - ${dates?.[1]?.format('YYYY-MM-DD')}`
-                                : date
-                        }
+                        // day={
+                        //     dates
+                        //         ? `${dates?.[0]?.format(
+                        //               'YYYY-MM-DD',
+                        //           )} - ${dates?.[1]?.format('YYYY-MM-DD')}`
+                        //         : date
+                        // }
                         data={
                             dates
                                 ? intervalData
@@ -141,13 +151,13 @@ const AdminCount = () => {
                         }
                     />
                     <AgeChartExample
-                        day={
-                            dates
-                                ? `${dates?.[0]?.format(
-                                      'YYYY-MM-DD',
-                                  )} - ${dates?.[1]?.format('YYYY-MM-DD')} `
-                                : date
-                        }
+                        // day={
+                        //     dates
+                        //         ? `${dates?.[0]?.format(
+                        //               'YYYY-MM-DD',
+                        //           )} - ${dates?.[1]?.format('YYYY-MM-DD')} `
+                        //         : date
+                        // }
                         data={
                             dates
                                 ? intervalData

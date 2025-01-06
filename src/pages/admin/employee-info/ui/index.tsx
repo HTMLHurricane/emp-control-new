@@ -15,9 +15,9 @@ const AdminEmployeeInfoPage = () => {
     };
     const navigate = useNavigate();
 
-    return (
-        <FlexBox cls="flex-col space-y-6">
-            <div className="flex items-center justify-between mb-5">
+    return (    
+        <FlexBox cls="flex-col">
+            <div className="flex items-center justify-between">
                 <Button
                     onClick={() => navigate(-1)}
                     type="primary"
