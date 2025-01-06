@@ -62,7 +62,7 @@ export const OrganizationTable = () => {
             bordered
             columns={columns}
             rowKey={(el) => el.id!}
-            dataSource={data}
+            dataSource={data ?? []}
             className="mt-5"
         />
     );

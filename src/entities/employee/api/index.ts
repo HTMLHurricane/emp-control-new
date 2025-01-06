@@ -37,7 +37,7 @@ export const EmployeeAPI = api.injectEndpoints({
                     body: formData,
                 };
             },
-            invalidatesTags: ['employee'],
+            invalidatesTags: ['employee', 'employee_info'],
         }),
         updateEmployee: builder.mutation<IResponse['message'], IEmployeePatch>({
             query: ({ id, ...body }) => ({
@@ -52,7 +52,7 @@ export const EmployeeAPI = api.injectEndpoints({
                 url: `employees/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['employee'],
+            invalidatesTags: ['employee', 'employee_info'],
         }),
     }),
 });

@@ -45,7 +45,7 @@ export interface IEmployeeImage {
 }
 
 export interface IEmployeeImagePost {
-    id: number;
+    id: number | string;
     file: File;
 }
 

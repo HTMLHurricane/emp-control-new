@@ -8,7 +8,7 @@ import { columnResponseText } from '@/shared/const/css';
 
 const AdminEmployeePageTable = () => {
     const { attendanceBranch } = useAppSelector();
-    const { data, isFetching } = useGetAllEmployeesQuery(
+    const { data, isLoading } = useGetAllEmployeesQuery(
         attendanceBranch !== undefined
             ? { branch_id: attendanceBranch }
             : { branch_id: undefined },
@@ -22,16 +22,19 @@ const AdminEmployeePageTable = () => {
             key: 'first_image',
             dataIndex: 'first_image',
             className: `${columnResponseText}`,
-            render: (_, res) => (
-                <Image
-                    src={res.first_image.url}
-                    alt={`employee`}
-                    width={100}
-                    height={100}
-                    className="rounded-full cursor-pointer"
-                    preview={{ mask: null }}
-                />
-            ),
+            render: (_, res) =>
+                res.first_image ? (
+                    <Image
+                        src={res.first_image.url}
+                        alt={`employee`}
+                        width={100}
+                        height={100}
+                        className="rounded-full cursor-pointer"
+                        preview={{ mask: null }}
+                    />
+                ) : (
+                    <>Фото отсутствует</>
+                ),
         },
         {
             title: 'Имя',
@@ -87,12 +90,12 @@ const AdminEmployeePageTable = () => {
 
     return (
         <Table
-            loading={isFetching}
+            loading={isLoading}
             scroll={{ x: true }}
             bordered
             columns={columns}
             rowKey={(el) => el.id}
-            dataSource={data}
+            dataSource={data ?? []}
             pagination={{ pageSize: 10 }}
             className="mt-2"
         />

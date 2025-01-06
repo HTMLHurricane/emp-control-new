@@ -16,7 +16,7 @@ import { useEffect } from 'react';
 const AdminBranchPageTable = () => {
     const { setBranchForm, setIsUpdatingBranch } = useAppActions();
     const { branchDate } = useAppSelector();
-    const { data, isFetching } = useGetBranchesInfoQuery(branchDate);
+    const { data, isLoading } = useGetBranchesInfoQuery(branchDate);
     const [deleteBranch, { isSuccess: deleteSuccess, isError: deleteError }] =
         useDeleteBranchMutation();
 
@@ -107,12 +107,12 @@ const AdminBranchPageTable = () => {
 
     return (
         <Table
-            loading={isFetching}
+            loading={isLoading}
             scroll={{ x: true }}
             bordered
             columns={columns}
             rowKey={(el) => el.id}
-            dataSource={data}
+            dataSource={data ?? []}
         />
     );
 };

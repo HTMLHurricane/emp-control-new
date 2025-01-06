@@ -92,7 +92,7 @@ const AdminSchedulePageTable = () => {
             bordered
             columns={columns}
             rowKey={(el) => el.id}
-            dataSource={data}
+            dataSource={data ?? []}
         />
     );
 };

@@ -14,6 +14,7 @@ export const EmployeeAPI = api.injectEndpoints({
                 url: `employees/get_by_id?employee_id=${id}`,
                 method: 'GET',
             }),
+            providesTags: ['employee_info'],
         }),
         getEmployeeImagesById: build.query<
             IData<IEmployeeImage[]>,
@@ -51,7 +52,7 @@ export const EmployeeAPI = api.injectEndpoints({
                 url: `images/delete?image_id=${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['employee_info', "client"],
+            invalidatesTags: ['employee_info', 'client'],
         }),
     }),
 });

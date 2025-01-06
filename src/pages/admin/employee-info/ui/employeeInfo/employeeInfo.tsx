@@ -8,12 +8,17 @@ import {
     Popconfirm,
     message,
     Button,
+    Upload,
 } from 'antd';
 import { EmployeeImageGallery } from '../employeeImageGallery/employeeImageGallery';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetEmployeeByIdQuery } from '@/entities/employee-info/api';
 import { MdDelete } from 'react-icons/md';
-import { useDeleteEmployeeMutation } from '@/entities/employee/api';
+import { UploadOutlined } from '@ant-design/icons';
+import {
+    useDeleteEmployeeMutation,
+    useSetEmployeeImageMutation,
+} from '@/entities/employee/api';
 import { IEmployee } from '@/entities/employee/model/types';
 import { useAppActions } from '@/shared';
 import { useEffect } from 'react';
@@ -27,12 +32,23 @@ export const EmployeeInfo = () => {
         useDeleteEmployeeMutation();
     const { setEmployeeForm, setIsUpdatingEmployee } = useAppActions();
     const navigate = useNavigate();
+    const [setImage] = useSetEmployeeImageMutation();
     const { data, isLoading } = useGetEmployeeByIdQuery(id, {
         skip: id === undefined,
     });
+    const handleUploadChange = (info: any) => {
+        if (info.fileList.length > 0) {
+            const selectedFile = info.fileList[0].originFileObj;
+            setImage({
+                id: id!,
+                file: selectedFile,
+            });
+        }
+    };
     useEffect(() => {
         if (deleteSuccess) {
             message.success('Успешно удалено');
+            navigate('/employees');
         }
     }, [deleteSuccess]);
 
@@ -68,33 +84,83 @@ export const EmployeeInfo = () => {
                         description={
                             <div className="flex items-center bg-white shadow-md rounded-lg p-6">
                                 <div className="relative group flex flex-col justify-center items-center">
-                                    <Image
-                                        src={data?.first_image?.url}
-                                        alt={`Employee`}
-                                        width={300}
-                                        height={300}
-                                        className="cursor-pointer rounded-full"
-                                        preview={{ mask: null }}
-                                    />
-                                    <div className="flex items-center w-[300px] h-[150px] rounded-b-full absolute bottom-0 cursor-pointer bg-[#80808080] text-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
-                                        <Popconfirm
-                                            onConfirm={() =>
-                                                deleteEmployee(data.id)
-                                            }
-                                            className="basis-1/2 flex justify-center pl-10"
-                                            title="Вы действительно хотите удалить сотрудника?"
-                                        >
-                                            <MdDelete size={40} />
-                                        </Popconfirm>
-                                        <div className="basis-1/2 flex justify-center pr-8">
-                                            <Button
-                                                className="text-[12px] md:text-[20px]"
-                                                onClick={() => handleEdit(data)}
-                                                type="link"
-                                                icon={<BsPencil size={30} />}
-                                            />
+                                    {data.first_image ? (
+                                        <Image
+                                            src={data.first_image.url}
+                                            alt={`Employee`}
+                                            width={300}
+                                            height={300}
+                                            className="cursor-pointer rounded-full"
+                                            preview={{ mask: null }}
+                                        />
+                                    ) : (
+                                        <>Фото отсутствует</>
+                                    )}
+                                    {data.first_image ? (
+                                        <div className="flex items-center w-[300px] h-[150px] rounded-b-full absolute bottom-0 cursor-pointer bg-[#80808080] text-red-500 opacity-100 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                                            <Popconfirm
+                                                onConfirm={() =>
+                                                    deleteEmployee(data.id)
+                                                }
+                                                className="basis-1/2 flex justify-center pl-10"
+                                                title="Вы действительно хотите удалить сотрудника?"
+                                            >
+                                                <MdDelete size={40} />
+                                            </Popconfirm>
+                                            <div className="basis-1/2 flex justify-center pr-8">
+                                                <Button
+                                                    className="text-[12px] md:text-[20px]"
+                                                    onClick={() =>
+                                                        handleEdit(data)
+                                                    }
+                                                    type="link"
+                                                    icon={
+                                                        <BsPencil size={30} />
+                                                    }
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
+                                    ) : (
+                                        <div className="flex flex-col items-center">
+                                            <div className="flex items-center pt-5 justify-between w-[120px] pb-5">
+                                                <Popconfirm
+                                                    onConfirm={() =>
+                                                        deleteEmployee(data.id)
+                                                    }
+                                                    className="text-red-500"
+                                                    title="Вы действительно хотите удалить сотрудника?"
+                                                >
+                                                    <MdDelete size={40} />
+                                                </Popconfirm>
+                                                <div className="flex justify-center">
+                                                    <Button
+                                                        className="text-[12px] md:text-[20px]"
+                                                        onClick={() =>
+                                                            handleEdit(data)
+                                                        }
+                                                        type="link"
+                                                        icon={
+                                                            <BsPencil
+                                                                size={30}
+                                                            />
+                                                        }
+                                                    />
+                                                </div>
+                                            </div>
+                                            <Upload
+                                                beforeUpload={() => false}
+                                                maxCount={1}
+                                                accept="image/*"
+                                                onChange={handleUploadChange}
+                                            >
+                                                <Button
+                                                    icon={<UploadOutlined />}
+                                                >
+                                                    Фото
+                                                </Button>
+                                            </Upload>
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="space-y-4 ml-8">
