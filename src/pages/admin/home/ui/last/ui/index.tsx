@@ -67,7 +67,7 @@ const Last = () => {
             title: 'det score',
             dataIndex: 'score',
             key: 'score',
-            render: (score) => <>{score.toFixed(2) * 100}%</>,
+            render: (score) => <>{Number(score.toFixed(2))}</>,
             responsive: ['md', 'lg', 'xl'],
             className: `${columnResponseText}`,
         },
@@ -131,7 +131,6 @@ const Last = () => {
                     }}
                     onRow={(res) => ({
                         onClick: () => {
-                            
                             if (!isPreviewOpened) {
                                 navigate(`employees/${res.employee_id}`);
                             }
