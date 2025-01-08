@@ -52,7 +52,7 @@ const AdminEmployeeInfoPage = () => {
                     </Radio.Button>
                 </Radio.Group>
             </div>
-            <div className="w-full">
+            <div className="w-full pt-2">
                 {activeTab === 'info' && <EmployeeInfo />}
                 {activeTab === 'attendance' && <EmployeeAttendance />}
                 {activeTab === 'devices' && <EmployeeDevices />}

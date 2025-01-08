@@ -23,7 +23,7 @@ import { IEmployee } from '@/entities/employee/model/types';
 import { useAppActions } from '@/shared';
 import { useEffect } from 'react';
 import { BsPencil } from 'react-icons/bs';
-import { IoMdShareAlt } from 'react-icons/io'
+import { IoMdShareAlt } from 'react-icons/io';
 
 const { Meta } = Card;
 
@@ -78,7 +78,7 @@ export const EmployeeInfo = () => {
         );
     }
     return (
-        <Card className="w-full">
+        <Card className="w-full py-16">
             <Row gutter={[16, 16]} align="middle" justify="center">
                 <Col span={12}>
                     <Meta
@@ -116,7 +116,9 @@ export const EmployeeInfo = () => {
                                                     }
                                                     type="link"
                                                     icon={
-                                                        <IoMdShareAlt size={35}/>
+                                                        <IoMdShareAlt
+                                                            size={35}
+                                                        />
                                                     }
                                                 />
                                             </div>
