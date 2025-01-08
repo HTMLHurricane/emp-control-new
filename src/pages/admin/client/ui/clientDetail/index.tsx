@@ -1,16 +1,5 @@
 import { useGetTopClientByIdQuery } from '@/entities/client/api';
-import {
-    Button,
-    Card,
-    Image,
-    Row,
-    Col,
-    Spin,
-    List,
-    Popconfirm,
-    message,
-} from 'antd';
-import Meta from 'antd/es/card/Meta';
+import { Button, Card, Image, Spin, List, Popconfirm, message } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ClientAttendances } from '../clientAttendance';
 import { useDeleteImageMutation } from '@/entities/employee-info/api';
@@ -44,76 +33,52 @@ export const ClientDetail = () => {
                 <Button onClick={() => navigate(-1)} type="primary">
                     Назад
                 </Button>
-                <Row gutter={[16, 16]} align="middle" justify="center">
-                    <Col span={12}>
-                        <Meta
-                            description={
-                                <div className="flex items-center bg-white shadow-md rounded-lg p-6">
-                                    <div className="space-y-4 ml-8">
-                                        <div className="text-lg">
-                                            <span className="text-gray-700 font-semibold">
-                                                Возраст:
-                                            </span>
-                                            <span className="ml-2 text-gray-900">
-                                                {data.age}
-                                            </span>
-                                        </div>
-                                        <div className="text-lg">
-                                            <span className="text-gray-700 font-semibold">
-                                                Пол:
-                                            </span>
-                                            <span className="ml-2 text-gray-900">
-                                                {data.gender}
-                                            </span>
-                                        </div>
+                <div
+                    style={{
+                        height: '60vh',
+                        overflowY: 'auto',
+                        padding: '16px',
+                        border: '1px solid #ddd',
+                    }}
+                    className="custom-scroll rounded-lg mt-5"
+                >
+                    <List
+                        grid={{
+                            xs: 2, // 1 колонка для экранов <576px
+                            sm: 2, // 2 колонки для экранов ≥576px
+                            md: 4, // 3 колонки для экранов ≥768px
+                            lg: 6, // 4 колонки для экранов ≥992px
+                            xl: 8, // 5 колонок для экранов ≥1200px
+                            xxl: 10, // 6 колонок для экранов ≥1600px
+                        }}
+                        dataSource={data.images}
+                        renderItem={(item) => (
+                            <List.Item key={item.id}>
+                                <div className="relative group flex flex-col justify-center items-center">
+                                    <Image
+                                        src={item.url}
+                                        alt={`Employee ${item.person_id}`}
+                                        width={100}
+                                        height={100}
+                                        className="rounded-full cursor-pointer"
+                                        preview={{ mask: null }}
+                                    />
+                                    <div className="absolute bottom-0 cursor-pointer w-[100px] h-[50px] bg-[#80808080] text-red-500 flex items-center justify-center  opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out rounded-bl-full rounded-br-full">
+                                        <Popconfirm
+                                            onConfirm={() =>
+                                                deleteImage(item.id)
+                                            }
+                                            className="basis-1/2 text-center text-[16px] font-bold"
+                                            title="Вы действительно хотите удалить?"
+                                        >
+                                            x
+                                        </Popconfirm>
                                     </div>
                                 </div>
-                            }
-                        />
-                    </Col>
-
-                    <Col span={12} style={{ textAlign: 'center' }}>
-                        <div
-                            style={{
-                                height: '60vh',
-                                overflowY: 'auto',
-                                padding: '16px',
-                                border: '1px solid #ddd',
-                            }}
-                            className="custom-scroll rounded-lg"
-                        >
-                            <List
-                                grid={{ column: 4 }}
-                                dataSource={data.images}
-                                renderItem={(item) => (
-                                    <List.Item key={item.id}>
-                                        <div className="relative group flex flex-col justify-center items-center">
-                                            <Image
-                                                src={item.url}
-                                                alt={`Employee ${item.person_id}`}
-                                                width={100}
-                                                height={100}
-                                                className="rounded-full cursor-pointer"
-                                                preview={{ mask: null }}
-                                            />
-                                            <div className="absolute bottom-0 cursor-pointer w-[100px] h-[50px] bg-[#80808080] text-red-500 flex items-center justify-center  opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out rounded-bl-full rounded-br-full">
-                                                <Popconfirm
-                                                    onConfirm={() =>
-                                                        deleteImage(item.id)
-                                                    }
-                                                    className="basis-1/2 text-center text-[16px] font-bold"
-                                                    title="Вы действительно хотите удалить?"
-                                                >
-                                                    x
-                                                </Popconfirm>
-                                            </div>
-                                        </div>
-                                    </List.Item>
-                                )}
-                            />
-                        </div>
-                    </Col>
-                </Row>
+                            </List.Item>
+                        )}
+                    />
+                </div>
             </Card>
             <ClientAttendances />
         </div>

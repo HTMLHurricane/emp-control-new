@@ -58,7 +58,7 @@ export const EmployeeDevices = () => {
     return (
         <Table
             loading={isLoading}
-            scroll={{ x: true, y: 520 }}
+            scroll={{ x: true }}
             bordered
             columns={columns}
             dataSource={data?.content}

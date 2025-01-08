@@ -6,7 +6,6 @@ import {
     useGetEmployeeImagesByIdQuery,
 } from '@/entities/employee-info/api';
 import { useParams } from 'react-router-dom';
-import { MdDelete } from 'react-icons/md';
 
 export const EmployeeImageGallery: React.FC = () => {
     const { id } = useParams();
