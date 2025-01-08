@@ -2,8 +2,7 @@ import { useDeleteClientMutation } from '@/entities/client/api';
 import { ITopClients } from '@/entities/client/models/types';
 import { List, Image, Button, Popconfirm, message } from 'antd';
 import { FC, useEffect } from 'react';
-import { FaEye } from 'react-icons/fa6';
-import { MdDelete } from 'react-icons/md';
+import { IoMdShareAlt } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 
 interface TopClientsTableProps {
@@ -48,20 +47,20 @@ export const TopClientsTable: FC<TopClientsTableProps> = ({
                                 alt={`Employee`}
                                 width={150}
                                 height={150}
-                                className="cursor-pointer rounded-sm"
+                                className="cursor-pointer rounded-xl"
                                 preview={{ mask: null }}
                             />
-                            <div className="absolute bottom-0 cursor-pointer w-[150px] h-[50px] bg-[#80808080] text-red-500 flex items-center justify-center group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                            <div className="absolute bottom-0 cursor-pointer w-[150px] rounded-b-xl h-[30px] bg-white opacity-80 text-red-500 flex items-center justify-center group-hover:opacity-80 transition-opacity duration-300 ease-in-out">
                                 <Popconfirm
                                     onConfirm={() =>
                                         deleteClient(item.client_id)
                                     }
-                                    className="basis-1/2"
+                                    className="basis-1/2 text-center text-[16px] font-bold"
                                     title="Вы действительно хотите удалить?"
                                 >
-                                    <MdDelete size={30} />
+                                    x
                                 </Popconfirm>
-                                <div className="text-white text-xl text-center font-semibold">
+                                <div className="text-slate-950 text-[14px] text-center font-semibold">
                                     {item.visit_count}
                                 </div>
                                 <Button
@@ -71,7 +70,7 @@ export const TopClientsTable: FC<TopClientsTableProps> = ({
                                             `/top_clients/${item.client_id}`,
                                         )
                                     }
-                                    icon={<FaEye size={25} />}
+                                    icon={<IoMdShareAlt size={20} />}
                                     className="text-[12px] w-[20px] md:text-[14px] basis-1/2"
                                 />
                             </div>

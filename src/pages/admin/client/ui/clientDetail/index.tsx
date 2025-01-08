@@ -13,7 +13,6 @@ import {
 import Meta from 'antd/es/card/Meta';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ClientAttendances } from '../clientAttendance';
-import { MdDelete } from 'react-icons/md';
 import { useDeleteImageMutation } from '@/entities/employee-info/api';
 import { useEffect } from 'react';
 
@@ -102,10 +101,10 @@ export const ClientDetail = () => {
                                                     onConfirm={() =>
                                                         deleteImage(item.id)
                                                     }
-                                                    className="basis-1/2"
+                                                    className="basis-1/2 text-center text-[16px] font-bold"
                                                     title="Вы действительно хотите удалить?"
                                                 >
-                                                    <MdDelete size={30} />
+                                                    x
                                                 </Popconfirm>
                                             </div>
                                         </div>

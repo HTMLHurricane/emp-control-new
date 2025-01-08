@@ -86,11 +86,11 @@ export const EmployeeImageGallery: React.FC = () => {
                             />
                             <Popconfirm
                                 onConfirm={() => handleDelete(Number(item.id))}
-                                className="absolute bottom-0 cursor-pointer w-[100px] h-[50px] bg-[#80808080] rounded-b-full text-red-500 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
+                                className="absolute bottom-0 cursor-pointer w-[100px] h-[50px] bg-white rounded-b-full text-red-500 flex justify-center items-center opacity-0 group-hover:opacity-80 transition-opacity duration-300 ease-in-out"
                                 title="Вы действительно хотите удалить?"
                             >
-                                <div>
-                                    <MdDelete size={25} />
+                                <div className="text-2xl font-semibold">
+                                    x
                                 </div>
                             </Popconfirm>
                         </div>

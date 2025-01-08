@@ -91,21 +91,21 @@ const AdminLayout: FC = () => {
         <Layout className="relative h-screen overflow-hidden">
             {/* Sidebar - Responsive width based on screen size */}
             <Sider
-                theme="dark"
+                theme="light"
                 width={250}
                 collapsedWidth={50}
                 collapsed={collapsed}
                 breakpoint="lg"
                 className="fixed h-full sm:w-16 md:w-20 lg:w-60 xl:w-72 z-50"
             >
-                <div className="text-center text-white text-2xl py-5">
+                <div className="text-center text-slate-950 text-2xl py-5">
                     <Link to="/">{collapsed ? 'A' : 'AralHUB'}</Link>
                 </div>
                 <Menu
                     defaultSelectedKeys={['1']}
                     defaultOpenKeys={['sub1']}
                     mode="inline"
-                    theme="dark"
+                    theme="light"
                     items={data?.is_admin ? itemsAdmin : items}
                 />
                 <div className="flex flex-col absolute bottom-0 w-full">
@@ -113,13 +113,13 @@ const AdminLayout: FC = () => {
                         icon={!collapsed && <LuLogOut />}
                         onClick={onLogout}
                         type="link"
-                        className="text-white"
+                        className="text-slate-950"
                     >
                         {collapsed ? <LuLogOut /> : 'Выйти'}
                     </Button>
                     <Button
                         onClick={handleCollapsed}
-                        className="bg-transparent text-white hover:!bg-transparent hover:!text-white border-none w-full py-8"
+                        className="bg-transparent text-slate-950 hover:!bg-transparent hover:!text-slate-950 border-none w-full py-8"
                     >
                         {collapsed ? <FaArrowRight /> : <FaArrowLeft />}
                     </Button>

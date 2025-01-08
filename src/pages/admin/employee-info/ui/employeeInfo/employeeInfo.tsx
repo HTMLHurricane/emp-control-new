@@ -23,6 +23,7 @@ import { IEmployee } from '@/entities/employee/model/types';
 import { useAppActions } from '@/shared';
 import { useEffect } from 'react';
 import { BsPencil } from 'react-icons/bs';
+import { IoMdShareAlt } from 'react-icons/io'
 
 const { Meta } = Card;
 
@@ -97,15 +98,15 @@ export const EmployeeInfo = () => {
                                         <>Фото отсутствует</>
                                     )}
                                     {data.first_image ? (
-                                        <div className="flex items-center w-[300px] h-[150px] rounded-b-full absolute bottom-0 cursor-pointer bg-[#80808080] text-red-500 opacity-100 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                                        <div className="flex items-center w-[300px] h-[150px] rounded-b-full absolute bottom-0 cursor-pointer bg-white text-red-500 opacity-80 group-hover:opacity-80 transition-opacity duration-300 ease-in-out">
                                             <Popconfirm
                                                 onConfirm={() =>
                                                     deleteEmployee(data.id)
                                                 }
-                                                className="basis-1/2 flex justify-center pl-10"
+                                                className="basis-1/2 flex justify-center pl-10 text-4xl font-bold"
                                                 title="Вы действительно хотите удалить сотрудника?"
                                             >
-                                                <MdDelete size={40} />
+                                                x
                                             </Popconfirm>
                                             <div className="basis-1/2 flex justify-center pr-8">
                                                 <Button
@@ -115,7 +116,7 @@ export const EmployeeInfo = () => {
                                                     }
                                                     type="link"
                                                     icon={
-                                                        <BsPencil size={30} />
+                                                        <IoMdShareAlt size={35}/>
                                                     }
                                                 />
                                             </div>
