@@ -13,7 +13,6 @@ import {
 import { EmployeeImageGallery } from '../employeeImageGallery/employeeImageGallery';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetEmployeeByIdQuery } from '@/entities/employee-info/api';
-import { MdDelete } from 'react-icons/md';
 import { UploadOutlined } from '@ant-design/icons';
 import {
     useDeleteEmployeeMutation,
@@ -21,8 +20,7 @@ import {
 } from '@/entities/employee/api';
 import { IEmployee } from '@/entities/employee/model/types';
 import { useAppActions } from '@/shared';
-import { useEffect } from 'react';
-import { BsPencil } from 'react-icons/bs';
+import { useEffect, useState } from 'react';
 import { IoMdShareAlt } from 'react-icons/io';
 
 const { Meta } = Card;
@@ -33,10 +31,13 @@ export const EmployeeInfo = () => {
         useDeleteEmployeeMutation();
     const { setEmployeeForm, setIsUpdatingEmployee } = useAppActions();
     const navigate = useNavigate();
-    const [setImage] = useSetEmployeeImageMutation();
+    const [setImage, { isSuccess: addImageSuccess }] =
+        useSetEmployeeImageMutation();
     const { data, isLoading } = useGetEmployeeByIdQuery(id, {
         skip: id === undefined,
     });
+    const [fileList, setFileList] = useState<any[]>([]);
+
     const handleUploadChange = (info: any) => {
         if (info.fileList.length > 0) {
             const selectedFile = info.fileList[0].originFileObj;
@@ -44,8 +45,17 @@ export const EmployeeInfo = () => {
                 id: id!,
                 file: selectedFile,
             });
+            setFileList(info.fileList); 
         }
     };
+
+    useEffect(() => {
+        if (addImageSuccess) {
+            message.success('Успешно загружено');
+            setFileList([]);
+        }
+    }, [addImageSuccess]);
+
     useEffect(() => {
         if (deleteSuccess) {
             message.success('Успешно удалено');
@@ -108,6 +118,20 @@ export const EmployeeInfo = () => {
                                             >
                                                 x
                                             </Popconfirm>
+                                            <Upload
+                                                beforeUpload={() => false}
+                                                maxCount={1}
+                                                accept="image/*"
+                                                onChange={handleUploadChange}
+                                                fileList={fileList}
+                                                onRemove={() => setFileList([])}
+                                            >
+                                                <Button
+                                                    icon={<UploadOutlined />}
+                                                >
+                                                    Фото
+                                                </Button>
+                                            </Upload>
                                             <div className="basis-1/2 flex justify-center pr-8">
                                                 <Button
                                                     className="text-[12px] md:text-[20px]"
@@ -130,10 +154,10 @@ export const EmployeeInfo = () => {
                                                     onConfirm={() =>
                                                         deleteEmployee(data.id)
                                                     }
-                                                    className="text-red-500"
+                                                    className="basis-1/2 flex justify-center pl-10 text-4xl font-bold text-red-500"
                                                     title="Вы действительно хотите удалить сотрудника?"
                                                 >
-                                                    <MdDelete size={40} />
+                                                    x
                                                 </Popconfirm>
                                                 <div className="flex justify-center">
                                                     <Button
@@ -143,8 +167,8 @@ export const EmployeeInfo = () => {
                                                         }
                                                         type="link"
                                                         icon={
-                                                            <BsPencil
-                                                                size={30}
+                                                            <IoMdShareAlt
+                                                                size={35}
                                                             />
                                                         }
                                                     />

@@ -33,7 +33,7 @@ const items: MenuItem[] = [
         icon: <VscGraphLine />,
         children: [
             { key: '9', label: <Link to="/count">Статистика</Link> },
-            { key: '10', label: <Link to="/top_clients">Топ клиенты</Link> },
+            // { key: '10', label: <Link to="/top_clients">Топ клиенты</Link> },
         ],
     },
 ];
