@@ -26,13 +26,15 @@ export const EmployeeImageGallery: React.FC = () => {
 
     useEffect(() => {
         if (data) {
-            // Если страница первая, сбрасываем список изображений
-            if (page === 1) {
-                setImages(data.content);
-            } else {
-                // Для других страниц добавляем новые изображения
-                setImages((prev) => [...prev, ...data.content]);
-            }
+            setImages((prev) => {
+                // Убираем дубликаты через фильтрацию
+                const newImages = data.content.filter(
+                    (image) =>
+                        !prev.some((prevImage) => prevImage.id === image.id),
+                );
+                return page === 1 ? newImages : [...prev, ...newImages];
+            });
+
             // Проверяем, есть ли еще изображения
             setHasMore(page < data?.total_pages);
         }
@@ -62,7 +64,7 @@ export const EmployeeImageGallery: React.FC = () => {
             className="custom-scroll rounded-lg"
         >
             <List
-                grid={{ 
+                grid={{
                     gutter: 5, // Расстояние между элементами
                     xs: 2, // 1 колонка для экранов <576px
                     sm: 2, // 2 колонки для экранов ≥576px
@@ -70,7 +72,7 @@ export const EmployeeImageGallery: React.FC = () => {
                     lg: 3, // 4 колонки для экранов ≥992px
                     xl: 4, // 5 колонок для экранов ≥1200px
                     xxl: 4, // 6 колонок для экранов ≥1600px
-                 }}
+                }}
                 dataSource={images}
                 renderItem={(item) => (
                     <List.Item key={item.id}>
@@ -88,9 +90,7 @@ export const EmployeeImageGallery: React.FC = () => {
                                 className="absolute bottom-0 cursor-pointer w-[100px] h-[50px] bg-white rounded-b-full text-red-500 flex justify-center items-center opacity-0 group-hover:opacity-80 transition-opacity duration-300 ease-in-out"
                                 title="Вы действительно хотите удалить?"
                             >
-                                <div className="text-2xl font-semibold">
-                                    x
-                                </div>
+                                <div className="text-2xl font-semibold">x</div>
                             </Popconfirm>
                         </div>
                     </List.Item>
