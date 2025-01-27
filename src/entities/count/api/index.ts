@@ -28,7 +28,7 @@ export const BranchAPI = api.injectEndpoints({
         }),
         getPeakHoursClients: build.query<
             IPeakHoursClients[],
-            { start_time_str: string; end_time_str: string }
+            { start_time_str: string; end_time_str: string; branch_id: number }
         >({
             query: (params) => ({
                 url: 'clients/get_clients_by_datetime_range',
@@ -38,7 +38,7 @@ export const BranchAPI = api.injectEndpoints({
         }),
         getRegularClients: build.query<
             IPeakHoursClients[],
-            { start_time_str: string; end_time_str: string }
+            { start_date_str: string; end_date_str: string; branch_id: number }
         >({
             query: (params) => ({
                 url: `clients/get_regular_clients`,

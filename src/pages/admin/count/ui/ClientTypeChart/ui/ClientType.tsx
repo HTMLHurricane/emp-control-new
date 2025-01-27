@@ -1,34 +1,26 @@
-import { useDeleteClientMutation } from '@/entities/client/api';
-import { useGetPeakHoursClientsQuery } from '@/entities/count/api';
+import { useGetRegularClientsQuery } from '@/entities/count/api';
 import { useAppSelector } from '@/shared';
-import { Button, Image, List, message, Popconfirm } from 'antd/lib';
-import { useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa6';
-import { IoMdShareAlt } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import { Button, Image, List, message, Popconfirm } from 'antd/lib';
+import { IoMdShareAlt } from 'react-icons/io';
+import { useDeleteClientMutation } from '@/entities/client/api';
+import { useEffect } from 'react';
 
-export const PeakHoursClients = () => {
-    const { dates, datesTimes, attendanceBranch } = useAppSelector();
+export const ClientTypePage = () => {
+    const { dates, attendanceBranch } = useAppSelector();
     const [deleteClient, { isSuccess }] = useDeleteClientMutation();
     useEffect(() => {
         if (isSuccess) {
             message.success('Успешно удалено');
         }
     }, [isSuccess]);
-    const { data } = useGetPeakHoursClientsQuery(
-        {
-            start_time_str: `${dates?.[0]?.format(
-                'YYYY-MM-DD',
-            )} ${datesTimes?.slice(0, 5)}:00`,
-            end_time_str: `${dates?.[1]?.format(
-                'YYYY-MM-DD',
-            )} ${datesTimes?.slice(6, 11)}:00`,
-            branch_id: attendanceBranch!,
-        },
-        { skip: datesTimes === undefined },
-    );
+    const { data } = useGetRegularClientsQuery({
+        start_date_str: `${dates?.[0]?.format('YYYY-MM-DD')}`,
+        end_date_str: `${dates?.[1]?.format('YYYY-MM-DD')}`,
+        branch_id: attendanceBranch!,
+    });
     const navigate = useNavigate();
-
     return (
         <div>
             <h2 className="flex items-center text-lg font-semibold">
@@ -40,12 +32,8 @@ export const PeakHoursClients = () => {
                 Клиенты
             </h2>
             <div className="text-xl font-semibold text-center my-5">
-                Пиковое время клиентов за {dates?.[0]?.format('YYYY-MM-DD')} -{' '}
+                Постоянные клиенты за {dates?.[0]?.format('YYYY-MM-DD')} -{' '}
                 {dates?.[1]?.format('YYYY-MM-DD')}
-                <div>
-                    время: {datesTimes?.slice(0, 5)} -{' '}
-                    {datesTimes?.slice(6, 11)}
-                </div>
             </div>
             <List
                 grid={{

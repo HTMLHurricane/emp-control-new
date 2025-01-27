@@ -10,6 +10,7 @@ import {
 import { Clients } from '@/pages/admin/client/ui';
 import { ClientDetail } from '@/pages/admin/client/ui/clientDetail';
 import { AdminCount } from '@/pages/admin/count/ui';
+import { ClientTypePage } from '@/pages/admin/count/ui/ClientTypeChart/ui/ClientType'
 import { PeakHoursClients } from '@/pages/admin/count/ui/PeakHoursChart/ui/PeakHoursClients'
 import { Device } from '@/pages/admin/device/ui';
 import { Organization } from '@/pages/admin/Organization';
@@ -85,7 +86,8 @@ const App = () => {
                             element={<AdminSchedulePage />}
                         />
                         <Route path="/count" element={<AdminCount />} />
-                        <Route path="/peakhoursclients" element={<PeakHoursClients />} />
+                        <Route path="/peakhoursclientspodrobnie" element={<PeakHoursClients />} />
+                        <Route path="/clientspodrobnie" element={<ClientTypePage />} />
                         <Route path="/top_clients" element={<Clients />} />
                         <Route
                             path="/top_clients/:id"

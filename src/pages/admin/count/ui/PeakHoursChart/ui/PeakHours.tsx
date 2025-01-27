@@ -106,7 +106,7 @@ export const PeakHours: React.FC<PeakHoursProps> = ({
                     }}
                     onClick={(e) => {
                         setDatesTimes(e.activeLabel);
-                        navigate('/peakhoursclients');
+                        navigate('/peakhoursclientspodrobnie');
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
