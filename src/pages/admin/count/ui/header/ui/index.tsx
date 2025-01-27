@@ -13,9 +13,7 @@ const { RangePicker } = DatePicker;
 
 interface IHeaderProps {
     dates: [dayjs.Dayjs | null, dayjs.Dayjs | null] | null;
-    setDates: React.Dispatch<
-        React.SetStateAction<[dayjs.Dayjs | null, dayjs.Dayjs | null] | null>
-    >;
+    setDates: any;
 }
 
 export const Header: FC<IHeaderProps> = ({ setDates, dates }) => {

@@ -4,6 +4,7 @@ import {
     IClientIntervalData,
     IClientIntervalParams,
     IClientParams,
+    IPeakHoursClients,
 } from '../model/types';
 
 export const BranchAPI = api.injectEndpoints({
@@ -25,7 +26,32 @@ export const BranchAPI = api.injectEndpoints({
                 params,
             }),
         }),
+        getPeakHoursClients: build.query<
+            IPeakHoursClients[],
+            { start_time_str: string; end_time_str: string }
+        >({
+            query: (params) => ({
+                url: 'clients/get_clients_by_datetime_range',
+                method: 'GET',
+                params,
+            }),
+        }),
+        getRegularClients: build.query<
+            IPeakHoursClients[],
+            { start_time_str: string; end_time_str: string }
+        >({
+            query: (params) => ({
+                url: `clients/get_regular_clients`,
+                method: 'GET',
+                params,
+            }),
+        }),
     }),
 });
 
-export const { useGetClientsStatisticQuery, useGetClientsByIntervalQuery } = BranchAPI;
+export const {
+    useGetClientsStatisticQuery,
+    useGetClientsByIntervalQuery,
+    useGetPeakHoursClientsQuery,
+    useGetRegularClientsQuery,
+} = BranchAPI;

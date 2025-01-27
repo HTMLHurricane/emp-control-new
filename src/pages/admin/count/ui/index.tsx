@@ -9,9 +9,9 @@ import {
 } from '@/entities/count/api';
 import { Spin } from 'antd';
 import { ClientData, IClientIntervalData } from '@/entities/count/model/types';
-import { useAppSelector } from '@/shared';
-import dayjs from 'dayjs';
-import { useState } from 'react';
+import { TOKEN, useAppActions, useAppSelector } from '@/shared';
+import { PeakHours1 } from './PeakHoursChart/ui/PeakHours1';
+import { useCheckUserQuery } from '@/entities/auth/api';
 
 const transformIntervalData = (
     hourlyClientCounts: IClientIntervalData['daily_client_counts'],
@@ -36,9 +36,9 @@ const transformData = (
 };
 
 const AdminCount = () => {
-    const [dates, setDates] = useState<
-        [dayjs.Dayjs | null, dayjs.Dayjs | null] | null
-    >(null);
+    const { dates } = useAppSelector();
+    const { setDates } = useAppActions();
+    const { data: admin } = useCheckUserQuery(TOKEN.get() as string);
     const { attendanceBranch, homeDate } = useAppSelector();
     const date = homeDate.format('YYYY-MM-DD');
     const { data, isLoading } = useGetClientsStatisticQuery(
@@ -113,7 +113,7 @@ const AdminCount = () => {
             <div className="flex justify-between">
                 <div className="flex-col w-full">
                     {dates && (
-                        <PeakHours
+                        <PeakHours1
                             day={`${dates?.[0]?.format(
                                 'YYYY-MM-DD',
                             )} - ${dates?.[1]?.format('YYYY-MM-DD')}`}
@@ -127,37 +127,44 @@ const AdminCount = () => {
                             type="days"
                         />
                     )}
-                    <PeakHours
-                        // day={
-                        //     dates
-                        //         ? `${dates?.[0]?.format(
-                        //               'YYYY-MM-DD',
-                        //           )} - ${dates?.[1]?.format('YYYY-MM-DD')}`
-                        //         : date
-                        // }
-                        data={
-                            dates
-                                ? intervalData
+                    {admin?.is_admin ? (
+                        <PeakHours
+                            data={
+                                dates
+                                    ? intervalData
+                                        ? transformData({
+                                              counts: intervalData
+                                                  .hourly_client_counts.counts,
+                                          })
+                                        : []
+                                    : data
                                     ? transformData({
-                                          counts: intervalData
-                                              .hourly_client_counts.counts,
+                                          counts: data.hourly_client_counts
+                                              .counts,
                                       })
                                     : []
-                                : data
-                                ? transformData({
-                                      counts: data.hourly_client_counts.counts,
-                                  })
-                                : []
-                        }
-                    />
+                            }
+                        />
+                    ) : (
+                        <PeakHours1
+                            data={
+                                dates
+                                    ? intervalData
+                                        ? transformData({
+                                              counts: intervalData
+                                                  .hourly_client_counts.counts,
+                                          })
+                                        : []
+                                    : data
+                                    ? transformData({
+                                          counts: data.hourly_client_counts
+                                              .counts,
+                                      })
+                                    : []
+                            }
+                        />
+                    )}
                     <AgeChartExample
-                        // day={
-                        //     dates
-                        //         ? `${dates?.[0]?.format(
-                        //               'YYYY-MM-DD',
-                        //           )} - ${dates?.[1]?.format('YYYY-MM-DD')} `
-                        //         : date
-                        // }
                         data={
                             dates
                                 ? intervalData

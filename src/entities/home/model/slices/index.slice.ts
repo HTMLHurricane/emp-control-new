@@ -3,7 +3,7 @@ import { IHomeSliceInitState } from '../types';
 import dayjs from 'dayjs';
 
 const initialState: IHomeSliceInitState = {
-    collapsed: false,
+    collapsed: true,
     homeDate: dayjs(),
     homeMonthData: dayjs(),
     branch: undefined,
@@ -11,6 +11,8 @@ const initialState: IHomeSliceInitState = {
     isLateModal: false,
     isComeModal: false,
     attendanceBranch: undefined,
+    dates: [dayjs(), dayjs()],
+    datesTimes: undefined,
 };
 
 const HomeSlice = createSlice({
@@ -43,6 +45,17 @@ const HomeSlice = createSlice({
         },
         setCollapsed(state, { payload }: PayloadAction<boolean>) {
             state.collapsed = payload;
+        },
+        setDates(
+            state,
+            {
+                payload,
+            }: PayloadAction<[dayjs.Dayjs | null, dayjs.Dayjs | null]>,
+        ) {
+            state.dates = payload;
+        },
+        setDatesTimes(state, { payload }: PayloadAction<string | undefined>) {
+            state.datesTimes = payload;
         },
     },
 });

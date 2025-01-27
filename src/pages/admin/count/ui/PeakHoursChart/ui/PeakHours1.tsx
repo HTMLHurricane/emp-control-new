@@ -1,7 +1,6 @@
 import { PeakAttendance } from '@/entities/count/model/types';
-import { Title, Card, useAppActions } from '@/shared';
+import { Title, Card } from '@/shared';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
     LineChart,
     Line,
@@ -61,12 +60,10 @@ interface PeakHoursProps {
     type?: 'days' | 'time';
 }
 
-export const PeakHours: React.FC<PeakHoursProps> = ({
+export const PeakHours1: React.FC<PeakHoursProps> = ({
     data,
     type = 'time',
 }) => {
-    const navigate = useNavigate();
-    const { setDatesTimes } = useAppActions();
     const CustomTooltip = ({ active, payload }: any) => {
         if (active && payload && payload.length) {
             // Получаем данные для подсказки
@@ -104,10 +101,7 @@ export const PeakHours: React.FC<PeakHoursProps> = ({
                         left: 20,
                         bottom: 10,
                     }}
-                    onClick={(e) => {
-                        setDatesTimes(e.activeLabel);
-                        navigate('/peakhoursclients');
-                    }}
+                    
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis

@@ -46,3 +46,8 @@ export interface PeakAttendance {
     time: string;
     client_count: number;
 }
+
+export interface IPeakHoursClients {
+    client_id: number;
+    first_photo: string;
+}
