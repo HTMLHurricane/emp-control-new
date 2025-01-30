@@ -35,7 +35,7 @@ export const PeakHoursClients = () => {
                 <FaArrowLeft
                     size={18}
                     className="mr-3 cursor-pointer hover:text-blue-500 transition-colors duration-150"
-                    onClick={() => navigate(-1)}
+                    onClick={() => navigate('/count')}
                 />
                 Клиенты
             </h2>

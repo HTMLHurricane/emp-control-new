@@ -8,7 +8,8 @@ import { useDeleteClientMutation } from '@/entities/client/api';
 import { useEffect } from 'react';
 
 export const ClientTypePage = () => {
-    const { dates, attendanceBranch } = useAppSelector();
+    const { dates, attendanceBranch, homeDate } = useAppSelector();
+    const date = homeDate.format('YYYY-MM-DD');
     const [deleteClient, { isSuccess }] = useDeleteClientMutation();
     useEffect(() => {
         if (isSuccess) {
@@ -16,18 +17,19 @@ export const ClientTypePage = () => {
         }
     }, [isSuccess]);
     const { data } = useGetRegularClientsQuery({
-        start_date_str: `${dates?.[0]?.format('YYYY-MM-DD')}`,
-        end_date_str: `${dates?.[1]?.format('YYYY-MM-DD')}`,
+        start_date_str: dates ? `${dates?.[0]?.format('YYYY-MM-DD')}` : date,
+        end_date_str: dates ? `${dates?.[1]?.format('YYYY-MM-DD')}` : date,
         branch_id: attendanceBranch!,
     });
     const navigate = useNavigate();
+    console.log(homeDate);
     return (
         <div>
             <h2 className="flex items-center text-lg font-semibold">
                 <FaArrowLeft
                     size={18}
                     className="mr-3 cursor-pointer hover:text-blue-500 transition-colors duration-150"
-                    onClick={() => navigate(-1)}
+                    onClick={() => navigate('/count')}
                 />
                 Клиенты
             </h2>
