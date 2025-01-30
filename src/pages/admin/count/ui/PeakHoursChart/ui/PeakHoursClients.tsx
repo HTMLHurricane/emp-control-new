@@ -8,7 +8,8 @@ import { IoMdShareAlt } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 
 export const PeakHoursClients = () => {
-    const { dates, datesTimes, attendanceBranch } = useAppSelector();
+    const { dates, datesTimes, attendanceBranch, homeDate } = useAppSelector();
+    const date = homeDate.format('YYYY-MM-DD');
     const [deleteClient, { isSuccess }] = useDeleteClientMutation();
     useEffect(() => {
         if (isSuccess) {
@@ -17,12 +18,12 @@ export const PeakHoursClients = () => {
     }, [isSuccess]);
     const { data } = useGetPeakHoursClientsQuery(
         {
-            start_time_str: `${dates?.[0]?.format(
+            start_time_str: dates ? `${dates?.[0]?.format(
                 'YYYY-MM-DD',
-            )} ${datesTimes?.slice(0, 5)}:00`,
-            end_time_str: `${dates?.[1]?.format(
+            )} ${datesTimes?.slice(0, 5)}:00` : `${date} ${datesTimes?.slice(0, 5)}:00`,
+            end_time_str: dates ? `${dates?.[1]?.format(
                 'YYYY-MM-DD',
-            )} ${datesTimes?.slice(6, 11)}:00`,
+            )} ${datesTimes?.slice(6, 11)}:00` : `${date} ${datesTimes?.slice(6, 11)}:00`,
             branch_id: attendanceBranch!,
         },
         { skip: datesTimes === undefined },
