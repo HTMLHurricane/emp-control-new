@@ -32,6 +32,6 @@ export interface IHomeSliceInitState {
     isNotComeModal: boolean;
     isLateModal: boolean;
     isComeModal: boolean;
-    dates: [dayjs.Dayjs | null, dayjs.Dayjs | null];
+    dates: [dayjs.Dayjs | null, dayjs.Dayjs | null] | null;
     datesTimes: string | undefined;
 }

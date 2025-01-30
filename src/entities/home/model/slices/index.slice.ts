@@ -11,8 +11,8 @@ const initialState: IHomeSliceInitState = {
     isLateModal: false,
     isComeModal: false,
     attendanceBranch: undefined,
-    dates: [dayjs(), dayjs()],
     datesTimes: undefined,
+    dates: null,
 };
 
 const HomeSlice = createSlice({

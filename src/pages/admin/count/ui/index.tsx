@@ -41,6 +41,7 @@ const AdminCount = () => {
     const { data: admin } = useCheckUserQuery(TOKEN.get() as string);
     const { attendanceBranch, homeDate } = useAppSelector();
     const date = homeDate.format('YYYY-MM-DD');
+
     const { data, isLoading } = useGetClientsStatisticQuery(
         {
             branch_id: attendanceBranch,
