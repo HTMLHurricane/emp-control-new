@@ -73,7 +73,7 @@ const AdminCreateEmployeeForm = () => {
     useEffect(() => () => onCancel(), []);
 
     return (
-        <FormLayout title="Изменить данные сотрудника" size="xl">
+        <FormLayout title="Добавить сотрудника" size="xl">
             <Form
                 form={form}
                 onFinish={onSubmit}
