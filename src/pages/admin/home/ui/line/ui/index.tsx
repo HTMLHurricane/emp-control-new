@@ -45,7 +45,7 @@ export const calculateDelay = (actualTime?: string, scheduledTime?: string) => {
 };
 
 const Line = () => {
-    const { homeDate, collapsed, attendanceBranch } = useAppSelector();
+    const { homeDate, attendanceBranch } = useAppSelector();
     const [employeeTablePage, setEmployeeTablePage] = useState(1);
     const [employeeTableLimit, setEmployeeTableLimit] = useState(10);
     const navigate = useNavigate();
@@ -110,7 +110,7 @@ const Line = () => {
     ];
 
     return (
-        <Card className={`text-center ${collapsed ? '' : 'xl:w-[800px]'}`}>
+        <Card className={`text-center min-w-[600px] xl:w-full`}>
             <Title>Общая активность за {homeDate.format('YYYY-MM-DD')}</Title>
             <Table
                 dataSource={data?.content || []}

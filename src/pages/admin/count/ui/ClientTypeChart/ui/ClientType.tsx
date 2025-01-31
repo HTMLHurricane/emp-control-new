@@ -3,9 +3,9 @@ import { useAppSelector } from '@/shared';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import { Button, Image, List, message, Popconfirm } from 'antd/lib';
-import { IoMdShareAlt } from 'react-icons/io';
 import { useDeleteClientMutation } from '@/entities/client/api';
 import { useEffect } from 'react';
+import { FaInfo } from 'react-icons/fa'
 
 export const ClientTypePage = () => {
     const { dates, attendanceBranch, homeDate } = useAppSelector();
@@ -77,7 +77,7 @@ export const ClientTypePage = () => {
                                             `/top_clients/${item.client_id}`,
                                         )
                                     }
-                                    icon={<IoMdShareAlt size={20} />}
+                                    icon={<FaInfo size={13} />}
                                     className="text-[12px] w-[20px] md:text-[14px] basis-1/2"
                                 />
                             </div>

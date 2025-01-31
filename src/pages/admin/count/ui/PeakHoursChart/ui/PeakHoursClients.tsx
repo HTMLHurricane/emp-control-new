@@ -3,8 +3,8 @@ import { useGetPeakHoursClientsQuery } from '@/entities/count/api';
 import { useAppSelector } from '@/shared';
 import { Button, Image, List, message, Popconfirm } from 'antd/lib';
 import { useEffect } from 'react';
+import { FaInfo } from 'react-icons/fa'
 import { FaArrowLeft } from 'react-icons/fa6';
-import { IoMdShareAlt } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 
 export const PeakHoursClients = () => {
@@ -88,7 +88,7 @@ export const PeakHoursClients = () => {
                                             `/top_clients/${item.client_id}`,
                                         )
                                     }
-                                    icon={<IoMdShareAlt size={20} />}
+                                    icon={<FaInfo size={13} />}
                                     className="text-[12px] w-[20px] md:text-[14px] basis-1/2"
                                 />
                             </div>

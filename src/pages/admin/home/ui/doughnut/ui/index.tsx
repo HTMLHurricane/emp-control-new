@@ -20,7 +20,7 @@ const Doughnut = () => {
         );
     } else {
         return (
-            <Card className="xl:max-w-[400px]">
+            <Card className="min-w-[400px]">
                 <DoughnutChart
                     datasets={[
                         data?.absent_employees ?? 0,

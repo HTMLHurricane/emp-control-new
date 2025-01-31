@@ -3,8 +3,8 @@ import { IEmployee } from '@/entities/employee/model/types';
 import { FlexBox, useAppSelector } from '@/shared';
 import { Button, Image, Table, TableProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { FaEye } from 'react-icons/fa6';
 import { columnResponseText } from '@/shared/const/css';
+import { FaInfo } from 'react-icons/fa'
 
 const AdminEmployeePageTable = () => {
     const { attendanceBranch } = useAppSelector();
@@ -79,7 +79,7 @@ const AdminEmployeePageTable = () => {
                     <Button
                         type="primary"
                         onClick={() => navigate(`/employees/${rec.id}`)}
-                        icon={<FaEye />}
+                        icon={<FaInfo />}
                         className="text-[12px] md:text-[14px]"
                     />
                 </div>

@@ -98,8 +98,8 @@ const AdminLayout: FC = () => {
                 breakpoint="lg"
                 className="fixed h-full sm:w-16 md:w-20 lg:w-60 xl:w-72 z-50"
             >
-                <div className="text-center text-slate-950 text-2xl py-5">
-                    <Link to="/">{collapsed ? 'A' : 'AralHUB'}</Link>
+                <div className="text-center text-slate-950 text-xl pt-5 pb-1">
+                    <Link to="/" className="text-start">{collapsed ? 'A' : 'AralHUB'}</Link>
                 </div>
                 <Menu
                     defaultSelectedKeys={['1']}
@@ -107,6 +107,7 @@ const AdminLayout: FC = () => {
                     mode="inline"
                     theme="light"
                     items={data?.is_admin ? itemsAdmin : items}
+                    
                 />
                 <div className="flex flex-col absolute bottom-0 w-full">
                     <Button

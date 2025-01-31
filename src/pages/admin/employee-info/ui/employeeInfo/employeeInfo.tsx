@@ -21,7 +21,7 @@ import {
 import { IEmployee } from '@/entities/employee/model/types';
 import { useAppActions } from '@/shared';
 import { useEffect, useState } from 'react';
-import { IoMdShareAlt } from 'react-icons/io';
+import { FaInfo } from 'react-icons/fa'
 
 const { Meta } = Card;
 
@@ -140,9 +140,7 @@ export const EmployeeInfo = () => {
                                                     }
                                                     type="link"
                                                     icon={
-                                                        <IoMdShareAlt
-                                                            size={35}
-                                                        />
+                                                        <FaInfo size={25} />
                                                     }
                                                 />
                                             </div>
@@ -167,9 +165,7 @@ export const EmployeeInfo = () => {
                                                         }
                                                         type="link"
                                                         icon={
-                                                            <IoMdShareAlt
-                                                                size={35}
-                                                            />
+                                                            <FaInfo size={25} />
                                                         }
                                                     />
                                                 </div>

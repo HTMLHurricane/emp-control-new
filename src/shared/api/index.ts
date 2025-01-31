@@ -12,7 +12,7 @@ export const api = createApi({
         },
     }),
     refetchOnFocus: false,
-    tagTypes: ['branch', 'role', 'employee', 'schedule', 'organization', 'device', 'employee_info', "client"],
+    tagTypes: ['branch', 'role', 'employee', 'schedule', 'organization', 'device', 'employee_info', "client",],
     endpoints: (build) => ({
         default: build.query({
             query: () => 'default',

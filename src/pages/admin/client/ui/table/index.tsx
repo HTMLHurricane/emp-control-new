@@ -2,7 +2,7 @@ import { useDeleteClientMutation } from '@/entities/client/api';
 import { ITopClients } from '@/entities/client/models/types';
 import { List, Image, Button, Popconfirm, message } from 'antd';
 import { FC, useEffect } from 'react';
-import { IoMdShareAlt } from 'react-icons/io';
+import { FaInfo } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom';
 
 interface TopClientsTableProps {
@@ -70,7 +70,7 @@ export const TopClientsTable: FC<TopClientsTableProps> = ({
                                             `/top_clients/${item.client_id}`,
                                         )
                                     }
-                                    icon={<IoMdShareAlt size={20} />}
+                                    icon={<FaInfo size={14} />}
                                     className="text-[12px] w-[20px] md:text-[14px] basis-1/2"
                                 />
                             </div>
