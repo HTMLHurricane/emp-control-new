@@ -6,8 +6,10 @@ import { Device } from '@/entities/device/model/types';
 import { FlexBox, DeleteButton, EditButton, useAppActions } from '@/shared';
 import { message, Table, TableProps } from 'antd';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next'
 
 export const DeviceTable = () => {
+    const {t} = useTranslation()
     const { setDeviceForm, setIsUpdatingDevice } = useAppActions();
     const { data, isLoading } = useGetDevicesQuery();
     const [deleteDevice, { isSuccess }] = useDeleteDeviceMutation();
@@ -25,51 +27,51 @@ export const DeviceTable = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            message.success('Успешно удалено');
+            message.success(t('Успешно удалено'));
         }
     }, [isSuccess]);
 
     const columns: TableProps<Device>['columns'] = [
         {
             key: 'id',
-            title: 'ID Камеры',
+            title: t('ID Камеры'),
             dataIndex: 'id',
         },
         {
             key: 'name',
-            title: 'Камера',
+            title: t('Камера'),
             dataIndex: 'name',
         },
         {
             key: 'path',
-            title: 'Путь',
+            title: t('Путь'),
             dataIndex: 'path',
         },
         {
             key: 'organization_id',
-            title: 'ID организации',
+            title: t('ID организации'),
             dataIndex: 'organization_id',
         },
         {
             key: 'branch',
-            title: 'Филиал',
+            title: t('Филиал'),
             dataIndex: 'branch',
             render: (_, res) => <>{res.branch.name}</>,
         },
         {
             key: 'is_active_branch',
-            title: 'Активность филиала',
+            title: t('Активность филиала'),
             dataIndex: 'branch',
             render: (_, res) => (
-                <>{res.branch.is_active === true ? 'Активен' : 'Не активен'}</>
+                <>{res.branch.is_active === true ? t('Активен') : t('Не активен')}</>
             ),
         },
         {
             key: 'is_active',
-            title: 'Активность камеры',
+            title: t('Активность камеры'),
             dataIndex: 'is_active',
             render: (_, res) => (
-                <>{res.is_active === true ? 'Активен' : 'Не активен'}</>
+                <>{res.is_active === true ? t('Активен') : t('Не активен')}</>
             ),
         },
         {

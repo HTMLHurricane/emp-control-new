@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { ClientHeader } from './header';
 import { TopClientsTable } from './table';
 import { Spin, Empty } from 'antd';
+import { useTranslation } from 'react-i18next'
 
 export const Clients = () => {
+    const {t} = useTranslation()
     const [dates, setDates] = useState<
         [dayjs.Dayjs | null, dayjs.Dayjs | null] | null
     >([dayjs().startOf('month'), dayjs().endOf('month')]);
@@ -36,13 +38,13 @@ export const Clients = () => {
     }
     const getTitle = () => {
         if (filter === 'week') {
-            return 'за текущую неделю';
+            return t('за текущую неделю');
         } else if (filter === 'month') {
-            return 'за текущий месяц';
+            return t('за текущий месяц');
         } else if (dates && dates[0] && dates[1]) {
-            return `за ${dates[0].format('YYYY-MM')}`; // Форматируем по выбранному месяцу
+            return `${t('за')} ${dates[0].format('YYYY-MM')}`;
         }
-        return 'Топ клиенты';
+        return t('Топ клиенты');
     };
 
     return (
@@ -57,7 +59,7 @@ export const Clients = () => {
             />
             {!data || data.length === 0 ? (
                 <div className="flex justify-center items-center min-h-screen">
-                    <Empty description="Данные топ клиентов не найдены" />
+                    <Empty description={t("Данные топ клиентов не найдены")} />
                 </div>
             ) : (
                 <TopClientsTable

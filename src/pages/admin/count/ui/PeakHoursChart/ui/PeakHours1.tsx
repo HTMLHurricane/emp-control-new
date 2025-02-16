@@ -1,6 +1,7 @@
 import { PeakAttendance } from '@/entities/count/model/types';
 import { Title, Card } from '@/shared';
 import React from 'react';
+import { useTranslation } from 'react-i18next'
 import {
     LineChart,
     Line,
@@ -64,6 +65,7 @@ export const PeakHours1: React.FC<PeakHoursProps> = ({
     data,
     type = 'time',
 }) => {
+    const {t} = useTranslation()
     const CustomTooltip = ({ active, payload }: any) => {
         if (active && payload && payload.length) {
             // Получаем данные для подсказки
@@ -71,9 +73,9 @@ export const PeakHours1: React.FC<PeakHoursProps> = ({
             return (
                 <div className="custom-tooltip text-[#8884d8] bg-white p-2 border-solid border-[1px] rounded-[5px]">
                     <p>
-                        {type == 'days' ? 'День' : 'Время'} : {time}
+                        {type == 'days' ? t('День') : t('Время')} : {time}
                     </p>
-                    <p>Количество клиентов: {client_count}</p>
+                    <p>{t("Количество клиентов")}: {client_count}</p>
                 </div>
             );
         }
@@ -85,8 +87,8 @@ export const PeakHours1: React.FC<PeakHoursProps> = ({
             title={
                 <Title>
                     {type == 'days'
-                        ? 'Количество клиентов'
-                        : 'Пиковое время клиентов'}{' '}
+                        ? t('Количество клиентов')
+                        : t('Пиковое время клиентов')}{' '}
                 </Title>
             }
             style={{ height: 500 }}

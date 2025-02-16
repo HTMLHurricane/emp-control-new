@@ -4,9 +4,11 @@ import { useAppActions, useAppSelector } from '@/shared';
 import { FormLayout } from '@/shared/ui/formLayout/formLayout';
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next'
 
 export const DeviceUpdateForm = () => {
     const [form] = Form.useForm();
+    const {t} = useTranslation()
     const [createDevice, { isSuccess, isLoading, isError }] =
         useUpdateDeviceMutation();
     const { setIsUpdatingDevice } = useAppActions();
@@ -35,11 +37,11 @@ export const DeviceUpdateForm = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            message.success('Device успешно изменен');
+            message.success(t('Device успешно изменена'));
             setIsUpdatingDevice(false);
         }
         if (isError) {
-            message.error('Произошла ошибка во время изменения device');
+            message.error(t('Произошла ошибка во время изменения device'));
             console.log('error', isError);
         }
     }, [isSuccess, isError]);
@@ -51,15 +53,15 @@ export const DeviceUpdateForm = () => {
     }, []);
 
     return (
-        <FormLayout title="Создать device" size="xl">
+        <FormLayout title={t("Создать device")} size="xl">
             <Form form={form} onFinish={onSubmit} layout="vertical">
                 <Form.Item<IDevicePatch>
                     name="name"
-                    label="Название Device"
+                    label={t("Название Device")}
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста, заполните поле!',
+                            message: t('Пожалуйста, заполните поле!'),
                         },
                     ]}
                 >
@@ -71,7 +73,7 @@ export const DeviceUpdateForm = () => {
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста, заполните поле!',
+                            message: t('Пожалуйста, заполните поле!'),
                         },
                     ]}
                 >
@@ -83,7 +85,7 @@ export const DeviceUpdateForm = () => {
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста, заполните поле!',
+                            message: t('Пожалуйста, заполните поле!'),
                         },
                     ]}
                 >
@@ -94,19 +96,19 @@ export const DeviceUpdateForm = () => {
                     valuePropName="checked"
                 >
                     <Checkbox>
-                        <span className="ml-5">Активность</span>
+                        <span className="ml-5">{t("Активность")}</span>
                     </Checkbox>
                 </Form.Item>
                 <div className="flex justify-end space-x-4">
                     <Button onClick={onCancel} type="default">
-                        Отмена
+                        {t("Отмена")}
                     </Button>
                     <Button
                         loading={isLoading}
                         type="primary"
                         htmlType="submit"
                     >
-                        Сохранить
+                        {t("Сохранить")}
                     </Button>
                 </div>
             </Form>

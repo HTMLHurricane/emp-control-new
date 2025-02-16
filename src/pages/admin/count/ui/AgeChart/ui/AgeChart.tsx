@@ -1,5 +1,6 @@
 import { Title, Card } from '@/shared';
 import React from 'react';
+import { useTranslation } from 'react-i18next'
 import {
     LineChart,
     Line,
@@ -59,6 +60,7 @@ interface AgeChartProps {
 }
 
 export const AgeChartExample: React.FC<AgeChartProps> = ({ data }) => {
+    const {t} = useTranslation();
     // Преобразуем объект с использованием Object.values и Object.keys
     const transformedData = Object.keys(data).map((ageGroup, index) => ({
         ageGroup, // Возрастная группа (например "18-24")
@@ -71,8 +73,8 @@ export const AgeChartExample: React.FC<AgeChartProps> = ({ data }) => {
             const { ageGroup, client_count } = payload[0].payload;
             return (
                 <div className="custom-tooltip text-[#380848] bg-white p-2 border-solid border-[1px] rounded-[5px]">
-                    <p>{`${ageGroup} лет`}</p>
-                    <p>{`Количество клиентов: ${client_count}`}</p>
+                    <p>{`${ageGroup} ${t('лет')}`}</p>
+                    <p>{`${t("Количество клиентов")}: ${client_count}`}</p>
                 </div>
             );
         }
@@ -81,7 +83,7 @@ export const AgeChartExample: React.FC<AgeChartProps> = ({ data }) => {
 
     return (
         <Card
-            title={<Title>Возраст клиентов</Title>}
+            title={<Title>{t("Возраст клиентов")}</Title>}
             style={{ height: 500 }}
             className="text-center my-5"
         >

@@ -7,8 +7,10 @@ import { columnResponseText } from '@/shared/const/css';
 import { IdName } from '@/shared/types/Types';
 import { message, Table, TableProps } from 'antd';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const OrganizationTable = () => {
+    const { t } = useTranslation();
     const { setOrganizationForm, setIsUpdatingOrganization } = useAppActions();
     const { data, isLoading } = useGetOrganizationQuery();
     const [deleteOrganization, { isSuccess: deleteSuccess }] =
@@ -25,7 +27,7 @@ export const OrganizationTable = () => {
     const columns: TableProps<IdName>['columns'] = [
         {
             key: 'name',
-            title: 'Название',
+            title: t('Название'),
             dataIndex: 'name',
             className: `${columnResponseText}`,
         },
@@ -51,7 +53,7 @@ export const OrganizationTable = () => {
 
     useEffect(() => {
         if (deleteSuccess) {
-            message.success('Успешно удалено');
+            message.success(t('Успешно удалено'));
         }
     }, [deleteSuccess]);
 

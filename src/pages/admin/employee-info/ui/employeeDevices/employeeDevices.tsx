@@ -2,9 +2,11 @@ import { useGetEmployeeDeviceAttendancesByIdQuery } from '@/entities/employee-in
 import { AttendanceEmployeeDetailsById } from '@/entities/employee-info/model';
 import { TableProps, Table, Image } from 'antd';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom';
 
 export const EmployeeDevices = () => {
+    const {t} = useTranslation()
     const [employeeTablePage, setEmployeeTablePage] = useState(1);
     const [employeeTableLimit, setEmployeeTableLimit] = useState(10);
     const { id } = useParams();
@@ -19,7 +21,7 @@ export const EmployeeDevices = () => {
 
     const columns: TableProps<AttendanceEmployeeDetailsById>['columns'] = [
         {
-            title: 'Камера',
+            title: t('Камера'),
             dataIndex: 'device',
             render: (_, res) => <>{res.device.name}</>,
         },
@@ -34,17 +36,17 @@ export const EmployeeDevices = () => {
         //     render: (_, res) => <>{}</>
         // },
         {
-            title: 'Филиал',
+            title: t('Филиал'),
             dataIndex: 'device',
             render: (_, res) => <>{res.device.branch.name}</>,
         },
         {
-            title: 'Адрес',
+            title: t('Адрес'),
             dataIndex: 'device',
             render: (_, res) => <>{res.device.branch.address}</>,
         },
         {
-            title: 'Фото',
+            title: t('Фото'),
             dataIndex: 'url',
             render: (url) => (
                 <div className="flex flex-wrap gap-2">

@@ -7,8 +7,10 @@ import {
     IScheduleDayPost,
 } from '@/entities/schedule/model/types';
 import { useCheckUserQuery } from '@/entities/auth/api';
+import { useTranslation } from 'react-i18next';
 
 const AdminCreateScheduleForm: FC = () => {
+    const { t } = useTranslation();
     const [form] = Form.useForm<ISchedulePost>();
     const [createSchedule, { isSuccess, isLoading, isError }] =
         useCreateScheduleMutation();
@@ -79,11 +81,11 @@ const AdminCreateScheduleForm: FC = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            message.success('График работы успешно создан');
+            message.success(t('График работы успешно создан!'));
             setIsCreatingSchedule(false);
         }
         if (isError) {
-            message.error('Произошла ошибка при создании графика работы');
+            message.error(t('Произошла ошибка при создании графика работы.'));
         }
     }, [isSuccess, isError]);
 
@@ -94,34 +96,34 @@ const AdminCreateScheduleForm: FC = () => {
     }, []);
 
     const daysOfWeek = [
-        { label: 'Понедельник', key: 'monday' },
-        { label: 'Вторник', key: 'tuesday' },
-        { label: 'Среда', key: 'wednesday' },
-        { label: 'Четверг', key: 'thursday' },
-        { label: 'Пятница', key: 'friday' },
-        { label: 'Суббота', key: 'saturday' },
-        { label: 'Воскресенье', key: 'sunday' },
+        { label: t('Понедельник'), key: 'monday' },
+        { label: t('Вторник'), key: 'tuesday' },
+        { label: t('Среда'), key: 'wednesday' },
+        { label: t('Четверг'), key: 'thursday' },
+        { label: t('Пятница'), key: 'friday' },
+        { label: t('Суббота'), key: 'saturday' },
+        { label: t('Воскресенье'), key: 'sunday' },
     ];
 
     return (
         <Form form={form} onFinish={onSubmit} layout="vertical">
             <Form.Item
                 className="max-w-[600px]"
-                label="Название рабочего графика"
+                label={t('Название рабочего графика')}
                 name="name"
                 rules={[
                     {
                         required: true,
-                        message: 'Введите название рабочего графика',
+                        message: t('Введите название рабочего графика'),
                     },
                 ]}
             >
                 <Input />
             </Form.Item>
             <FlexBox cls="max-w-[600px] mb-5">
-                <b>День недели</b>
-                <b className="ml-auto mr-10">Начало рабочего дня</b>
-                <b>Конец рабочего дня</b>
+                <b>{t('День недели')}</b>
+                <b className="ml-auto mr-10">{t('Начало рабочего дня')}</b>
+                <b>{t('Конец рабочего дня')}</b>
             </FlexBox>
             <FlexBox gap="0" cls="flex-col max-w-[600px]">
                 {daysOfWeek.map((day) => (
@@ -133,23 +135,23 @@ const AdminCreateScheduleForm: FC = () => {
                             name={['work_hours', day.key, 'startTime']}
                             style={{ marginLeft: 'auto' }}
                         >
-                            <Input placeholder="Например: 10:00" />
+                            <Input placeholder={`${t('Например')}: 10:00`} />
                         </Form.Item>
                         <Form.Item name={['work_hours', day.key, 'endTime']}>
-                            <Input placeholder="Например: 18:00" />
+                            <Input placeholder={`${t('Например')}: 18:00`} />
                         </Form.Item>
                     </FlexBox>
                 ))}
             </FlexBox>
             <p className="text-sm mb-5 text-gray-400">
-                Оставьте пустым поле, если этот день должен быть выходным
+                {t('Оставьте пустым поле, если этот день должен быть выходным')}
             </p>
             <FlexBox>
                 <Button onClick={onCancel} type="default">
-                    Отмена
+                    {t('Отмена')}
                 </Button>
                 <Button loading={isLoading} type="primary" htmlType="submit">
-                    Сохранить
+                    {t('Сохранить')}
                 </Button>
             </FlexBox>
         </Form>

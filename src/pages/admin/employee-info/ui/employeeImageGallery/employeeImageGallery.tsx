@@ -6,8 +6,10 @@ import {
     useGetEmployeeImagesByIdQuery,
 } from '@/entities/employee-info/api';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'
 
 export const EmployeeImageGallery: React.FC = () => {
+    const {t} = useTranslation()
     const { id } = useParams();
     const [page, setPage] = useState(1); // Стартовая страница
     const [images, setImages] = useState<IEmployeeImage[]>([]);
@@ -20,7 +22,7 @@ export const EmployeeImageGallery: React.FC = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            message.success('Успешно удалено');
+            message.success(t('Успешно удалено'));
         }
     }, [isSuccess]);
 
@@ -88,7 +90,7 @@ export const EmployeeImageGallery: React.FC = () => {
                             <Popconfirm
                                 onConfirm={() => handleDelete(Number(item.id))}
                                 className="absolute bottom-0 cursor-pointer w-[100px] h-[50px] bg-white rounded-b-full text-red-500 flex justify-center items-center opacity-0 group-hover:opacity-80 transition-opacity duration-300 ease-in-out"
-                                title="Вы действительно хотите удалить?"
+                                title={t("Вы действительно хотите удалить?")}
                             >
                                 <div className="text-2xl font-semibold">x</div>
                             </Popconfirm>
@@ -103,14 +105,14 @@ export const EmployeeImageGallery: React.FC = () => {
                         type="primary"
                         size="large"
                     >
-                        Загрузить больше
+                        {t("Загрузить больше")}
                     </Button>
                 </div>
             )}
             {isLoading && (
                 <div className="text-center mt-4">
                     <Button loading type="primary" size="large">
-                        Загружается...
+                        {t("Загружается...")}
                     </Button>
                 </div>
             )}

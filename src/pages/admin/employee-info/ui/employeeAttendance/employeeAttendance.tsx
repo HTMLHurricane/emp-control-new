@@ -2,9 +2,11 @@ import { useGetDailyAttendanceByIdQuery } from '@/entities/employee-info/api';
 import { IDailyAttendanceById } from '@/entities/employee-info/model';
 import { TableProps, Table, Image, Empty, Spin } from 'antd';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 const EmployeeAttendance = () => {
+    const { t } = useTranslation();
     const [employeeTablePage, setEmployeeTablePage] = useState(1);
     const [employeeTableLimit, setEmployeeTableLimit] = useState(10);
     const { id } = useParams();
@@ -19,19 +21,19 @@ const EmployeeAttendance = () => {
 
     const columns: TableProps<IDailyAttendanceById>['columns'] = [
         {
-            title: 'День',
+            title: t('День'),
             dataIndex: 'created_at',
             render: (item) => <>{item.split('T')[0]}</>,
             className: 'w-[120px]',
         },
         {
-            title: 'Пришёл(а)',
+            title: t('Пришёл(а)'),
             dataIndex: 'time_in',
             render: (item) => <>в {item?.slice(0, 5)}</>,
             className: 'w-[120px]',
         },
         {
-            title: 'Фото прихода',
+            title: t('Фото прихода'),
             dataIndex: 'attendance_in',
             render: (_, res) => (
                 <div className="flex flex-wrap gap-2">
@@ -45,22 +47,28 @@ const EmployeeAttendance = () => {
             className: 'w-[100px]',
         },
         {
-            title: 'Опоздал(а)',
+            title: t('Опоздал(а)'),
             dataIndex: 'late',
-            render: (item) => <>на {item?.slice(0, 4)} ч</>,
+            render: (item) => (
+                <>
+                    {t('на')} {item?.slice(0, 4)} ч
+                </>
+            ),
         },
         {
-            title: 'Ранний уход',
+            title: t('Ранний уход'),
             dataIndex: 'early',
             render: (item) => <>{item}</>,
         },
         {
-            title: 'Ушёл(а)',
+            title: t('Ушёл(а)'),
             dataIndex: 'time_out',
-            render: (item) => <>{item ? `в ${item.slice(0, 5)}` : ''}</>,
+            render: (item) => (
+                <>{item ? `${t('в')} ${item.slice(0, 5)}` : ''}</>
+            ),
         },
         {
-            title: 'Фото ухода',
+            title: t('Фото ухода'),
             dataIndex: 'attendance_out',
             render: (_, res) => (
                 <div className="flex flex-wrap gap-2">
@@ -81,7 +89,7 @@ const EmployeeAttendance = () => {
     if (!data) {
         return (
             <div className="flex justify-center items-center">
-                <Empty description="Данные не найдены" />
+                <Empty description={t("Данные не найдены")} />
             </div>
         );
     }

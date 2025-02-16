@@ -12,8 +12,10 @@ import { columnResponseText } from '@/shared/const/css';
 import { IdName } from '@/shared/types/Types'
 import { Table, TableProps, message } from 'antd';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next'
 
 const AdminRolePageTable = () => {
+    const {t} = useTranslation()
     const {
         setRoleForm,
         setIsUpdatingRole,
@@ -32,7 +34,7 @@ const AdminRolePageTable = () => {
 
     const columns: TableProps<IdName>['columns'] = [
         {
-            title: 'Название',
+            title: t('Название'),
             dataIndex: 'name',
             className: `${columnResponseText}`,
         },
@@ -57,7 +59,7 @@ const AdminRolePageTable = () => {
 
     useEffect(() => {
         if (deleteSuccess) {
-            message.success('Успешно удалено');
+            message.success(t('Успешно удалено'));
         }
     }, [deleteSuccess]);
 

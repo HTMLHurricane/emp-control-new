@@ -4,8 +4,10 @@ import { useAppActions, useAppSelector } from '@/shared';
 import { FormLayout } from '@/shared/ui/formLayout/formLayout';
 import { Button, Form, Input, message } from 'antd';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next'
 
 const AdminUpdateRoleForm = () => {
+    const { t } = useTranslation();
     const [form] = Form.useForm();
     const [updateRole, { isSuccess, isLoading, isError }] =
         useUpdateRoleMutation();
@@ -29,11 +31,11 @@ const AdminUpdateRoleForm = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            message.success('Роль успешно изменён');
+            message.success(t('Роль успешно изменена!'));
             setIsUpdatingRole(false);
         }
         if (isError) {
-            message.error('Произошла ошибка во время редактирования');
+            message.error(t('Произошла ошибка во время редактирования.'));
             console.log('error', isError);
         }
     }, [isSuccess, isError]);
@@ -45,7 +47,7 @@ const AdminUpdateRoleForm = () => {
     }, []);
 
     return (
-        <FormLayout title="Изменить название роли" size='xl'>
+        <FormLayout title={t("Изменить название роли")} size='xl'>
             <Form
                 form={form}
                 onFinish={onSubmit}
@@ -53,11 +55,11 @@ const AdminUpdateRoleForm = () => {
             >
                 <Form.Item<IRolePatch>
                     name="name"
-                    label="Название роли"
+                    label={t("Название роли")}
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста, заполните поле!',
+                            message: t('Пожалуйста, заполните поле!'),
                         },
                     ]}
                 >
@@ -65,14 +67,14 @@ const AdminUpdateRoleForm = () => {
                 </Form.Item>
                 <div className="flex justify-end space-x-4">
                     <Button onClick={onCancel} type="default">
-                        Отмена
+                        {t("Отмена")}
                     </Button>
                     <Button
                         loading={isLoading}
                         type="primary"
                         htmlType="submit"
                     >
-                        Сохранить
+                        {t("Сохранить")}
                     </Button>
                 </div>
             </Form>

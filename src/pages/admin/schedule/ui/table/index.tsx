@@ -7,8 +7,10 @@ import { DeleteButton, EditButton, useAppActions } from '@/shared';
 import { columnResponseText } from '@/shared/const/css';
 import { Table, TableProps, message } from 'antd';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const AdminSchedulePageTable = () => {
+    const { t } = useTranslation();
     const { setScheduleForm, setIsUpdatingSchedule } = useAppActions();
     const { data, isLoading } = useGetAllSchedulesQuery();
     const [deleteSchedule, { isSuccess: deleteSuccess, isError: deleteError }] =
@@ -21,12 +23,12 @@ const AdminSchedulePageTable = () => {
 
     const columns: TableProps<ISchedule>['columns'] = [
         {
-            title: 'Название',
+            title: t('Название'),
             dataIndex: 'name',
             className: `${columnResponseText}`,
         },
         {
-            title: 'Дни',
+            title: t('Дни'),
             dataIndex: 'work_hours',
             render: (_, rec) => {
                 return (
@@ -37,13 +39,13 @@ const AdminSchedulePageTable = () => {
                                     <li key={day.id}>
                                         {`${
                                             {
-                                                MONDAY: 'Понедельник',
-                                                TUESDAY: 'Вторник',
-                                                WEDNESDAY: 'Среда',
-                                                THURSDAY: 'Четверг',
-                                                FRIDAY: 'Пятница',
-                                                SATURDAY: 'Суббота',
-                                                SUNDAY: 'Воскресенье',
+                                                MONDAY: t('Понедельник'),
+                                                TUESDAY: t('Вторник'),
+                                                WEDNESDAY: t('Среда'),
+                                                THURSDAY: t('Четверг'),
+                                                FRIDAY: t('Пятница'),
+                                                SATURDAY: t('Суббота'),
+                                                SUNDAY: t('Воскресенье'),
                                             }[day.day_of_week] || ''
                                         } ${day.start_time.slice(
                                             0,
@@ -74,13 +76,13 @@ const AdminSchedulePageTable = () => {
 
     useEffect(() => {
         if (deleteSuccess) {
-            message.success('Успешно удалено');
+            message.success(t('Успешно удалено'));
         }
     }, [deleteSuccess]);
 
     useEffect(() => {
         if (deleteError) {
-            message.error('Произошла ошибка во время удаления');
+            message.error(t('Произошла ошибка во время удаления'));
             console.log('error', deleteError);
         }
     }, [deleteError]);

@@ -7,8 +7,10 @@ import { mapToOptions } from '@/shared/lib/mapToOptions';
 import { FormLayout } from '@/shared/ui/formLayout/formLayout';
 import { Button, Form, Input, message, Select } from 'antd';
 import { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next'
 
 export const DeviceCreateForm = () => {
+    const {t} = useTranslation()
     const [form] = Form.useForm();
     const [createDevice, { isSuccess, isLoading, isError }] =
         useCreateDeviceMutation();
@@ -31,11 +33,11 @@ export const DeviceCreateForm = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            message.success('Device успешно создана');
+            message.success(t('Device успешно создана'));
             setIsCreatingDevice(false);
         }
         if (isError) {
-            message.error('Произошла ошибка во время создания device');
+            message.error(t('Произошла ошибка во время создания device'));
             console.log('error', isError);
         }
     }, [isSuccess, isError]);
@@ -51,11 +53,11 @@ export const DeviceCreateForm = () => {
             <Form form={form} onFinish={onSubmit} layout="vertical">
                 <Form.Item<IDevicePost>
                     name="name"
-                    label="Название Device"
+                    label={t("Название Device")}
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста, заполните поле!',
+                            message: t('Пожалуйста, заполните поле!'),
                         },
                     ]}
                 >
@@ -63,11 +65,11 @@ export const DeviceCreateForm = () => {
                 </Form.Item>
                 <Form.Item<IDevicePost>
                     name="path"
-                    label="Path Device"
+                    label={t("Path Device")}
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста, заполните поле!',
+                            message: t('Пожалуйста, заполните поле!'),
                         },
                     ]}
                 >
@@ -79,7 +81,7 @@ export const DeviceCreateForm = () => {
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста, заполните поле!',
+                            message: t('Пожалуйста, заполните поле!'),
                         },
                     ]}
                 >
@@ -87,46 +89,46 @@ export const DeviceCreateForm = () => {
                 </Form.Item>
                 <Form.Item<IDevicePost>
                     name="organization_id"
-                    label="Организация"
+                    label={t("Организация")}
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста, выберите организацию!',
+                            message: t('Пожалуйста, выберите организацию!'),
                         },
                     ]}
                 >
                     <Select
                         disabled={!organizationOptions?.length}
                         options={organizationOptions}
-                        placeholder="Выберите организацию"
+                        placeholder={t("Выберите организацию")}
                     />
                 </Form.Item>
                 <Form.Item<IDevicePost>
                     name="branch_id"
-                    label="Филиал"
+                    label={t("Филиал")}
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста, выберите филиал!',
+                            message: t('Пожалуйста, выберите филиал!'),
                         },
                     ]}
                 >
                     <Select
                         disabled={!branchOptions?.length}
                         options={branchOptions}
-                        placeholder="Выберите филиал"
+                        placeholder={t("Выберите филиал")}
                     />
                 </Form.Item>
                 <div className="flex justify-end space-x-4">
                     <Button onClick={onCancel} type="default">
-                        Отмена
+                        {t("Отмена")}
                     </Button>
                     <Button
                         loading={isLoading}
                         type="primary"
                         htmlType="submit"
                     >
-                        Сохранить
+                        {t("Сохранить")}
                     </Button>
                 </div>
             </Form>

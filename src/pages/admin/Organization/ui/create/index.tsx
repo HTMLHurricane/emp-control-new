@@ -4,8 +4,10 @@ import { useAppActions } from '@/shared';
 import { FormLayout } from '@/shared/ui/formLayout/formLayout';
 import { Form, Input, Button, message } from 'antd';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next'
 
 export const OrganizationCreateForm = () => {
+    const {t} = useTranslation()
     const [form] = Form.useForm();
     const [createOrganization, { isSuccess, isLoading, isError }] =
         useCreateOrganizationMutation();
@@ -22,11 +24,11 @@ export const OrganizationCreateForm = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            message.success('Организация успешно создана');
+            message.success(t('Организация успешно создана!'));
             setIsCreatingOrganization(false);
         }
         if (isError) {
-            message.error('Произошла ошибка во время создания организации');
+            message.error(t('Произошла ошибка во время создания организации.'));
             console.log('error', isError);
         }
     }, [isSuccess, isError]);
@@ -38,15 +40,15 @@ export const OrganizationCreateForm = () => {
     }, []);
 
     return (
-        <FormLayout title="Создать организацию" size="xl">
+        <FormLayout title={t("Создать организацию")} size="xl">
             <Form form={form} onFinish={onSubmit} layout="vertical">
                 <Form.Item<IOrganizationPost>
                     name="name"
-                    label="Название организации"
+                    label={t("Название организации")}
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста, заполните поле!',
+                            message: t('Пожалуйста, заполните поле!'),
                         },
                     ]}
                 >
@@ -54,14 +56,14 @@ export const OrganizationCreateForm = () => {
                 </Form.Item>
                 <div className="flex justify-end space-x-4">
                     <Button onClick={onCancel} type="default">
-                        Отмена
+                        {t("Отмена")}
                     </Button>
                     <Button
                         loading={isLoading}
                         type="primary"
                         htmlType="submit"
                     >
-                        Сохранить
+                        {t("Сохранить")}
                     </Button>
                 </div>
             </Form>

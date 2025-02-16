@@ -3,10 +3,12 @@ import { useAppActions, useAppSelector } from '@/shared';
 import { mapToOptions } from '@/shared/lib/mapToOptions';
 import { Button, Select } from 'antd';
 import { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next'
 import { FaArrowLeft, FaUserPlus } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 
 const AdminEmployeePageHead = () => {
+    const {t} = useTranslation()
     const { isCreatingEmployee, isUpdatingEmployee, attendanceBranch } =
         useAppSelector();
     const { setIsCreatingEmployee, setAttendanceBranch } = useAppActions();
@@ -32,14 +34,14 @@ const AdminEmployeePageHead = () => {
                     className="mr-4 cursor-pointer hover:text-blue-300 duration-150"
                     onClick={() => navigate(-1)}
                 />
-                Сотрудники
+                {t("Сотрудники")}
             </h2>
             {!isCreatingEmployee && !isUpdatingEmployee && (
                 <div className="flex">
                     <Select
                         options={branchOptions}
                         value={attendanceBranch}
-                        placeholder="Филиал"
+                        placeholder={t("Филиал")}
                         onSelect={(e) => setAttendanceBranch(e)}
                         allowClear
                         onClear={() => setAttendanceBranch()}
@@ -51,7 +53,7 @@ const AdminEmployeePageHead = () => {
                         className="text-[14px] md:ml-4 ml-2"
                     >
                         <div className="hidden md:block">
-                            Добавить сотрудника
+                            {t("Добавить сотрудника")}
                         </div>
                     </Button>
                 </div>

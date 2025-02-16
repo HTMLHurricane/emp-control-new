@@ -1,9 +1,11 @@
 import { FlexBox, useAppActions, useAppSelector } from '@/shared';
 import { Button, DatePicker, DatePickerProps } from 'antd';
+import { useTranslation } from 'react-i18next'
 import { FaArrowLeft, FaPlus } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 
 const AdminBranchPageHead = () => {
+    const {t} = useTranslation()
     const { isCreatingBranch, isUpdatingBranch } = useAppSelector();
     const { setIsCreatingBranch, setBranchDate } = useAppActions();
     const navigate = useNavigate();
@@ -22,13 +24,13 @@ const AdminBranchPageHead = () => {
                     className="mr-4 cursor-pointer hover:text-blue-300 duration-150"
                     onClick={() => navigate(-1)}
                 />
-                Филиалы
+                {t("Филиалы")}
             </h2>
             <div className="flex">
                 <DatePicker
                     allowClear={false}
                     onChange={onChange}
-                    placeholder="Дата"
+                    placeholder={t("Дата")}
                     className="w-[80px]"
                 />
                 {!isCreatingBranch && !isUpdatingBranch && (
@@ -38,7 +40,7 @@ const AdminBranchPageHead = () => {
                         onClick={handleCreate}
                         className="ml-2 md:ml-4"
                     >
-                        Филиал
+                        {t("Филиал")}
                     </Button>
                 )}
             </div>

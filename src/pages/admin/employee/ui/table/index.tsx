@@ -1,12 +1,20 @@
-import { useGetAllEmployeesQuery } from '@/entities/employee/api';
+import {
+    useDeleteEmployeeMutation,
+    useGetAllEmployeesQuery,
+} from '@/entities/employee/api';
 import { IEmployee } from '@/entities/employee/model/types';
 import { FlexBox, useAppSelector } from '@/shared';
-import { Button, Image, Table, TableProps } from 'antd';
+import { Button, Image, message, Popconfirm, Table, TableProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { columnResponseText } from '@/shared/const/css';
-import { FaInfo } from 'react-icons/fa'
+import { FaInfo } from 'react-icons/fa';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const AdminEmployeePageTable = () => {
+    const { t } = useTranslation();
+    const [deleteEmployee, { isSuccess: deleteSuccess }] =
+        useDeleteEmployeeMutation();
     const { attendanceBranch } = useAppSelector();
     const { data, isLoading } = useGetAllEmployeesQuery(
         attendanceBranch !== undefined
@@ -15,10 +23,15 @@ const AdminEmployeePageTable = () => {
         { skip: attendanceBranch === undefined },
     );
     const navigate = useNavigate();
-
+    useEffect(() => {
+        if (deleteSuccess) {
+            message.success(t('Успешно удалено'));
+            navigate('/employees');
+        }
+    }, [deleteSuccess]);
     const columns: TableProps<IEmployee>['columns'] = [
         {
-            title: 'Фото',
+            title: t('Фото'),
             key: 'first_image',
             dataIndex: 'first_image',
             className: `${columnResponseText}`,
@@ -33,30 +46,30 @@ const AdminEmployeePageTable = () => {
                         preview={{ mask: null }}
                     />
                 ) : (
-                    <>Фото отсутствует</>
+                    <>{t("Фото отсутствует")}</>
                 ),
         },
         {
-            title: 'Имя',
+            title: t('Имя'),
             dataIndex: 'full_name',
             className: `${columnResponseText}`,
         },
         {
-            title: 'Должность',
+            title: t('Должность'),
             dataIndex: 'position',
             render: (e) =>
-                e.name === 'unknown' ? 'Должность не указана' : e.name,
+                e.name === 'unknown' ? t('Должность не указана') : e.name,
             className: `${columnResponseText}`,
         },
         {
-            title: 'Подразделение',
+            title: t('Филиал'),
             dataIndex: 'branch',
             render: (e) => e.name,
             className: `${columnResponseText}`,
             responsive: ['md', 'lg', 'xl'],
         },
         {
-            title: 'Рабочий график',
+            title: t('Рабочий график'),
             dataIndex: 'schedule',
             render: (el) => (
                 <FlexBox cls="flex-col w-[200px]">{el.name}</FlexBox>
@@ -65,7 +78,7 @@ const AdminEmployeePageTable = () => {
             responsive: ['lg', 'xl'],
         },
         {
-            title: 'Телефон',
+            title: t('Телефон'),
             dataIndex: 'phone',
             render: (item) => <div className="w-[150px]">{item}</div>,
             className: `${columnResponseText}`,
@@ -75,13 +88,20 @@ const AdminEmployeePageTable = () => {
             title: '',
             dataIndex: 'actions',
             render: (_, rec) => (
-                <div className="flex gap-1 lg:gap-2">
+                <div className="flex gap-1 lg:gap-4">
                     <Button
                         type="primary"
                         onClick={() => navigate(`/employees/${rec.id}`)}
                         icon={<FaInfo />}
                         className="text-[12px] md:text-[14px]"
                     />
+                    <Popconfirm
+                        onConfirm={() => deleteEmployee(rec.id)}
+                        className="text-2xl text-white bg-red-500 px-2 rounded-lg cursor-pointer"
+                        title={t("Вы действительно хотите удалить сотрудника?")}
+                    >
+                        x
+                    </Popconfirm>
                 </div>
             ),
             className: `${columnResponseText}`,

@@ -3,6 +3,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { IDoughnutChartProps } from '../../model';
 import { useAppActions } from '@/shared';
+import { useTranslation } from 'react-i18next'
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 const cardClasses =
@@ -10,6 +11,7 @@ const cardClasses =
 const cardTextClasses = 'text-gray-400 lg:text-base max-lg:text-sm';
 
 const DoughnutChart: FC<IDoughnutChartProps> = ({ datasets, date, total }) => {
+    const {t} = useTranslation()
     const { setIsNotComeModal, setIsLateModal, setIsComeModal } =
         useAppActions();
     const chartRef = useRef();
@@ -19,7 +21,7 @@ const DoughnutChart: FC<IDoughnutChartProps> = ({ datasets, date, total }) => {
         plugins: {
             title: {
                 display: true,
-                text: `Статистика за ${date.format('YYYY-MM-DD')}`,
+                text: `${t("Статистика за")} ${date.format('YYYY-MM-DD')}`,
                 font: {
                     size: 16,
                 },
@@ -30,7 +32,7 @@ const DoughnutChart: FC<IDoughnutChartProps> = ({ datasets, date, total }) => {
     const data = {
         datasets: [
             {
-                label: 'Количество',
+                label: t('Количество'),
                 data: datasets,
                 backgroundColor: ['red', 'yellow', 'green'],
                 borderColor: ['red', 'yellow', 'green'],
@@ -68,21 +70,21 @@ const DoughnutChart: FC<IDoughnutChartProps> = ({ datasets, date, total }) => {
                     className={`${cardClasses} border-t-green-500`}
                 >
                     <span>{datasets[2]}</span>
-                    <span className={cardTextClasses}>Пришли</span>
+                    <span className={cardTextClasses}>{t("Пришли")}</span>
                 </div>
                 <div
                     onClick={() => setIsLateModal(true)}
                     className={`${cardClasses} border-t-yellow-200`}
                 >
                     <span>{datasets[1]}</span>
-                    <span className={cardTextClasses}>Опоздали</span>
+                    <span className={cardTextClasses}>{t("Опоздали")}</span>
                 </div>
                 <div
                     onClick={() => setIsNotComeModal(true)}
                     className={`${cardClasses} border-t-red-500`}
                 >
                     <span>{datasets[0]}</span>
-                    <span className={cardTextClasses}>Не пришли</span>
+                    <span className={cardTextClasses}>{t("Не пришли")}</span>
                 </div>
             </div>
         </div>

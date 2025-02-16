@@ -2,6 +2,7 @@ import { useDeleteClientMutation } from '@/entities/client/api';
 import { ITopClients } from '@/entities/client/models/types';
 import { List, Image, Button, Popconfirm, message } from 'antd';
 import { FC, useEffect } from 'react';
+import { useTranslation } from 'react-i18next'
 import { FaInfo } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom';
 
@@ -16,17 +17,18 @@ export const TopClientsTable: FC<TopClientsTableProps> = ({
     top,
     title,
 }) => {
+    const {t} = useTranslation()
     const navigate = useNavigate();
     const [deleteClient, { isSuccess }] = useDeleteClientMutation();
     useEffect(() => {
         if (isSuccess) {
-            message.success('Успешно удалено');
+            message.success(t('Успешно удалено'));
         }
     }, [isSuccess]);
     return (
         <div>
             <h2 className="text-center py-5">
-                Топ {top} клиентов {title}
+                {t("Топ")} {top} {t("клиентов")} {title}
             </h2>
             <List
                 grid={{
@@ -56,7 +58,7 @@ export const TopClientsTable: FC<TopClientsTableProps> = ({
                                         deleteClient(item.client_id)
                                     }
                                     className="basis-1/2 text-center text-[16px] font-bold"
-                                    title="Вы действительно хотите удалить?"
+                                    title={t("Вы действительно хотите удалить?")}
                                 >
                                     x
                                 </Popconfirm>

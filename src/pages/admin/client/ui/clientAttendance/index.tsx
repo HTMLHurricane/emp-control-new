@@ -2,9 +2,11 @@ import { useGetClientAttendancesQuery } from '@/entities/client/api';
 import { IClientAttendance } from '@/entities/client/models/types';
 import { TableProps, Image, Table } from 'antd';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom';
 
 export const ClientAttendances = () => {
+    const {t} = useTranslation()
     const [page, setPage] = useState(1);
     const [page_size, setPageSize] = useState(10);
     const { id } = useParams();
@@ -21,21 +23,21 @@ export const ClientAttendances = () => {
         {
             key: 'date',
             dataIndex: 'date',
-            title: 'Дата',
+            title: t('Дата'),
             render: (item) => <>{item.split('T')[0]}</>,
             className: 'w-[200px]',
         },
         {
             key: 'date',
             dataIndex: 'date',
-            title: 'Время',
+            title: t('Время'),
             render: (item) => <>{item.slice(11, 16)}</>,
             className: 'w-[200px]',
         },
         {
             key: 'url',
             dataIndex: 'url',
-            title: 'Фото',
+            title: t('Фото'),
             render: (url) => <Image src={url} width={300} height={150} />,
             className: 'w-[300px]',
         },
@@ -48,7 +50,7 @@ export const ClientAttendances = () => {
         {
             key: 'age',
             dataIndex: 'age',
-            title: 'Возраст',
+            title: t('Возраст'),
             render: (item) => <>{item} лет</>,
         },
         {

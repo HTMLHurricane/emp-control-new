@@ -13,8 +13,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { UploadOutlined } from '@ant-design/icons';
 import { FormLayout } from '@/shared/ui/formLayout/formLayout';
 import { useCheckUserQuery } from '@/entities/auth/api';
+import { useTranslation } from 'react-i18next'
 
 const AdminCreateEmployeeForm = () => {
+    const {t} = useTranslation()
     const [form] = Form.useForm();
     const [createEmployee, { isSuccess, isError }] =
         useCreateEmployeeMutation();
@@ -56,12 +58,12 @@ const AdminCreateEmployeeForm = () => {
 
     useEffect(() => {
         if (isSuccess && success) {
-            message.success('Сотрудник успешно создан!');
+            message.success(t('Сотрудник успешно создан!'));
             setIsCreatingEmployee(false);
         } else if (loading) {
-            message.loading('Создаем сотрудника...');
+            message.loading(t('Создаем сотрудника...'));
         } else if (isError || error) {
-            message.error('Произошла ошибка при создании сотрудника.');
+            message.error(t('Произошла ошибка при создании сотрудника.'));
         }
     }, [isSuccess, isError, success, loading, error]);
 
@@ -73,7 +75,7 @@ const AdminCreateEmployeeForm = () => {
     useEffect(() => () => onCancel(), []);
 
     return (
-        <FormLayout title="Добавить сотрудника" size="xl">
+        <FormLayout title={t("Добавить сотрудника")} size="xl">
             <Form
                 form={form}
                 onFinish={onSubmit}
@@ -84,32 +86,32 @@ const AdminCreateEmployeeForm = () => {
                     <Col xs={24} sm={12}>
                         <Form.Item
                             name="first_name"
-                            label="Имя"
+                            label={t("Имя")}
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Пожалуйста, заполните поле!',
+                                    message: t('Пожалуйста, заполните поле!'),
                                 },
                             ]}
                         >
-                            <Input placeholder="Введите имя" />
+                            <Input placeholder={t("Введите имя")} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12}>
                         <Form.Item
                             name="position_id"
-                            label="Должность"
+                            label={t("Должность")}
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Пожалуйста, выберите должность!',
+                                    message: t('Пожалуйста, выберите должность!'),
                                 },
                             ]}
                         >
                             <Select
                                 disabled={!roleOptions?.length}
                                 options={roleOptions}
-                                placeholder="Выберите должность"
+                                placeholder={t("Выберите должность")}
                             />
                         </Form.Item>
                     </Col>
@@ -118,33 +120,33 @@ const AdminCreateEmployeeForm = () => {
                     <Col xs={24} sm={12}>
                         <Form.Item
                             name="last_name"
-                            label="Фамилия"
+                            label={t("Фамилия")}
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Пожалуйста, заполните поле!',
+                                    message: t('Пожалуйста, заполните поле!'),
                                 },
                             ]}
                         >
-                            <Input placeholder="Введите фамилию" />
+                            <Input placeholder={t("Введите фамилию")} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={12}>
                         <Form.Item
                             name="branch_id"
-                            label="Филиал"
+                            label={t("Филиал")}
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Пожалуйста, выберите филиал!',
+                                    message: t('Пожалуйста, выберите филиал!'),
                                 },
                             ]}
                         >
                             <Select
                                 disabled={!branchOptions?.length}
                                 options={branchOptions}
-                                placeholder="Выберите филиал"
+                                placeholder={t("Выберите филиал")}
                             />
                         </Form.Item>
                     </Col>
@@ -153,33 +155,33 @@ const AdminCreateEmployeeForm = () => {
                     <Col xs={24} sm={12}>
                         <Form.Item
                             name="phone"
-                            label="Телефон"
+                            label={t("Телефон")}
                             rules={[
                                 {
                                     required: true,
                                     message:
-                                        'Пожалуйста, введите номер телефона!',
+                                        t('Пожалуйста, введите номер телефона!'),
                                 },
                             ]}
                         >
-                            <Input placeholder="Введите номер телефона" />
+                            <Input placeholder={t("Введите номер телефона")} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12}>
                         <Form.Item
                             name="schedule_id"
-                            label="Рабочий график"
+                            label={t("Рабочий график")}
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Пожалуйста, выберите график!',
+                                    message: t('Пожалуйста, выберите график!'),
                                 },
                             ]}
                         >
                             <Select
                                 disabled={!scheduleOptions?.length}
                                 options={scheduleOptions}
-                                placeholder="Выберите график"
+                                placeholder={t("Выберите график")}
                             />
                         </Form.Item>
                     </Col>
@@ -187,12 +189,12 @@ const AdminCreateEmployeeForm = () => {
                 <Row gutter={16}>
                     <Col xs={24} sm={12}>
                         <Form.Item
-                            label="Выберите изображение"
+                            label={t("Выберите изображение")}
                             rules={[
                                 {
                                     required: true,
                                     message:
-                                        'Пожалуйста, выберите изображение!',
+                                        t('Пожалуйста, выберите изображение!'),
                                 },
                             ]}
                         >
@@ -203,7 +205,7 @@ const AdminCreateEmployeeForm = () => {
                                 onChange={handleUploadChange}
                             >
                                 <Button icon={<UploadOutlined />}>
-                                    Выбрать изображение
+                                    {t("Выбрать изображение")}
                                 </Button>
                             </Upload>
                         </Form.Item>
@@ -211,10 +213,10 @@ const AdminCreateEmployeeForm = () => {
                 </Row>
                 <div className="flex justify-end space-x-4">
                     <Button onClick={onCancel} type="default">
-                        Отмена
+                        {t("Отмена")}
                     </Button>
                     <Button loading={loading} type="primary" htmlType="submit">
-                        Сохранить
+                        {t("Сохранить")}
                     </Button>
                 </div>
             </Form>

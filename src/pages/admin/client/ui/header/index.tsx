@@ -2,6 +2,7 @@ import { FlexBox } from '@/shared';
 import { DatePicker, Radio, Select } from 'antd';
 import dayjs from 'dayjs';
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next'
 import { FaArrowLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,6 +26,7 @@ export const ClientHeader: FC<IHeaderProps> = ({
     setFilter,
     filter,
 }) => {
+    const {t} = useTranslation()
     const navigate = useNavigate();
     const applyFilter = (filter: 'week' | 'month') => {
         if (filter === 'week') {
@@ -63,13 +65,13 @@ export const ClientHeader: FC<IHeaderProps> = ({
                     className="mr-4 cursor-pointer hover:text-blue-300 duration-150"
                     onClick={() => navigate(-1)}
                 />
-                Топ клиенты
+                {t("Топ клиенты")}
             </h2>
             <div className="flex gap-1">
                 <Select
                     value={topCount}
                     onChange={handleChange}
-                    placeholder="Выберите значение"
+                    placeholder={t("Выберите значение")}
                 >
                     <Option value={10}>10</Option>
                     <Option value={15}>15</Option>
@@ -81,8 +83,8 @@ export const ClientHeader: FC<IHeaderProps> = ({
                     onChange={(e) => applyFilter(e.target.value)}
                     className="flex-shrink-0"
                 >
-                    <Radio.Button value="week">Текущая неделя</Radio.Button>
-                    <Radio.Button value="month">Текущий месяц</Radio.Button>
+                    <Radio.Button value="week">{t("Текущая неделя")}</Radio.Button>
+                    <Radio.Button value="month">{t("Текущий месяц")}</Radio.Button>
                 </Radio.Group>
                 <DatePicker
                     picker="month"

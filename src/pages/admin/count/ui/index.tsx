@@ -12,6 +12,7 @@ import { ClientData, IClientIntervalData } from '@/entities/count/model/types';
 import { TOKEN, useAppActions, useAppSelector } from '@/shared';
 import { PeakHours1 } from './PeakHoursChart/ui/PeakHours1';
 import { useCheckUserQuery } from '@/entities/auth/api';
+import { useTranslation } from 'react-i18next'
 
 const transformIntervalData = (
     hourlyClientCounts: IClientIntervalData['daily_client_counts'],
@@ -36,6 +37,7 @@ const transformData = (
 };
 
 const AdminCount = () => {
+    const {t} = useTranslation()
     const { dates } = useAppSelector();
     const { setDates } = useAppActions();
     const { data: admin } = useCheckUserQuery(TOKEN.get() as string);
@@ -66,7 +68,7 @@ const AdminCount = () => {
         <div className="w-full">
             <Header dates={dates} setDates={setDates} />
             <div className="text-xl font-bold text-center pt-5 pb-1">
-                Статистика за{' '}
+                {t("Статистика за")}{' '}
                 {dates
                     ? `${
                           dates?.[0]?.format('YYYY-MM-DD') +

@@ -4,8 +4,10 @@ import { IdName } from '@/shared/types/Types';
 import { FormLayout } from '@/shared/ui/formLayout/formLayout';
 import { Form, Input, Button, message } from 'antd';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const OrganizationUpdateForm = () => {
+    const { t } = useTranslation();
     const [form] = Form.useForm();
     const [updateOrganization, { isSuccess, isLoading, isError }] =
         useUpdateOrganizationMutation();
@@ -29,11 +31,11 @@ export const OrganizationUpdateForm = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            message.success('Организация успешно изменена');
+            message.success(t('Организация успешно изменена!'));
             setIsUpdatingOrganization(false);
         }
         if (isError) {
-            message.error('Произошла ошибка во время редактирования');
+            message.error(t('Произошла ошибка во время редактирования.'));
             console.log('error', isError);
         }
     }, [isSuccess, isError]);
@@ -45,15 +47,15 @@ export const OrganizationUpdateForm = () => {
     }, []);
 
     return (
-        <FormLayout title="Изменить название организации" size="xl">
+        <FormLayout title={t("Изменить название организации")} size="xl">
             <Form form={form} onFinish={onSubmit} layout="vertical">
                 <Form.Item<IdName>
                     name="name"
-                    label="Название организации"
+                    label={t("Название организации")}
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста, заполните поле!',
+                            message: t('Пожалуйста, заполните поле!'),
                         },
                     ]}
                 >
@@ -61,14 +63,14 @@ export const OrganizationUpdateForm = () => {
                 </Form.Item>
                 <div className="flex justify-end space-x-4">
                     <Button onClick={onCancel} type="default">
-                        Отмена
+                        {t("Отмена")}
                     </Button>
                     <Button
                         loading={isLoading}
                         type="primary"
                         htmlType="submit"
                     >
-                        Сохранить
+                        {t("Сохранить")}
                     </Button>
                 </div>
             </Form>

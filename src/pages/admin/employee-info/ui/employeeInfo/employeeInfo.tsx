@@ -21,11 +21,13 @@ import {
 import { IEmployee } from '@/entities/employee/model/types';
 import { useAppActions } from '@/shared';
 import { useEffect, useState } from 'react';
-import { FaInfo } from 'react-icons/fa'
+import { FaInfo } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 const { Meta } = Card;
 
 export const EmployeeInfo = () => {
+    const { t } = useTranslation();
     const { id } = useParams();
     const [deleteEmployee, { isSuccess: deleteSuccess }] =
         useDeleteEmployeeMutation();
@@ -45,20 +47,20 @@ export const EmployeeInfo = () => {
                 id: id!,
                 file: selectedFile,
             });
-            setFileList(info.fileList); 
+            setFileList(info.fileList);
         }
     };
 
     useEffect(() => {
         if (addImageSuccess) {
-            message.success('Успешно загружено');
+            message.success(t('Успешно загружено'));
             setFileList([]);
         }
     }, [addImageSuccess]);
 
     useEffect(() => {
         if (deleteSuccess) {
-            message.success('Успешно удалено');
+            message.success(t('Успешно удалено'));
             navigate('/employees');
         }
     }, [deleteSuccess]);
@@ -83,7 +85,7 @@ export const EmployeeInfo = () => {
     if (!data) {
         return (
             <div className="flex justify-center items-center ">
-                <Empty description="Данные Сотрудника не найдены" />
+                <Empty description={t('Данные Сотрудника не найдены')} />
             </div>
         );
     }
@@ -105,7 +107,7 @@ export const EmployeeInfo = () => {
                                             preview={{ mask: null }}
                                         />
                                     ) : (
-                                        <>Фото отсутствует</>
+                                        <>{t('Фото отсутствует')}</>
                                     )}
                                     {data.first_image ? (
                                         <div className="flex items-center w-[300px] h-[150px] rounded-b-full absolute bottom-0 cursor-pointer bg-white text-red-500 opacity-80 group-hover:opacity-80 transition-opacity duration-300 ease-in-out">
@@ -114,7 +116,9 @@ export const EmployeeInfo = () => {
                                                     deleteEmployee(data.id)
                                                 }
                                                 className="basis-1/2 flex justify-center pl-10 text-4xl font-bold"
-                                                title="Вы действительно хотите удалить сотрудника?"
+                                                title={t(
+                                                    'Вы действительно хотите удалить сотрудника?',
+                                                )}
                                             >
                                                 x
                                             </Popconfirm>
@@ -129,7 +133,7 @@ export const EmployeeInfo = () => {
                                                 <Button
                                                     icon={<UploadOutlined />}
                                                 >
-                                                    Фото
+                                                    {'Фото'}
                                                 </Button>
                                             </Upload>
                                             <div className="basis-1/2 flex justify-center pr-8">
@@ -139,9 +143,7 @@ export const EmployeeInfo = () => {
                                                         handleEdit(data)
                                                     }
                                                     type="link"
-                                                    icon={
-                                                        <FaInfo size={25} />
-                                                    }
+                                                    icon={<FaInfo size={25} />}
                                                 />
                                             </div>
                                         </div>
@@ -153,7 +155,9 @@ export const EmployeeInfo = () => {
                                                         deleteEmployee(data.id)
                                                     }
                                                     className="basis-1/2 flex justify-center pl-10 text-4xl font-bold text-red-500"
-                                                    title="Вы действительно хотите удалить сотрудника?"
+                                                    title={t(
+                                                        'Вы действительно хотите удалить сотрудника?',
+                                                    )}
                                                 >
                                                     x
                                                 </Popconfirm>
@@ -179,7 +183,7 @@ export const EmployeeInfo = () => {
                                                 <Button
                                                     icon={<UploadOutlined />}
                                                 >
-                                                    Фото
+                                                    {t('Фото')}
                                                 </Button>
                                             </Upload>
                                         </div>
@@ -189,7 +193,7 @@ export const EmployeeInfo = () => {
                                 <div className="space-y-4 ml-8">
                                     <div className="text-lg">
                                         <span className="text-gray-700 font-semibold">
-                                            ФИО:
+                                            {t('ФИО')}:
                                         </span>
                                         <span className="ml-2 text-gray-900">
                                             {data.full_name}
@@ -197,7 +201,7 @@ export const EmployeeInfo = () => {
                                     </div>
                                     <div className="text-lg">
                                         <span className="text-gray-700 font-semibold">
-                                            Телефон:
+                                            {t('Телефон')}:
                                         </span>
                                         <span className="ml-2 text-gray-900">
                                             {data.phone}
@@ -205,7 +209,7 @@ export const EmployeeInfo = () => {
                                     </div>
                                     <div className="text-lg">
                                         <span className="text-gray-700 font-semibold">
-                                            Филиал:
+                                            {t('Филиал')}:
                                         </span>
                                         <span className="ml-2 text-gray-900">
                                             {data.branch.name}
@@ -213,7 +217,7 @@ export const EmployeeInfo = () => {
                                     </div>
                                     <div className="text-lg">
                                         <span className="text-gray-700 font-semibold">
-                                            Должность:
+                                            {t('Должность')}:
                                         </span>
                                         <span className="ml-2 text-gray-900">
                                             {data.position.name}
@@ -221,7 +225,7 @@ export const EmployeeInfo = () => {
                                     </div>
                                     <div className="text-lg">
                                         <span className="text-gray-700 font-semibold">
-                                            Рабочий график:
+                                            {t('Рабочий график')}:
                                         </span>
                                         <span className="ml-2 text-gray-900">
                                             {data.schedule.name}

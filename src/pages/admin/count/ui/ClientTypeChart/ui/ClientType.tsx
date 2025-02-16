@@ -6,14 +6,16 @@ import { Button, Image, List, message, Popconfirm } from 'antd/lib';
 import { useDeleteClientMutation } from '@/entities/client/api';
 import { useEffect } from 'react';
 import { FaInfo } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 
 export const ClientTypePage = () => {
+    const {t} = useTranslation()
     const { dates, attendanceBranch, homeDate } = useAppSelector();
     const date = homeDate.format('YYYY-MM-DD');
     const [deleteClient, { isSuccess }] = useDeleteClientMutation();
     useEffect(() => {
         if (isSuccess) {
-            message.success('Успешно удалено');
+            message.success(t('Успешно удалено'));
         }
     }, [isSuccess]);
     const { data } = useGetRegularClientsQuery({
@@ -31,10 +33,10 @@ export const ClientTypePage = () => {
                     className="mr-3 cursor-pointer hover:text-blue-500 transition-colors duration-150"
                     onClick={() => navigate('/count')}
                 />
-                Клиенты
+                {t("Клиенты")}
             </h2>
             <div className="text-xl font-semibold text-center my-5">
-                Постоянные клиенты за {dates?.[0]?.format('YYYY-MM-DD')} -{' '}
+                {t("Постоянные клиенты за")} {dates?.[0]?.format('YYYY-MM-DD')} -{' '}
                 {dates?.[1]?.format('YYYY-MM-DD')}
             </div>
             <List
@@ -65,7 +67,7 @@ export const ClientTypePage = () => {
                                         deleteClient(item.client_id)
                                     }
                                     className="basis-1/2 text-center text-[16px] font-bold"
-                                    title="Вы действительно хотите удалить?"
+                                    title={t("Вы действительно хотите удалить?")}
                                 >
                                     x
                                 </Popconfirm>

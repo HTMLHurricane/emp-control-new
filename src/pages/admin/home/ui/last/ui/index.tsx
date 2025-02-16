@@ -5,8 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { columnResponseText } from '@/shared/const/css';
 import { Image, Spin, Table, TableProps } from 'antd';
 import { ILastAttendance } from '@/entities/home/model';
+import { useTranslation } from 'react-i18next'
 
 const Last = () => {
+    const {t} = useTranslation()
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [isPreviewOpened, setIsPreviewOpened] = useState(false);
@@ -18,7 +20,7 @@ const Last = () => {
 
     const columns: TableProps<ILastAttendance>['columns'] = [
         {
-            title: 'Фото',
+            title: t('Фото'),
             dataIndex: 'employee',
             key: 'employee',
             render: (_, res) => (
@@ -43,13 +45,13 @@ const Last = () => {
             ),
         },
         {
-            title: 'ФИО',
+            title: t('ФИО'),
             key: 'full_name',
             dataIndex: 'full_name',
             render: (_, res) => <>{res.employee.full_name}</>,
         },
         {
-            title: 'Должность',
+            title: t('Должность'),
             dataIndex: 'position',
             key: 'position',
             render: (_, res) => <>{res.employee.branch.name}</>,
@@ -57,7 +59,7 @@ const Last = () => {
             className: `${columnResponseText}`,
         },
         {
-            title: 'Филиал',
+            title: t('Филиал'),
             dataIndex: 'branch',
             key: 'branch',
             render: (_, res) => <>{res.employee.branch.name}</>,
@@ -72,14 +74,14 @@ const Last = () => {
             className: `${columnResponseText}`,
         },
         {
-            title: 'Время',
+            title: t('Время'),
             dataIndex: 'date',
             key: 'date',
             render: (time) => time.split('T')[1].slice(0, 5),
             className: `${columnResponseText} w-[50px]`,
         },
         {
-            title: 'Изображение',
+            title: t('Изображение'),
             dataIndex: 'url',
             key: 'url',
             render: (url) => (
@@ -112,7 +114,7 @@ const Last = () => {
     } else {
         return (
             <Card className="flex-col flex-1 min-h-[450px] text-center">
-                <Title>Последняя активность</Title>
+                <Title>{t("Последняя активность")}</Title>
                 <Table<ILastAttendance>
                     scroll={{ y: 450 }}
                     dataSource={data?.content}

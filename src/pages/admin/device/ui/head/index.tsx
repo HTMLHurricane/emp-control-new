@@ -1,9 +1,11 @@
 import { useAppActions, useAppSelector } from '@/shared';
 import { Button } from 'antd';
+import { useTranslation } from 'react-i18next'
 import { FaArrowLeft, FaUserPlus } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 
 export const DeviceHead = () => {
+    const {t} = useTranslation()
     const { isCreatingDevice, isUpdatingDevice } = useAppSelector();
     const { setIsCreatingDevice } = useAppActions();
 
@@ -21,7 +23,7 @@ export const DeviceHead = () => {
                     className="mr-4 cursor-pointer hover:text-blue-300 duration-150"
                     onClick={() => navigate(-1)}
                 />
-                Устройства
+                {t("Устройства")}
             </h2>
             {!isCreatingDevice && !isUpdatingDevice && (
                 <div className="flex">
@@ -32,7 +34,7 @@ export const DeviceHead = () => {
                         className="text-[14px] md:ml-4 ml-2"
                     >
                         <div className="hidden md:block">
-                            Добавить Устройство
+                            {t("Добавить Устройство")}
                         </div>
                     </Button>
                 </div>

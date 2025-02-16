@@ -5,8 +5,10 @@ import { TOKEN, useAppActions } from '@/shared';
 import { FormLayout } from '@/shared/ui/formLayout/formLayout';
 import { Button, Checkbox, Col, Form, Input, message, Row } from 'antd';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const AdminCreateBranchForm = () => {
+    const { t } = useTranslation();
     const [form] = Form.useForm();
     const [createBranch, { isSuccess, isLoading, isError }] =
         useCreateBranchMutation();
@@ -24,11 +26,11 @@ const AdminCreateBranchForm = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            message.success('Филиал успешно создан');
+            message.success(t('Филиал успешно создан'));
             setIsCreatingBranch(false);
         }
         if (isError) {
-            message.error('Произошла ошибка во время создания филиала');
+            message.error(t('Произошла ошибка во время создания филиала'));
             console.log('error', isError);
         }
     }, [isSuccess, isError]);
@@ -40,7 +42,7 @@ const AdminCreateBranchForm = () => {
     }, []);
 
     return (
-        <FormLayout title="Создать филиал" size="xl">
+        <FormLayout title={t("Создать филиал")} size="xl">
             <Form
                 form={form}
                 onFinish={onSubmit}
@@ -51,11 +53,11 @@ const AdminCreateBranchForm = () => {
                     <Col xs={24} sm={12}>
                         <Form.Item<IBranchPost>
                             name="name"
-                            label="Название филиала"
+                            label={t("Название филиала")}
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Пожалуйста, заполните поле!',
+                                    message: t('Пожалуйста, заполните поле!'),
                                 },
                             ]}
                         >
@@ -65,11 +67,11 @@ const AdminCreateBranchForm = () => {
                     <Col xs={24} sm={12}>
                         <Form.Item<IBranchPost>
                             name="address"
-                            label="Адрес"
+                            label={t("Адрес")}
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Пожалуйста, заполните поле!',
+                                    message: t('Пожалуйста, заполните поле!'),
                                 },
                             ]}
                         >
@@ -82,21 +84,21 @@ const AdminCreateBranchForm = () => {
                         {' '}
                         <Form.Item name="is_active" valuePropName="checked">
                             <Checkbox>
-                                <span className="ml-5">Активность</span>
+                                <span className="ml-5">{t('Активность')}</span>
                             </Checkbox>
                         </Form.Item>
                     </Col>
                 </Row>
                 <div className="flex justify-end space-x-4">
                     <Button onClick={onCancel} type="default">
-                        Отмена
+                        {t("Отмена")}
                     </Button>
                     <Button
                         loading={isLoading}
                         type="primary"
                         htmlType="submit"
                     >
-                        Сохранить
+                        {t("Сохранить")}
                     </Button>
                 </div>
             </Form>

@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next'
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 export const Sex = ({ count }: { count: [number, number] }) => {
+    const {t} = useTranslation()
     const total = count[0] + count[1]; // Общее количество людей
     const formattedData = [
         {
-            name: 'Мужчины',
+            name: t('Мужчины'),
             value: count[0],
             percent: total > 0 ? (count[0] / total) * 100 : 0,
         },
         {
-            name: 'Женщины',
+            name: t('Женщины'),
             value: count[1],
             percent: total > 0 ? (count[1] / total) * 100 : 0,
         },

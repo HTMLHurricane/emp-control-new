@@ -1,9 +1,11 @@
 import { useAppActions, useAppSelector } from '@/shared';
 import { Button } from 'antd';
+import { useTranslation } from 'react-i18next'
 import { FaArrowLeft, FaUserPlus } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 
 const OrganizationHead = () => {
+    const {t} = useTranslation()
     const { isCreatingOrganization, isUpdatingOrganization } = useAppSelector();
     const { setIsCreatingOrganization } = useAppActions();
     const navigate = useNavigate();
@@ -20,7 +22,7 @@ const OrganizationHead = () => {
                     className="mr-4 cursor-pointer hover:text-blue-300 duration-150"
                     onClick={() => navigate(-1)}
                 />
-                Организации
+                {t("Организации")}
             </h2>
             {!isCreatingOrganization && !isUpdatingOrganization && (
                 <div className="flex">
@@ -31,7 +33,7 @@ const OrganizationHead = () => {
                         className="text-[14px] md:ml-4 ml-2"
                     >
                         <div className="hidden md:block">
-                            Добавить Организацию
+                            {t("Добавить Организацию")}
                         </div>
                     </Button>
                 </div>

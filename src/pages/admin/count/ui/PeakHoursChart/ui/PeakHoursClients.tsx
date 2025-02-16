@@ -3,17 +3,19 @@ import { useGetPeakHoursClientsQuery } from '@/entities/count/api';
 import { useAppSelector } from '@/shared';
 import { Button, Image, List, message, Popconfirm } from 'antd/lib';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next'
 import { FaInfo } from 'react-icons/fa'
 import { FaArrowLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 
 export const PeakHoursClients = () => {
+    const {t} = useTranslation()
     const { dates, datesTimes, attendanceBranch, homeDate } = useAppSelector();
     const date = homeDate.format('YYYY-MM-DD');
     const [deleteClient, { isSuccess }] = useDeleteClientMutation();
     useEffect(() => {
         if (isSuccess) {
-            message.success('Успешно удалено');
+            message.success(t('Успешно удалено'));
         }
     }, [isSuccess]);
     const { data } = useGetPeakHoursClientsQuery(
@@ -38,13 +40,13 @@ export const PeakHoursClients = () => {
                     className="mr-3 cursor-pointer hover:text-blue-500 transition-colors duration-150"
                     onClick={() => navigate('/count')}
                 />
-                Клиенты
+                {t('Клиенты')}
             </h2>
             <div className="text-xl font-semibold text-center my-5">
-                Пиковое время клиентов за {dates?.[0]?.format('YYYY-MM-DD')} -{' '}
+                {t("Пиковое время клиентов за")} {dates?.[0]?.format('YYYY-MM-DD')} -{' '}
                 {dates?.[1]?.format('YYYY-MM-DD')}
                 <div>
-                    время: {datesTimes?.slice(0, 5)} -{' '}
+                    {t("Время")}: {datesTimes?.slice(0, 5)} -{' '}
                     {datesTimes?.slice(6, 11)}
                 </div>
             </div>
@@ -76,7 +78,7 @@ export const PeakHoursClients = () => {
                                         deleteClient(item.client_id)
                                     }
                                     className="basis-1/2 text-center text-[16px] font-bold"
-                                    title="Вы действительно хотите удалить?"
+                                    title={t("Вы действительно хотите удалить?")}
                                 >
                                     x
                                 </Popconfirm>

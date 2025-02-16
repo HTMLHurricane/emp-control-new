@@ -4,8 +4,10 @@ import { useAppActions, useAppSelector } from '@/shared';
 import { FormLayout } from '@/shared/ui/formLayout/formLayout';
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next'
 
 const AdminUpdateBranchForm = () => {
+    const {t } = useTranslation() 
     const [form] = Form.useForm();
     const [updateBranch, { isSuccess, isLoading, isError }] =
         useUpdateBranchMutation();
@@ -29,11 +31,11 @@ const AdminUpdateBranchForm = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            message.success('Филиал успешно изменён');
+            message.success(t('Филиал успешно изменён'));
             setIsUpdatingBranch(false);
         }
         if (isError) {
-            message.error('Произошла ошибка во время редактирования');
+            message.error(t('Произошла ошибка во время редактирования'));
             console.log('error', isError);
         }
     }, [isSuccess, isError]);
@@ -45,7 +47,7 @@ const AdminUpdateBranchForm = () => {
     }, []);
 
     return (
-        <FormLayout title="Изменить данные филиала" size="xl">
+        <FormLayout title={t("Изменить данные филиала")} size="xl">
             <Form
                 form={form}
                 className="space-y-4"
@@ -55,11 +57,11 @@ const AdminUpdateBranchForm = () => {
                 <Form.Item<IBranchPatch> name="id" className="hidden" />
                 <Form.Item<IBranchPatch>
                     name="name"
-                    label="Название филиала"
+                    label={t("Название филиала")}
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста, заполните поле!',
+                            message: t('Пожалуйста, заполните поле!'),
                         },
                     ]}
                 >
@@ -71,7 +73,7 @@ const AdminUpdateBranchForm = () => {
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста, заполните поле!',
+                            message: t('Пожалуйста, заполните поле!'),
                         },
                     ]}
                 >
@@ -79,19 +81,19 @@ const AdminUpdateBranchForm = () => {
                 </Form.Item>
                 <Form.Item name="is_active" valuePropName="checked">
                     <Checkbox>
-                        <span className="ml-5">Активность</span>
+                        <span className="ml-5">{t("Активность")}</span>
                     </Checkbox>
                 </Form.Item>
                 <div className="flex justify-end space-x-4">
                     <Button onClick={onCancel} type="default">
-                        Отмена
+                        {t("Отмена")}
                     </Button>
                     <Button
                         loading={isLoading}
                         type="primary"
                         htmlType="submit"
                     >
-                        Сохранить
+                        {t("Сохранить")}
                     </Button>
                 </div>
             </Form>

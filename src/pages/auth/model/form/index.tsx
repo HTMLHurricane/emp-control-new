@@ -4,9 +4,11 @@ import { TOKEN } from '@/shared';
 import type { FormProps } from 'antd';
 import { Button, Form, Input, message } from 'antd';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 const AuthForm = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const [login, { data, isError, isSuccess, isLoading }] = useLoginMutation();
@@ -32,11 +34,11 @@ const AuthForm = () => {
 
     useEffect(() => {
         if (isError) {
-            message.error('Вы ввели неправильную почту или пароль');
+            message.error(t('Вы ввели неправильную почту или пароль'));
             form.resetFields(['username', 'password']);
         }
         if (isSuccess) {
-            message.success('Добро пожаловать!');
+            message.success(t('Добро пожаловать!'));
             TOKEN.set(data?.access_token);
             navigate('/');
         }
@@ -44,7 +46,7 @@ const AuthForm = () => {
 
     return (
         <div className="w-[400px]">
-            <h1 className="text-center mb-5">Авторизация</h1>
+            <h1 className="text-center mb-5">{t('Авторизация')}</h1>
             <Form
                 name="basic"
                 onFinish={onFinish}
@@ -60,7 +62,7 @@ const AuthForm = () => {
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста введите вашу почту!',
+                            message: t('Пожалуйста введите вашу почту!'),
                         },
                     ]}
                 >
@@ -68,12 +70,12 @@ const AuthForm = () => {
                 </Form.Item>
 
                 <Form.Item<IAuthForm>
-                    label="Пароль"
+                    label={t('Пароль')}
                     name="password"
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста введите ваш пароль!',
+                            message: t('Пожалуйста введите ваш пароль!'),
                         },
                     ]}
                 >
@@ -87,7 +89,7 @@ const AuthForm = () => {
                         type="primary"
                         htmlType="submit"
                     >
-                        Войти
+                        {t('Войти')}
                     </Button>
                 </Form.Item>
             </Form>

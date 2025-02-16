@@ -5,10 +5,12 @@ import { EmployeeInfo } from './employeeInfo/employeeInfo';
 import { EmployeeAttendance } from './employeeAttendance/employeeAttendance';
 import { EmployeeDevices } from './employeeDevices/employeeDevices';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'
 
 type Tab = 'info' | 'attendance' | 'devices';
 
 const AdminEmployeeInfoPage = () => {
+    const {t} = useTranslation()
     const [activeTab, setActiveTab] = useState<Tab>('info');
     const handleTabChange = (e: RadioChangeEvent) => {
         setActiveTab(e.target.value as Tab);
@@ -23,7 +25,7 @@ const AdminEmployeeInfoPage = () => {
                     type="primary"
                     className="self-start"
                 >
-                    Назад
+                    {t("Назад")}
                 </Button>
                 <Radio.Group
                     value={activeTab}
@@ -36,19 +38,19 @@ const AdminEmployeeInfoPage = () => {
                         value="info"
                         className="font-medium text-center"
                     >
-                        Информация о сотруднике
+                        {t("Информация о сотруднике")}
                     </Radio.Button>
                     <Radio.Button
                         value="attendance"
                         className="font-medium text-center"
                     >
-                        Посещаемость
+                        {t("Посещаемость")}
                     </Radio.Button>
                     <Radio.Button
                         value="devices"
                         className="font-medium text-center"
                     >
-                        Камера
+                        {t("Камера")}
                     </Radio.Button>
                 </Radio.Group>
             </div>

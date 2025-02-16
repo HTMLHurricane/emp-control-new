@@ -5,6 +5,7 @@ import { useAppSelector, Card, Title } from '@/shared';
 import { IDailyAttendance } from '@/entities/home/model';
 import { useNavigate } from 'react-router-dom';
 import { columnResponseText } from '@/shared/const/css';
+import { useTranslation } from 'react-i18next'
 
 // Функция для расчета разницы времени
 export const calculateDelay = (actualTime?: string, scheduledTime?: string) => {
@@ -45,6 +46,7 @@ export const calculateDelay = (actualTime?: string, scheduledTime?: string) => {
 };
 
 const Line = () => {
+    const { t } = useTranslation();
     const { homeDate, attendanceBranch } = useAppSelector();
     const [employeeTablePage, setEmployeeTablePage] = useState(1);
     const [employeeTableLimit, setEmployeeTableLimit] = useState(10);
@@ -62,13 +64,13 @@ const Line = () => {
 
     const columns: TableProps<IDailyAttendance>['columns'] = [
         {
-            title: 'ФИО',
+            title: t('ФИО'),
             key: 'full_name',
             dataIndex: 'full_name',
             className: `${columnResponseText} w-[100px] md:w-[200px]`,
         },
         {
-            title: 'Должность',
+            title: t('Должность'),
             key: 'position',
             dataIndex: 'position',
             render: (_, res) => <Tag>{res.position_name}</Tag>,
@@ -76,7 +78,7 @@ const Line = () => {
             className: `${columnResponseText}`,
         },
         {
-            title: 'Филиал',
+            title: t('Филиал'),
             key: 'branch',
             dataIndex: 'branch',
             render: (_, res) => <Tag>{res.branch_name}</Tag>,
@@ -84,7 +86,7 @@ const Line = () => {
             className: `${columnResponseText}`,
         },
         {
-            title: 'Пришел',
+            title: t('Пришел'),
             key: 'time_in',
             dataIndex: 'time_in',
             render: (item) => (
@@ -95,7 +97,7 @@ const Line = () => {
             className: `${columnResponseText}`,
         },
         {
-            title: 'Опоздал',
+            title: t('Опоздал'),
             key: 'delay',
             render: (_, res) => {
                 const delay = calculateDelay(res.time_in, res.time_schedule_in);
@@ -111,7 +113,7 @@ const Line = () => {
 
     return (
         <Card className={`text-center min-w-[600px] xl:w-full`}>
-            <Title>Общая активность за {homeDate.format('YYYY-MM-DD')}</Title>
+            <Title>{t("Общая активность за")} {homeDate.format('YYYY-MM-DD')}</Title>
             <Table
                 dataSource={data?.content || []}
                 rowKey={(row) => row.id}

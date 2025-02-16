@@ -4,8 +4,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ClientAttendances } from '../clientAttendance';
 import { useDeleteImageMutation } from '@/entities/employee-info/api';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next'
 
 export const ClientDetail = () => {
+    const {t} = useTranslation()
     const [deleteImage, { isSuccess }] = useDeleteImageMutation();
     const { id } = useParams();
     const navigate = useNavigate();
@@ -13,7 +15,7 @@ export const ClientDetail = () => {
         skip: id === undefined,
     });
     useEffect(() => {
-        if (isSuccess) message.success('Успешно удалено');
+        if (isSuccess) message.success(t('Успешно удалено'));
     }, [isSuccess]);
     if (isLoading) {
         return (
@@ -24,14 +26,14 @@ export const ClientDetail = () => {
     }
 
     if (!data) {
-        return <div>Данные не найдены</div>;
+        return <div>{t("Данные не найдены")}</div>;
     }
 
     return (
         <div>
             <Card className="w-full">
                 <Button onClick={() => navigate(-1)} type="primary">
-                    Назад
+                    {t("Назад")}
                 </Button>
                 <div
                     style={{
@@ -69,7 +71,7 @@ export const ClientDetail = () => {
                                                 deleteImage(item.id)
                                             }
                                             className="basis-1/2 text-center text-[16px] font-bold"
-                                            title="Вы действительно хотите удалить?"
+                                            title={t("Вы действительно хотите удалить?")}
                                         >
                                             x
                                         </Popconfirm>

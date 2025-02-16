@@ -12,8 +12,10 @@ import {
 import { columnResponseText } from '@/shared/const/css';
 import { Table, TableProps, message } from 'antd';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next'
 
 const AdminBranchPageTable = () => {
+    const {t} = useTranslation()
     const { setBranchForm, setIsUpdatingBranch } = useAppActions();
     const { branchDate } = useAppSelector();
     const { data, isLoading } = useGetBranchesInfoQuery(branchDate);
@@ -32,22 +34,22 @@ const AdminBranchPageTable = () => {
 
     const columns: TableProps<IBranchesInfo>['columns'] = [
         {
-            title: 'Название',
+            title: t('Название'),
             dataIndex: 'name',
             className: `${columnResponseText}`,
         },
         {
-            title: 'Локация',
+            title: t('Адрес'),
             dataIndex: 'address',
             className: `${columnResponseText}`,
         },
         {
-            title: 'Количество сотрудников',
+            title: t('Количество сотрудников'),
             dataIndex: 'total_employees',
             className: `${columnResponseText}`,
         },
         {
-            title: 'Количество пришедших',
+            title: t('Количество пришедших'),
             dataIndex: 'present_employees',
             render: (el) => (
                 <span className="hover:bg-gray-300 p-3 rounded-md transition-all cursor-pointer">
@@ -58,7 +60,7 @@ const AdminBranchPageTable = () => {
             responsive: ['md', 'lg', 'xl'],
         },
         {
-            title: 'Количество опоздавших',
+            title: t('Количество опоздавших'),
             dataIndex: 'late_employees',
             render: (el) => (
                 <span className="hover:bg-gray-300 p-3 rounded-md transition-all cursor-pointer">
@@ -69,7 +71,7 @@ const AdminBranchPageTable = () => {
             responsive: ['lg', 'xl'],
         },
         {
-            title: 'Количество отсутствующих',
+            title: t('Количество отсутствующих'),
             dataIndex: 'absent_employees',
             render: (el) => (
                 <span className="hover:bg-gray-300 p-3 rounded-md transition-all cursor-pointer">
@@ -94,13 +96,13 @@ const AdminBranchPageTable = () => {
 
     useEffect(() => {
         if (deleteSuccess) {
-            message.success('Успешно удалено');
+            message.success(t('Успешно удалено'));
         }
     }, [deleteSuccess]);
 
     useEffect(() => {
         if (deleteError) {
-            message.error('Произошла ошибка во время удаления');
+            message.error(t('Произошла ошибка во время удаления'));
             console.log('error', deleteError);
         }
     }, [deleteError]);

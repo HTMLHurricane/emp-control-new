@@ -6,6 +6,7 @@ import type { DatePickerProps } from 'antd';
 import { RangePickerProps } from 'antd/es/date-picker';
 import dayjs from 'dayjs';
 import { FC, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next'
 import { FaArrowLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,6 +18,7 @@ interface IHeaderProps {
 }
 
 export const Header: FC<IHeaderProps> = ({ setDates, dates }) => {
+    const {t} = useTranslation()
     const { attendanceBranch } = useAppSelector();
     const { setAttendanceBranch, setHomeDate } = useAppActions();
     const [filter, setFilter] = useState<'week' | 'month' | null>(null);
@@ -57,7 +59,7 @@ export const Header: FC<IHeaderProps> = ({ setDates, dates }) => {
                     className="mr-3 cursor-pointer hover:text-blue-500 transition-colors duration-150"
                     onClick={() => navigate(-1)}
                 />
-                Статистика
+                {t("Статистика")}
             </h2>
 
             {/* Фильтры */}
@@ -68,8 +70,8 @@ export const Header: FC<IHeaderProps> = ({ setDates, dates }) => {
                     onChange={(e) => applyFilter(e.target.value)}
                     className="flex-shrink-0"
                 >
-                    <Radio.Button value="week">Текущая неделя</Radio.Button>
-                    <Radio.Button value="month">Текущий месяц</Radio.Button>
+                    <Radio.Button value="week">{t("Текущая неделя")}</Radio.Button>
+                    <Radio.Button value="month">{t("Текущий месяц")}</Radio.Button>
                 </Radio.Group>
 
                 {/* Выбор диапазона */}
@@ -85,14 +87,14 @@ export const Header: FC<IHeaderProps> = ({ setDates, dates }) => {
                 <div className="flex flex-col lg:flex-row items-center gap-4 w-full lg:w-auto">
                     <DatePicker
                         allowClear={false}
-                        placeholder="Выберите день"
+                        placeholder={t("Выберите день")}
                         onChange={onChange}
                         className="w-full lg:w-[160px]"
                     />
                     <Select
                         options={branchOptions}
                         value={attendanceBranch}
-                        placeholder="Филиал"
+                        placeholder={t("Филиал")}
                         onSelect={(e) => setAttendanceBranch(e)}
                         allowClear
                         onClear={() => setAttendanceBranch(undefined)}
