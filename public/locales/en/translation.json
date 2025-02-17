@@ -171,5 +171,9 @@
     "Пожалуйста введите вашу почту!": "Please enter your email!",
     "Пароль": "Password",
     "Пожалуйста введите ваш пароль!": "Please enter your password!",
-    "Войти": "Log in"
+    "Войти": "Log in",
+    "Постоянные": "Permanent",
+    "Новые": "New",
+    "постоянные клиенты": "regular customers",
+    "новые клиенты": "new clients"
 }

@@ -24,7 +24,6 @@ export const ClientTypePage = () => {
         branch_id: attendanceBranch!,
     });
     const navigate = useNavigate();
-    console.log(homeDate);
     return (
         <div>
             <h2 className="flex items-center text-lg font-semibold">

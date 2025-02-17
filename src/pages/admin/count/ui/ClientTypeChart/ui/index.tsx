@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next'
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 export const ClientType = ({ data }: { data: number[] | undefined }) => {
+    const {t} = useTranslation()
     const total = data ? data[0] + data[1] : 0;
     const [isMobile, setIsMobile] = useState(false);
 
@@ -16,8 +18,8 @@ export const ClientType = ({ data }: { data: number[] | undefined }) => {
     }, []);
 
     const formattedData = [
-        { name: 'Постоянные', value: data ? data[0] : 0 },
-        { name: 'Новые', value: data ? data[1] : 0 },
+        { name: t('Постоянные'), value: data ? data[0] : 0 },
+        { name: t('Новые'), value: data ? data[1] : 0 },
     ];
 
     const COLORS = ['#2E3A8C', '#32CD32'];
