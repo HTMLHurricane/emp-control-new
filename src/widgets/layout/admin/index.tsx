@@ -73,6 +73,12 @@ const AdminLayout: FC = () => {
                     key: '8',
                     label: <Link to="/schedules">{t('Рабочий график')}</Link>,
                 },
+                {
+                    key: '9',
+                    label: (
+                        <Link to="/bad_images">{t('Плохие изображения')}</Link>
+                    ),
+                },
             ],
         },
         {

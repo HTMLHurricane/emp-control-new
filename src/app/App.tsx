@@ -7,11 +7,12 @@ import {
     AdminEmployeePage,
     AdminEmployeeInfoPage,
 } from '@/pages';
+import { BadImages } from '@/pages/admin/badImages';
 import { Clients } from '@/pages/admin/client/ui';
 import { ClientDetail } from '@/pages/admin/client/ui/clientDetail';
 import { AdminCount } from '@/pages/admin/count/ui';
-import { ClientTypePage } from '@/pages/admin/count/ui/ClientTypeChart/ui/ClientType'
-import { PeakHoursClients } from '@/pages/admin/count/ui/PeakHoursChart/ui/PeakHoursClients'
+import { ClientTypePage } from '@/pages/admin/count/ui/ClientTypeChart/ui/ClientType';
+import { PeakHoursClients } from '@/pages/admin/count/ui/PeakHoursChart/ui/PeakHoursClients';
 import { Device } from '@/pages/admin/device/ui';
 import { Organization } from '@/pages/admin/Organization';
 import { AdminSchedulePage } from '@/pages/admin/schedule/ui';
@@ -86,8 +87,15 @@ const App = () => {
                             element={<AdminSchedulePage />}
                         />
                         <Route path="/count" element={<AdminCount />} />
-                        <Route path="/peakhoursclientspodrobnie" element={<PeakHoursClients />} />
-                        <Route path="/clientspodrobnie" element={<ClientTypePage />} />
+                        <Route
+                            path="/peakhoursclientspodrobnie"
+                            element={<PeakHoursClients />}
+                        />
+                        <Route
+                            path="/clientspodrobnie"
+                            element={<ClientTypePage />}
+                        />
+                        <Route path="/bad_images" element={<BadImages />} />
                         <Route path="/top_clients" element={<Clients />} />
                         <Route
                             path="/top_clients/:id"
