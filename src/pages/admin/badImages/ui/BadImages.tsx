@@ -5,6 +5,7 @@ import {
 import { BadImagesData } from '@/entities/badImages/model/types/types';
 import { columnResponseText } from '@/shared/const/css';
 import { Button, Image, message, Popconfirm, Table, TableProps } from 'antd';
+import dayjs from 'dayjs';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaInfo } from 'react-icons/fa6';
@@ -49,6 +50,14 @@ export const BadImages = () => {
             title: t('Дата'),
             key: 'created_at',
             dataIndex: 'created_at',
+            render: (item) => <>{dayjs(item).format('YYYY-MM-DD')}</>,
+            className: `${columnResponseText}`,
+        },
+        {
+            title: t('Время'),
+            key: 'created_at',
+            dataIndex: 'created_at',
+            render: (item) => <>{dayjs(item).format('HH:mm')}</>,
             className: `${columnResponseText}`,
         },
         {
