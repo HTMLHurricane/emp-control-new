@@ -178,5 +178,10 @@
     "новые клиенты": "new clients",
     "Позиция": "Position",
     "Плохие изображения": "Bad images",
-    "Действия": "Actions"
+    "Действия": "Actions",
+    "Удалить выбранные": "Delete selected",
+    "Да": "Yes",
+    "Нет": "No",
+    "Всего клиентов": "Total clients",
+    "Возвращающиеся клиенты": "Returning clients"
 }

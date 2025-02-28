@@ -9,6 +9,14 @@ export interface BadImagesData {
 }
 
 export interface BadImagesParams extends IPaginationParams {
-    start_date?: string;
-    end_date?: string;
+    start_date: string;
+    end_date: string;
+}
+
+export interface BadImagesByInterval {
+    page: number;
+    page_size: number;
+    total_elements: number;
+    total_pages: number;
+    content: BadImagesData[];
 }

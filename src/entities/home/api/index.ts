@@ -21,7 +21,15 @@ export const HomeAPI = api.injectEndpoints({
                 }),
             },
         ),
+        getAllClientsInfo: builder.query<
+            { all_clinets: number; returning_clients: number },
+            void
+        >({
+            query: () => ({
+                url: 'clients/get_all_clients_info',
+            }),
+        }),
     }),
 });
 
-export const { useGetLastDataQuery, useGetLineDataQuery } = HomeAPI;
+export const { useGetLastDataQuery, useGetLineDataQuery, useGetAllClientsInfoQuery } = HomeAPI;
