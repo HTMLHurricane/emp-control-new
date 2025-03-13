@@ -121,7 +121,7 @@ const AdminLayout: FC = () => {
             >
                 <div className="flex justify-center items-center text-slate-950 text-xl pt-5 pb-1">
                     <Link to="/" className="text-start mr-2">
-                        {collapsed ? 'A' : 'AralHUB'}
+                        {collapsed ? 'TC' : 'Tea-Chart'}
                     </Link>
                     {!collapsed && <LangSwitcher />}
                 </div>
